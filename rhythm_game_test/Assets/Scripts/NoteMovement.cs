@@ -1,20 +1,20 @@
-﻿using UnityEngine;
+﻿using UnityEngine; 
 
 public class NoteMovement : MonoBehaviour
 {
     public float speed;
     public float noteTime;
     public string noteType;
+    public bool isJudged = false;  // 판정 완료 여부
 
     RectTransform rect;
-    private Vector2 startPosition;  // 🔥 추가
 
     public void Init(float s, float t, string type)
     {
         speed = s;
         noteTime = t;
         noteType = type;
-        startPosition = rect.anchoredPosition;  // 🔥 시작 위치 저장
+        isJudged = false;
     }
 
     void Awake()

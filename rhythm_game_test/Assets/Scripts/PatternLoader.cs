@@ -1,4 +1,4 @@
-using UnityEngine;
+using UnityEngine; 
 using System.IO;
 
 public static class PatternLoader
@@ -8,7 +8,7 @@ public static class PatternLoader
         string path = Path.Combine(Application.dataPath, fileName);
         if (!File.Exists(path))
         {
-            Debug.LogError("JSON ÆÐÅÏ ÆÄÀÏ ¾øÀ½: " + path);
+            Debug.LogError("JSON ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: " + path);
             return new PatternData();
         }
 

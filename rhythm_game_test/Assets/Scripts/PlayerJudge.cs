@@ -3,15 +3,18 @@ using System.Linq;
 
 public class PlayerJudge : MonoBehaviour
 {
-    public float perfectRange = 0.05f;
-    public float greatRange = 0.10f;
-    public float goodRange = 0.15f;
+    public float perfectRange = 0.08f;
+    public float greatRange = 0.15f;
+    public float goodRange = 0.25f;
 
     public NoteSpawner spawner;
     public JudgePopup judgePopup;
 
     void Update()
     {
+        // 일시정지 중에는 입력 무시
+        if (PauseManager.IsPaused) return;
+
         if (Input.GetKeyDown(KeyCode.LeftArrow)) TryHit("LEFT");
         if (Input.GetKeyDown(KeyCode.RightArrow)) TryHit("RIGHT");
         if (Input.GetKeyDown(KeyCode.UpArrow)) TryHit("UP");
@@ -35,6 +38,7 @@ public class PlayerJudge : MonoBehaviour
             // 노트의 판정 시간이 지나고 goodRange까지 벗어났으면 MISS
             if (songTime > n.noteTime + goodRange)
             {
+                Debug.Log($"[MISS] songTime: {songTime:F2}, noteTime: {n.noteTime:F2}, diff: {(songTime - n.noteTime):F2}");
                 Miss(n);
             }
         }

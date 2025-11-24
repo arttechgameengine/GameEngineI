@@ -1,4 +1,4 @@
-﻿using UnityEngine; 
+﻿using UnityEngine;
 
 public class NoteMovement : MonoBehaviour
 {
@@ -7,7 +7,7 @@ public class NoteMovement : MonoBehaviour
     public string noteType;
     public bool isJudged = false;  // 판정 완료 여부
 
-    RectTransform rect;
+    Transform trans;
 
     public void Init(float s, float t, string type)
     {
@@ -19,14 +19,18 @@ public class NoteMovement : MonoBehaviour
 
     void Awake()
     {
-        rect = GetComponent<RectTransform>();
+        trans = transform;
     }
 
     void Update()
     {
-        rect.anchoredPosition += Vector2.left * speed * Time.deltaTime;
+        // 일시정지 중에는 움직이지 않음
+        if (PauseManager.IsPaused) return;
 
-        if (rect.anchoredPosition.x < -3000f)
+        // localPosition으로 이동 (NotesParent 기준)
+        trans.localPosition += Vector3.left * speed * Time.deltaTime;
+
+        if (trans.localPosition.x < -3000f)
             Destroy(gameObject);
     }
 }

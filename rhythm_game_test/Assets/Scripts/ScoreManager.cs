@@ -1,4 +1,5 @@
-using UnityEngine; 
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class ScoreManager : MonoBehaviour
@@ -128,5 +129,14 @@ public class ScoreManager : MonoBehaviour
         Debug.Log($"MISS: {missCount}");
         Debug.Log($"Max Combo: {maxCombo}");
         Debug.Log($"Total Notes: {GetTotalNotes()}");
+    }
+
+    // 결과 화면으로 이동
+    public void GoToResultScene()
+    {
+        // 결과 데이터 저장
+        GameResultData.SaveFromScoreManager(this);
+        // ScoreScene으로 이동
+        SceneManager.LoadScene("ScoreScene");
     }
 }

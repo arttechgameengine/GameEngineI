@@ -188,7 +188,7 @@ MonoBehaviour:
   rightSprite: {fileID: 21300000, guid: 8de82cd3a8b8d4fe6be6148f48b9396b, type: 3}
   upSprite: {fileID: 21300000, guid: de99b78e476e449da9e89297222df8df, type: 3}
   downSprite: {fileID: 21300000, guid: 50515b87527a140efb4a20420d8a7afe, type: 3}
-  spaceSprite: {fileID: 21300000, guid: af603204026e2456a94a095e52c55613, type: 3}
+  spaceSprite: {fileID: 21300000, guid: 43a1334df9a0845cdbc95da101c15cd1, type: 3}
 --- !u!114 &7010916551834882764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,6 +207,9 @@ MonoBehaviour:
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   missFadeDuration: 0.3
   missColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  parryReturnDuration: 0.4
+  enemyPosition: {x: 0, y: -400, z: 0}
+  enemySprite: {fileID: 0}
 --- !u!114 &7157475387866647946
 MonoBehaviour:
   m_ObjectHideFlags: 0

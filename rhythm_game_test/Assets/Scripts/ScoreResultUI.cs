@@ -18,6 +18,11 @@ public class ScoreResultUI : MonoBehaviour
     public TextMeshProUGUI greatText;
     public TextMeshProUGUI goodText;
     public TextMeshProUGUI missText;
+    public TextMeshProUGUI parryText;  // 패링 개수 표시 (옵셔널)
+
+    [Header("Parry Display")]
+    public bool showParryCount = false;  // 패링 개수 표시 여부 (Inspector에서 설정)
+    public GameObject parryLabel;  // "Parry:" 레이블 오브젝트
 
     [Header("Buttons")]
     public Button retryButton;
@@ -82,6 +87,31 @@ public class ScoreResultUI : MonoBehaviour
 
         if (missText != null)
             missText.text = $"{GameResultData.MissCount}";
+
+        // 패링 개수 표시 (옵션이 켜져있을 때만)
+        if (showParryCount)
+        {
+            if (parryText != null)
+            {
+                parryText.text = $"{GameResultData.ParryCount}";
+                parryText.gameObject.SetActive(true);
+            }
+            if (parryLabel != null)
+            {
+                parryLabel.SetActive(true);
+            }
+        }
+        else
+        {
+            if (parryText != null)
+            {
+                parryText.gameObject.SetActive(false);
+            }
+            if (parryLabel != null)
+            {
+                parryLabel.SetActive(false);
+            }
+        }
 
         // 성공/실패 표시
         if (resultText != null)

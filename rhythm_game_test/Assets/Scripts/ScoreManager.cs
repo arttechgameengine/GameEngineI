@@ -23,6 +23,7 @@ public class ScoreManager : MonoBehaviour
     public int greatCount = 0;
     public int goodCount = 0;
     public int missCount = 0;
+    public int parryCount = 0;  // 패링 성공 횟수
 
     void Awake()
     {
@@ -39,8 +40,15 @@ public class ScoreManager : MonoBehaviour
         greatCount = 0;
         goodCount = 0;
         missCount = 0;
+        parryCount = 0;
         UpdateComboUI();
         UpdateScoreUI();
+    }
+
+    // 패링 성공 시 호출
+    public void AddParrySuccess()
+    {
+        parryCount++;
     }
 
     public void AddJudge(string judge)

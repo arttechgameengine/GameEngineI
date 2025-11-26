@@ -9,6 +9,7 @@ public static class GameResultData
     public static int GreatCount;
     public static int GoodCount;
     public static int MissCount;
+    public static int ParryCount;  // 패링 성공 횟수
 
     public static int TotalNotes => PerfectCount + GreatCount + GoodCount + MissCount;
 
@@ -45,6 +46,7 @@ public static class GameResultData
         GreatCount = sm.greatCount;
         GoodCount = sm.goodCount;
         MissCount = sm.missCount;
+        ParryCount = sm.parryCount;
     }
 
     // 초기화
@@ -56,5 +58,6 @@ public static class GameResultData
         GreatCount = 0;
         GoodCount = 0;
         MissCount = 0;
+        ParryCount = 0;
     }
 }

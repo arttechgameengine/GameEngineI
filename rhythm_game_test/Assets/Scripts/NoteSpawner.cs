@@ -9,6 +9,9 @@ public class NoteSpawner : MonoBehaviour
     public RectTransform notesParent;
     public float noteSpeed = 500f;
 
+    [Header("Enemy Reference")]
+    public Transform enemySprite;  // 적 스프라이트 (Canvas 안의 Enemy Image)
+
     [Header("Audio")]
     public AudioSource bgmSource;
 
@@ -110,6 +113,8 @@ public class NoteSpawner : MonoBehaviour
     {
         RectTransform n = Instantiate(notePrefab, notesParent);
 
+        bool isSpaceNote = (data.type == "SPACE");
+
         // 노트가 실제로 hitLine에 도착해야 하는 시간 계산
         // 원래 noteTime이 spawnLeadTime보다 작으면 (음수 스폰 시간)
         // 현재 시간 + spawnLeadTime이 실제 도착 시간이 됨
@@ -127,15 +132,24 @@ public class NoteSpawner : MonoBehaviour
             actualHitTime = data.time;
         }
 
+        // SPACE 노트도 판정선까지 가야 판정됨 (일반 노트와 동일)
+
         // NotesParent 기준 로컬 좌표로 스폰 위치 설정
         n.localPosition = new Vector3(spawnLocalX, 0, 0);
 
         NoteMovement mv = n.GetComponent<NoteMovement>();
         NoteVisual visual = n.GetComponent<NoteVisual>();
+        NoteEffect effect = n.GetComponent<NoteEffect>();
 
         mv.Init(noteSpeed, actualHitTime, data.type);
         visual.SetType(data.type);
 
-        Debug.Log($"[Spawn] original: {data.time:F2}, actual: {actualHitTime:F2}, songTime: {currentSongTime:F2}");
+        // SPACE 노트면 Enemy Sprite 참조 할당
+        if (isSpaceNote && effect != null && enemySprite != null)
+        {
+            effect.enemySprite = enemySprite;
+        }
+
+        Debug.Log($"[Spawn] type: {data.type}, original: {data.time:F2}, actual: {actualHitTime:F2}, songTime: {currentSongTime:F2}, isSpace: {isSpaceNote}");
     }
 }

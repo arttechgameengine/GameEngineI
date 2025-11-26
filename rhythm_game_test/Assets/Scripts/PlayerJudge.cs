@@ -1,4 +1,4 @@
-﻿using UnityEngine; 
+﻿using UnityEngine;
 using System.Linq;
 
 public class PlayerJudge : MonoBehaviour
@@ -84,6 +84,13 @@ public class PlayerJudge : MonoBehaviour
         judgePopup.ShowJudge(judge);
         ScoreManager.Instance.AddJudge(judge);
 
+        // SPACE 노트 성공 시 패링 카운트 추가
+        bool isParry = (n.noteType == "SPACE");
+        if (isParry)
+        {
+            ScoreManager.Instance.AddParrySuccess();
+        }
+
         // 요리 효과 재생
         if (CookingEffect.Instance != null)
         {
@@ -94,7 +101,15 @@ public class PlayerJudge : MonoBehaviour
         NoteEffect effect = n.GetComponent<NoteEffect>();
         if (effect != null)
         {
-            effect.PlayHitEffect(() => Destroy(n.gameObject));
+            // SPACE 노트는 적 위치로 날아가는 효과
+            if (isParry)
+            {
+                effect.PlayParryReturnEffect(() => Destroy(n.gameObject));
+            }
+            else
+            {
+                effect.PlayHitEffect(() => Destroy(n.gameObject));
+            }
         }
         else
         {

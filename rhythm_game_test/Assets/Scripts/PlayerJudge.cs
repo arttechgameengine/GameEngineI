@@ -10,6 +10,13 @@ public class PlayerJudge : MonoBehaviour
     public NoteSpawner spawner;
     public JudgePopup judgePopup;
 
+    private CameraShakeManager cameraShake;
+
+    void Start()
+    {
+        cameraShake = GetComponent<CameraShakeManager>();
+    }
+
     void Update()
     {
         // 일시정지 중에는 입력 무시
@@ -123,6 +130,12 @@ public class PlayerJudge : MonoBehaviour
         Debug.Log("MISS");
         judgePopup.ShowJudge("MISS");
         ScoreManager.Instance.AddJudge("MISS");
+
+        // 일반 미스 화면 흔들림
+        if (cameraShake != null)
+        {
+            cameraShake.ShakeOnNormalMiss();
+        }
     }
 
     // 노트를 놓친 경우 (노트 파괴)
@@ -133,6 +146,20 @@ public class PlayerJudge : MonoBehaviour
         Debug.Log($"MISS ({n.noteType})");
         judgePopup.ShowJudge("MISS");
         ScoreManager.Instance.AddJudge("MISS");
+
+        // 패링 노트(SPACE) 미스 시 강한 화면 흔들림
+        bool isParryNote = (n.noteType == "SPACE");
+        if (cameraShake != null)
+        {
+            if (isParryNote)
+            {
+                cameraShake.ShakeOnParryMiss();
+            }
+            else
+            {
+                cameraShake.ShakeOnNormalMiss();
+            }
+        }
 
         // 미스 효과 재생 후 파괴
         NoteEffect effect = n.GetComponent<NoteEffect>();

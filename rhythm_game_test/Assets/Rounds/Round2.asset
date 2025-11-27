@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68613426d170f7a469ac2f0b9b0f62cd, type: 3}
+  m_Name: Round2
+  m_EditorClassIdentifier: 
+  roundNumber: 2
+  roundName: Round 2
+  enemyName: "\uC790\uC6C5"
+  enemyPortrait: {fileID: 21300000, guid: fc15fec5aea6a4e7c8d3af67916b7889, type: 3}
+  mapPosition: {x: 0, y: 0}
+  songName: 
+  songClip: {fileID: 8300000, guid: 4ab9950d4bda95344908bff638b22d65, type: 3}
+  beatmapFile: {fileID: 0}
+  storyText: 

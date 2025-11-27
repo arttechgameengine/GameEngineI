@@ -27,6 +27,7 @@ public class CameraShakeManager : MonoBehaviour
 
     void Start()
     {
+        // ShakeablePanel 설정
         if (shakeablePanel != null)
         {
             originalPosition = shakeablePanel.anchoredPosition;

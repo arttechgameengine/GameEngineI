@@ -973,6 +973,8 @@ MonoBehaviour:
   normalMissShakeForce: 1
   shakeDuration: 0.2
   shakeablePanel: {fileID: 1898027572}
+  parryMissParticle: {fileID: 0}
+  normalMissParticle: {fileID: 0}
 --- !u!1 &537249441
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,11 @@ public class NoteMovement : MonoBehaviour
     public string noteType;
     public bool isJudged = false;  // 판정 완료 여부
 
+    // 롱노트 관련
+    public string noteSubType = "NORMAL";    // NORMAL, LONG_START, LONG_HOLD, LONG_END
+    public int longNoteGroupId = -1;         // 롱노트 그룹 ID
+    public GameObject longNoteVisualBar;     // 롱노트 시각적 막대 (LONG_START만 가짐)
+
     Transform trans;
     private Image image;
     private NoteVisual visual;
@@ -16,16 +21,24 @@ public class NoteMovement : MonoBehaviour
     private bool isSpaceNote = false;
     private bool hasAppeared = false;
     private float appearDistance;  // HitLine으로부터 이 거리에서 나타남
-    private const float APPEAR_ANIM_DURATION = 0.3f;  // 등장 애니메이션 시간 (짧게 조정)
+    private const float APPEAR_ANIM_DURATION = 0.5f;  // 등장 애니메이션 시간 (속도 조절)
 
-    public void Init(float s, float t, string type)
+    public void Init(float s, float t, string type, string subType = "NORMAL", int groupId = -1)
     {
         speed = s;
         noteTime = t;
         noteType = type;
+        noteSubType = subType;
+        longNoteGroupId = groupId;
         isJudged = false;
 
         isSpaceNote = (type == "SPACE");
+
+        // LONG_HOLD와 LONG_END 노트는 안 보이게 설정 (시각적 막대만 표시)
+        if (subType == "LONG_HOLD" || subType == "LONG_END")
+        {
+            SetVisibility(false);
+        }
 
         if (isSpaceNote)
         {
@@ -102,7 +115,24 @@ public class NoteMovement : MonoBehaviour
 
         // "적" 위치 가져오기
         NoteEffect effect = GetComponent<NoteEffect>();
-        Vector3 enemyPos = effect != null ? effect.enemyPosition : new Vector3(0, -400f, 0);
+        Vector3 enemyPos = new Vector3(17f, 124f, 0);
+
+        if (effect != null)
+        {
+            // enemySprite가 설정되어 있으면 실제 위치 사용
+            if (effect.enemySprite != null)
+            {
+                RectTransform notesParent = transform.parent as RectTransform;
+                if (notesParent != null)
+                {
+                    enemyPos = notesParent.InverseTransformPoint(effect.enemySprite.position);
+                }
+            }
+            else
+            {
+                enemyPos = effect.enemyPosition;
+            }
+        }
 
         while (elapsed < APPEAR_ANIM_DURATION)
         {

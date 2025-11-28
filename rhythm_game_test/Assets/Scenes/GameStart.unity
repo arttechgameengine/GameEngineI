@@ -553,6 +553,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534294610}
   m_CullTransparentMesh: 1
+--- !u!1 &582268906
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 582268908}
+  - component: {fileID: 582268907}
+  m_Layer: 0
+  m_Name: GameModeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &582268907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582268906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 873dd1041c8c5bf49b831da865b33ba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMode: 0
+  allRounds:
+  - {fileID: 11400000, guid: 26818d5e0b332594bb7b161c6757228e, type: 2}
+  - {fileID: 11400000, guid: e56b6b0a7c88c85489f3e14fbd7816d5, type: 2}
+  - {fileID: 11400000, guid: 9994c9a23db0abd49a6faf6958d55b0f, type: 2}
+  - {fileID: 11400000, guid: 0da64b00da13cfa4fab44bd799d8b342, type: 2}
+  - {fileID: 11400000, guid: 0ac73964881eb5640a6e903f978dc9fd, type: 2}
+  currentStoryRound: 0
+  roundCleared: 0000000000
+--- !u!4 &582268908
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582268906}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 259.62393, y: 557.50635, z: 0.12659192}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &630136490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,3 +1295,4 @@ SceneRoots:
   - {fileID: 1427869507}
   - {fileID: 1628813800}
   - {fileID: 4566041}
+  - {fileID: 582268908}

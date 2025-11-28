@@ -21,7 +21,7 @@ public class NoteEffect : MonoBehaviour
 
     [Header("Parry Return Settings")]
     public float parryReturnDuration = 0.4f;  // 패링 노트가 돌아가는 시간
-    public Vector3 enemyPosition = new Vector3(0, -400f, 0);  // "적" 위치 (로컬 좌표)
+    public Vector3 enemyPosition = new Vector3(17f, 124f, 0);  // "적" 위치 (로컬 좌표)
     public Transform enemySprite;  // 적 스프라이트 참조 (Inspector에서 할당)
 
     private Color originalColor;
@@ -163,6 +163,18 @@ public class NoteEffect : MonoBehaviour
             overlayImage.color = c;
         }
 
+        // Enemy 위치 계산 (Transform이 있으면 사용, 없으면 기본값)
+        Vector3 targetEnemyPos = enemyPosition;
+        if (enemySprite != null)
+        {
+            // Enemy의 로컬 좌표를 NotesParent 기준으로 변환
+            RectTransform notesParent = transform.parent as RectTransform;
+            if (notesParent != null)
+            {
+                targetEnemyPos = notesParent.InverseTransformPoint(enemySprite.position);
+            }
+        }
+
         // 1단계: 적 위치로 날아가기 (페이드 없이)
         while (elapsed < parryReturnDuration)
         {
@@ -173,7 +185,7 @@ public class NoteEffect : MonoBehaviour
             float easeT = Mathf.Pow(t, 2f);
 
             // 적 위치로 이동
-            transform.localPosition = Vector3.Lerp(startPos, enemyPosition, easeT);
+            transform.localPosition = Vector3.Lerp(startPos, targetEnemyPos, easeT);
 
             // 회전 (720도)
             float rotation = Mathf.Lerp(0f, 720f, t);

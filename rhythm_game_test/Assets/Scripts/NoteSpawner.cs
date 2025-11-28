@@ -12,6 +12,9 @@ public class NoteSpawner : MonoBehaviour
     [Header("Enemy Reference")]
     public Transform enemySprite;  // 적 스프라이트 (Canvas 안의 Enemy Image)
 
+    [Header("Long Note Visual")]
+    public RectTransform longNoteBarPrefab;  // 롱노트 시각적 막대 Prefab
+
     [Header("Audio")]
     public AudioSource bgmSource;
 
@@ -116,8 +119,6 @@ public class NoteSpawner : MonoBehaviour
         bool isSpaceNote = (data.type == "SPACE");
 
         // 노트가 실제로 hitLine에 도착해야 하는 시간 계산
-        // 원래 noteTime이 spawnLeadTime보다 작으면 (음수 스폰 시간)
-        // 현재 시간 + spawnLeadTime이 실제 도착 시간이 됨
         float actualHitTime;
         float idealSpawnTime = data.time - spawnLeadTime;
 
@@ -132,8 +133,6 @@ public class NoteSpawner : MonoBehaviour
             actualHitTime = data.time;
         }
 
-        // SPACE 노트도 판정선까지 가야 판정됨 (일반 노트와 동일)
-
         // NotesParent 기준 로컬 좌표로 스폰 위치 설정
         n.localPosition = new Vector3(spawnLocalX, 0, 0);
 
@@ -141,8 +140,17 @@ public class NoteSpawner : MonoBehaviour
         NoteVisual visual = n.GetComponent<NoteVisual>();
         NoteEffect effect = n.GetComponent<NoteEffect>();
 
-        mv.Init(noteSpeed, actualHitTime, data.type);
+        // 노트 초기화 (noteSubType과 longNoteGroupId 전달)
+        mv.Init(noteSpeed, actualHitTime, data.type, data.noteSubType, data.longNoteGroupId);
+
         visual.SetType(data.type);
+
+        // 롱노트 시작 노트면 시각적 막대 생성
+        if (data.noteSubType == "LONG_START" && data.longNoteDuration > 0f)
+        {
+            GameObject longBar = CreateLongNoteBar(n, data.longNoteDuration, data.type);
+            mv.longNoteVisualBar = longBar;
+        }
 
         // SPACE 노트면 Enemy Sprite 참조 할당
         if (isSpaceNote && effect != null && enemySprite != null)
@@ -150,6 +158,50 @@ public class NoteSpawner : MonoBehaviour
             effect.enemySprite = enemySprite;
         }
 
-        Debug.Log($"[Spawn] type: {data.type}, original: {data.time:F2}, actual: {actualHitTime:F2}, songTime: {currentSongTime:F2}, isSpace: {isSpaceNote}");
+        Debug.Log($"[Spawn] type: {data.type}, subType: {data.noteSubType}, groupId: {data.longNoteGroupId}, time: {actualHitTime:F2}");
+    }
+
+    /// <summary>
+    /// 롱노트 시각적 막대 생성 (Start 노트에서 End 노트까지 연결)
+    /// </summary>
+    GameObject CreateLongNoteBar(RectTransform startNote, float duration, string noteType)
+    {
+        if (longNoteBarPrefab == null)
+        {
+            Debug.LogWarning("[NoteSpawner] longNoteBarPrefab이 설정되지 않았습니다!");
+            return null;
+        }
+
+        // 롱노트 막대 생성
+        RectTransform bar = Instantiate(longNoteBarPrefab, notesParent);
+
+        // 시작 노트와 같은 위치에 배치
+        bar.localPosition = startNote.localPosition;
+
+        // 길이 계산: duration * noteSpeed
+        float barLength = duration * noteSpeed;
+        bar.sizeDelta = new Vector2(barLength, bar.sizeDelta.y);
+
+        // 막대의 pivot을 왼쪽으로 설정 (노트에서 시작)
+        bar.pivot = new Vector2(0, 0.5f);
+
+        // Start 노트의 스프라이트를 복사하여 막대에 적용
+        UnityEngine.UI.Image barImage = bar.GetComponent<UnityEngine.UI.Image>();
+        UnityEngine.UI.Image noteImage = startNote.GetComponent<UnityEngine.UI.Image>();
+        if (barImage != null && noteImage != null && noteImage.sprite != null)
+        {
+            barImage.sprite = noteImage.sprite;
+            barImage.color = noteImage.color;
+
+            // 반투명하게 설정
+            Color c = barImage.color;
+            c.a = 0.5f;
+            barImage.color = c;
+        }
+
+        // Start 노트 뒤에 표시 (레이어 순서)
+        bar.SetSiblingIndex(startNote.GetSiblingIndex());
+
+        return bar.gameObject;
     }
 }

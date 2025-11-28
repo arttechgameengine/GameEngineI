@@ -39,6 +39,12 @@ public class CameraShakeManager : MonoBehaviour
         }
     }
 
+    public void ShakeOnParrySuccess()
+    {
+        Debug.Log($"[Camera Shake] 패링 성공! 강도: {normalMissShakeForce}");
+        StartCoroutine(Shake(normalMissShakeForce, shakeDuration));
+    }
+
     public void ShakeOnParryMiss()
     {
         Debug.Log($"[Camera Shake] 패링 미스! 강도: {parryMissShakeForce}");

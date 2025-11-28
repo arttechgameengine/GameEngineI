@@ -13,6 +13,13 @@ public class TournamentMapManager : MonoBehaviour
     public CinemachineCamera mainCamera; // 전체 맵 보기용 카메라
     public CinemachineCamera[] roundCameras = new CinemachineCamera[5]; // 각 라운드별 카메라
 
+    [Header("Camera Constraints")]
+    public PolygonCollider2D mapBoundary; // 전체 맵 경계 (Cinemachine Confiner용)
+    public PolygonCollider2D[] progressiveBoundaries = new PolygonCollider2D[5]; // 각 진행도별 경계
+
+    [Header("Tournament Silhouettes")]
+    public GameObject tournamentSilhouettesContainer; // 전체 브래킷 실루엣 컨테이너 (줌아웃 시에만 표시, 실제 5라운드 제외한 더미들)
+
     [Header("Round Buttons")]
     public RoundButton[] roundButtons = new RoundButton[5]; // 각 라운드 버튼
 
@@ -26,9 +33,17 @@ public class TournamentMapManager : MonoBehaviour
     public Button backButton;
 
     private int selectedRoundIndex = -1;
+    private CinemachineConfiner2D mainCameraConfiner; // 메인 카메라의 Confiner 컴포넌트
 
     void Start()
     {
+        // Confiner 컴포넌트 가져오기 또는 추가
+        mainCameraConfiner = mainCamera.GetComponent<CinemachineConfiner2D>();
+        if (mainCameraConfiner == null)
+        {
+            mainCameraConfiner = mainCamera.gameObject.AddComponent<CinemachineConfiner2D>();
+        }
+
         // 초기화: 전체 맵 보기
         ShowFullMap();
 
@@ -50,6 +65,13 @@ public class TournamentMapManager : MonoBehaviour
 
         // 초기 상태: 정보 패널 숨김
         roundInfoPanel.SetActive(false);
+
+        // 카메라 경계 설정 (현재 진행도에 맞춰)
+        UpdateCameraBoundary();
+
+        // 초기 상태: 실루엣 표시, 버튼 숨김
+        ShowSilhouettes(true);
+        ShowButtons(false);
     }
 
     /// <summary>
@@ -64,6 +86,10 @@ public class TournamentMapManager : MonoBehaviour
         }
         selectedRoundIndex = -1;
         roundInfoPanel.SetActive(false);
+
+        // 줌아웃 시: 실루엣 표시, 버튼 숨김
+        ShowSilhouettes(true);
+        ShowButtons(false);
     }
 
     /// <summary>
@@ -102,6 +128,10 @@ public class TournamentMapManager : MonoBehaviour
         {
             roundCameras[i].Priority.Value = (i == roundIndex) ? 10 : 0;
         }
+
+        // 줌인 시: 실루엣 숨김, 버튼 표시
+        ShowSilhouettes(false);
+        ShowButtons(true);
     }
 
     /// <summary>
@@ -143,5 +173,83 @@ public class TournamentMapManager : MonoBehaviour
     {
         // 줌아웃하여 전체 맵 보기
         ShowFullMap();
+    }
+
+    /// <summary>
+    /// 카메라 경계 업데이트
+    /// Story Mode: 현재 라운드까지만 탐색 가능
+    /// Free Mode: 전체 맵 탐색 가능
+    /// </summary>
+    void UpdateCameraBoundary()
+    {
+        if (mainCameraConfiner == null)
+        {
+            Debug.LogWarning("[Tournament] Confiner가 없습니다!");
+            return;
+        }
+
+        // Free Mode에서는 전체 맵 경계 사용
+        if (GameModeManager.Instance.currentMode == GameMode.FreeMode)
+        {
+            if (mapBoundary != null)
+            {
+                mainCameraConfiner.BoundingShape2D = mapBoundary;
+                Debug.Log("[Tournament] Free Mode - 전체 맵 탐색 가능");
+            }
+            return;
+        }
+
+        // Story Mode에서는 현재 진행도에 맞는 경계 사용
+        int currentRound = GameModeManager.Instance.currentStoryRound;
+
+        if (progressiveBoundaries != null && currentRound < progressiveBoundaries.Length)
+        {
+            PolygonCollider2D boundary = progressiveBoundaries[currentRound];
+            if (boundary != null)
+            {
+                mainCameraConfiner.BoundingShape2D = boundary;
+                Debug.Log($"[Tournament] Story Mode - Round {currentRound + 1}까지 탐색 가능");
+            }
+            else
+            {
+                Debug.LogWarning($"[Tournament] Round {currentRound + 1}의 경계가 설정되지 않았습니다!");
+            }
+        }
+    }
+
+    /// <summary>
+    /// 게임 모드 변경 시 호출 (외부에서 호출 가능)
+    /// </summary>
+    public void RefreshCameraBoundary()
+    {
+        UpdateCameraBoundary();
+    }
+
+    /// <summary>
+    /// 토너먼트 브래킷 실루엣 표시/숨김
+    /// 전체 브래킷 구조를 보여주는 더미 실루엣들 (실제 5라운드 제외)
+    /// </summary>
+    void ShowSilhouettes(bool show)
+    {
+        if (tournamentSilhouettesContainer != null)
+        {
+            tournamentSilhouettesContainer.SetActive(show);
+            Debug.Log($"[Tournament] 브래킷 실루엣 {(show ? "표시" : "숨김")}");
+        }
+    }
+
+    /// <summary>
+    /// 라운드 버튼 표시/숨김
+    /// </summary>
+    void ShowButtons(bool show)
+    {
+        for (int i = 0; i < roundButtons.Length; i++)
+        {
+            if (roundButtons[i] != null && roundButtons[i].gameObject != null)
+            {
+                roundButtons[i].gameObject.SetActive(show);
+            }
+        }
+        Debug.Log($"[Tournament] 버튼 {(show ? "표시" : "숨김")}");
     }
 }

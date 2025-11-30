@@ -1,0 +1,1117 @@
+{
+    "notes": [
+        {
+            "time": 1.0000001192092896,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 2.8499984741210939,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 4.199997901916504,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 5.850004196166992,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 7.700011253356934,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 8.300013542175293,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 9.100016593933106,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 10.85002326965332,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 11.550025939941407,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 13.75003433227539,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 14.600037574768067,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 15.750041961669922,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 16.550033569335939,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 17.80001449584961,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 19.149993896484376,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 19.949981689453126,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 20.84996795654297,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 22.949935913085939,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 23.899921417236329,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 25.099903106689454,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 26.349884033203126,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 27.39986801147461,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 28.599849700927736,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 29.249839782714845,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 30.999813079833986,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 31.799800872802736,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 32.899784088134769,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 33.9997673034668,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 35.4997444152832,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 37.29971694946289,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 38.049705505371097,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 38.6996955871582,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 39.84967803955078,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 40.49966812133789,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 41.249656677246097,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 41.9996452331543,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 42.849632263183597,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 43.54962158203125,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 44.19961166381836,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 44.899600982666019,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 45.99958419799805,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 47.24956512451172,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 47.99955368041992,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 49.59952926635742,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 50.349517822265628,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 51.39950180053711,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 52.14949035644531,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 52.899478912353519,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 53.79946517944336,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 57.09941482543945,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 58.59939193725586,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 59.299381256103519,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 60.39936447143555,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 62.7993278503418,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 63.449317932128909,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 64.09931182861328,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 64.9493637084961,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 65.7994155883789,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 67.59952545166016,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 68.24956512451172,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 69.59964752197266,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 70.39969635009766,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 71.19974517822266,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 71.7997817993164,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 73.3998794555664,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 76.6000747680664,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 77.20011138916016,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 77.8001480102539,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 79.70026397705078,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 80.35030364990235,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 81.7503890991211,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 82.35042572021485,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 83.25048065185547,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 84.45055389404297,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 85.05059051513672,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 85.65062713623047,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 86.35066986083985,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 87.4007339477539,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 88.00077056884766,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 88.65081024169922,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 89.8008804321289,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 90.40091705322266,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 91.10095977783203,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 91.8010025024414,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 92.5510482788086,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 93.15108489990235,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 94.10114288330078,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 94.75118255615235,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 96.00125885009766,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 97.0013198852539,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 97.65135955810547,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 99.4014663696289,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 101.4015884399414,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 102.30164337158203,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 103.0016860961914,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 103.7517318725586,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 104.9518051147461,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 106.40189361572266,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 107.25194549560547,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 109.0020523071289,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 114.40238189697266,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 115.45244598388672,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 116.1524887084961,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 117.3525619506836,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 119.7527084350586,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 120.50275421142578,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 121.85283660888672,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 122.80289459228516,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 123.45293426513672,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 124.5530014038086,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 127.65319061279297,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 128.85325622558595,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 129.5032958984375,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 130.703369140625,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 134.20358276367188,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 135.1536407470703,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 136.05369567871095,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 137.20376586914063,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 137.90380859375,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 139.00387573242188,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 139.65391540527345,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 140.303955078125,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 140.90399169921876,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 142.10406494140626,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 144.20419311523438,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 145.65428161621095,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 146.3543243408203,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 147.1543731689453,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 148.55445861816407,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 149.20449829101563,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 152.80471801757813,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 153.40475463867188,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 154.10479736328126,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 155.20486450195313,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 155.80490112304688,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 156.50494384765626,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 157.65501403808595,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 158.2550506591797,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 160.00515747070313,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 160.60519409179688,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 161.4552459716797,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 164.50543212890626,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 165.35548400878907,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 165.9555206298828,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 166.55555725097657,
+            "type": "SPACE",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 167.75563049316407,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 168.95570373535157,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 173.75599670410157,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 174.3560333251953,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 175.1060791015625,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 175.75611877441407,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 177.9562530517578,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 178.55628967285157,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 179.1563262939453,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 179.9063720703125,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 180.50640869140626,
+            "type": "UP",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 182.80654907226563,
+            "type": "LEFT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 183.4565887451172,
+            "type": "DOWN",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        },
+        {
+            "time": 184.10662841796876,
+            "type": "RIGHT",
+            "noteSubType": "NORMAL",
+            "longNoteGroupId": -1,
+            "longNoteDuration": 0.0
+        }
+    ]
+}

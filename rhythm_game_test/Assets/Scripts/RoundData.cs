@@ -12,10 +12,18 @@ public class RoundData : ScriptableObject
     public string enemyName; // 적 이름
     public Sprite enemyPortrait; // 적 초상화
 
+    public enum Difficulty { Easy, Normal, Hard, VeryHard }
+
+    [Header("Difficulty")]
+    public Difficulty difficulty = Difficulty.Normal;
+
     [Header("Map Info")]
     public Vector2 mapPosition; // 토너먼트 지도에서의 위치
 
-    [Header("Gameplay")]
+    [Header("Scene")]
+    public string sceneName; // 이동할 씬 이름 (예: "Round1Scene", "Round2Scene")
+
+    [Header("Gameplay (Optional - 씬에서 직접 설정 가능)")]
     public string songName; // 곡 이름
     public AudioClip songClip; // 곡 파일
     public TextAsset beatmapFile; // 비트맵 파일 (CSV)

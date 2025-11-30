@@ -2122,7 +2122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 767341542}
   bgmSource: {fileID: 759572563}
-  jsonPattern: {fileID: 4900000, guid: 52c6e8989836cce46acefe510cf546d6, type: 3}
+  jsonPattern: {fileID: 4900000, guid: 0ed7a226652f6984caadc035e3d48af8, type: 3}
 --- !u!4 &759572565
 Transform:
   m_ObjectHideFlags: 0

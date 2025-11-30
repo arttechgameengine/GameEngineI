@@ -34,6 +34,34 @@ public class SceneLoader : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// 토너먼트 맵으로 복귀 (모드에 따라 자동 선택)
+    /// Story Mode → TournamentMap, Free Mode → FreeMapScene
+    /// </summary>
+    public void LoadTournamentMap()
+    {
+        if (GameModeManager.Instance != null)
+        {
+            if (GameModeManager.Instance.currentMode == GameMode.StoryMode)
+            {
+                SceneManager.LoadScene("TournamentMap");
+            }
+            else if (GameModeManager.Instance.currentMode == GameMode.FreeMode)
+            {
+                SceneManager.LoadScene("FreeMapScene");
+            }
+            else
+            {
+                SceneManager.LoadScene("GameStart");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("[SceneLoader] GameModeManager.Instance가 null입니다. GameStart로 이동합니다.");
+            SceneManager.LoadScene("GameStart");
+        }
+    }
+
     // 게임 종료
     public void QuitGame()
     {

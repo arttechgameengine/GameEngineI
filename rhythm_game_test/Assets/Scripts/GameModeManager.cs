@@ -19,9 +19,9 @@ public class GameModeManager : MonoBehaviour
     [Header("Round Data")]
     public RoundData[] allRounds = new RoundData[5]; // 총 5개 라운드
 
-    [Header("Progress")]
+    [Header("Progress - Runtime Only")]
     public int currentStoryRound = 0; // Story Mode에서 현재 진행 중인 라운드 (0~4)
-    public bool[] roundCleared = new bool[5]; // 각 라운드 클리어 여부
+    public bool[] roundCleared = new bool[5]; // 각 라운드 클리어 여부 (Runtime 전용)
 
     void Awake()
     {
@@ -29,7 +29,9 @@ public class GameModeManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            LoadProgress();
+            
+            // ✅ Runtime 시작 시 항상 초기화 (PlayerPrefs 로드 제거)
+            ResetProgress();
         }
         else
         {
@@ -47,6 +49,25 @@ public class GameModeManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Story Mode 시작 (토너먼트 맵으로 이동)
+    /// </summary>
+    public void StartStoryMode()
+    {
+        SetGameMode(GameMode.StoryMode);
+        ResetProgress(); // Story Mode 시작 시 진행도 초기화
+        UnityEngine.SceneManagement.SceneManager.LoadScene("StoryMapScene");
+    }
+
+    /// <summary>
+    /// Free Mode 시작 (Free 맵으로 이동)
+    /// </summary>
+    public void StartFreeMode()
+    {
+        SetGameMode(GameMode.FreeMode);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("FreeMapScene");
+    }
+
+    /// <summary>
     /// 라운드가 잠겨있는지 확인
     /// </summary>
     public bool IsRoundLocked(int roundIndex)
@@ -60,7 +81,7 @@ public class GameModeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 라운드 클리어 처리
+    /// 라운드 클리어 처리 (Runtime 전용)
     /// </summary>
     public void ClearRound(int roundIndex)
     {
@@ -72,15 +93,27 @@ public class GameModeManager : MonoBehaviour
         if (currentMode == GameMode.StoryMode && roundIndex == currentStoryRound)
         {
             currentStoryRound = Mathf.Min(currentStoryRound + 1, 4);
-            Debug.Log($"[GameMode] Round {roundIndex + 1} 클리어! 다음 라운드 해금: {currentStoryRound + 1}");
+            Debug.Log($"[GameMode] Round {roundIndex + 1} 클리어! 다음 라운드 해금: {currentStoryRound + 1} (Runtime 전용)");
         }
 
-        SaveProgress();
+        // ❌ SaveProgress() 제거 - 더 이상 저장하지 않음
     }
 
     /// <summary>
-    /// 진행 상태 저장
+    /// 진행 상태 초기화 (게임 시작 시 항상 호출)
     /// </summary>
+    public void ResetProgress()
+    {
+        currentStoryRound = 0;
+        for (int i = 0; i < 5; i++)
+        {
+            roundCleared[i] = false;
+        }
+        Debug.Log("[GameMode] 진행 상태 초기화됨! (Runtime 전용)");
+    }
+
+    // ❌ 아래 함수들 제거 (더 이상 필요 없음)
+    /*
     public void SaveProgress()
     {
         PlayerPrefs.SetInt("CurrentStoryRound", currentStoryRound);
@@ -92,9 +125,6 @@ public class GameModeManager : MonoBehaviour
         Debug.Log("[GameMode] 진행 상태 저장됨!");
     }
 
-    /// <summary>
-    /// 진행 상태 불러오기
-    /// </summary>
     public void LoadProgress()
     {
         currentStoryRound = PlayerPrefs.GetInt("CurrentStoryRound", 0);
@@ -104,18 +134,5 @@ public class GameModeManager : MonoBehaviour
         }
         Debug.Log($"[GameMode] 진행 상태 불러옴! 현재 라운드: {currentStoryRound + 1}");
     }
-
-    /// <summary>
-    /// 진행 상태 초기화 (디버그용)
-    /// </summary>
-    public void ResetProgress()
-    {
-        currentStoryRound = 0;
-        for (int i = 0; i < 5; i++)
-        {
-            roundCleared[i] = false;
-        }
-        SaveProgress();
-        Debug.Log("[GameMode] 진행 상태 초기화됨!");
-    }
+    */
 }

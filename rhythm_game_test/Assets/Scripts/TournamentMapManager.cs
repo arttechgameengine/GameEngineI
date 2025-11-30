@@ -10,12 +10,8 @@ using UnityEngine.SceneManagement;
 public class TournamentMapManager : MonoBehaviour
 {
     [Header("Cinemachine")]
-    public CinemachineCamera mainCamera; // 전체 맵 보기용 카메라
     public CinemachineCamera[] roundCameras = new CinemachineCamera[5]; // 각 라운드별 카메라
-
-    [Header("Camera Constraints")]
-    public PolygonCollider2D mapBoundary; // 전체 맵 경계 (Cinemachine Confiner용)
-    public PolygonCollider2D[] progressiveBoundaries = new PolygonCollider2D[5]; // 각 진행도별 경계
+    public PolygonCollider2D[] roundBoundaries = new PolygonCollider2D[5]; // 각 라운드 카메라의 Confiner 경계
 
     [Header("Tournament Silhouettes")]
     public GameObject tournamentSilhouettesContainer; // 전체 브래킷 실루엣 컨테이너 (줌아웃 시에만 표시, 실제 5라운드 제외한 더미들)
@@ -23,29 +19,26 @@ public class TournamentMapManager : MonoBehaviour
     [Header("Round Buttons")]
     public RoundButton[] roundButtons = new RoundButton[5]; // 각 라운드 버튼
 
-    [Header("UI")]
+    [Header("Navigation UI")]
+    public Button leftArrowButton; // 이전 라운드로
+    public Button rightArrowButton; // 다음 라운드로
+    public Text currentRoundIndicator; // 현재 라운드 표시 (예: "Round 1/5")
+
+    [Header("Round Info UI")]
     public GameObject roundInfoPanel; // 라운드 정보 패널
     public Text roundNameText;
     public Text enemyNameText;
     public Image enemyPortraitImage;
+    public Text difficultyText; // 난이도 표시
     public Text storyText;
     public Button startBattleButton;
-    public Button backButton;
 
-    private int selectedRoundIndex = -1;
-    private CinemachineConfiner2D mainCameraConfiner; // 메인 카메라의 Confiner 컴포넌트
+    private int currentRoundIndex = 0; // 현재 보고 있는 라운드
 
     void Start()
     {
-        // Confiner 컴포넌트 가져오기 또는 추가
-        mainCameraConfiner = mainCamera.GetComponent<CinemachineConfiner2D>();
-        if (mainCameraConfiner == null)
-        {
-            mainCameraConfiner = mainCamera.gameObject.AddComponent<CinemachineConfiner2D>();
-        }
-
-        // 초기화: 전체 맵 보기
-        ShowFullMap();
+        // 각 라운드 카메라에 Confiner 설정
+        SetupRoundCameraConfiners();
 
         // 라운드 버튼 설정
         for (int i = 0; i < 5; i++)
@@ -60,40 +53,79 @@ public class TournamentMapManager : MonoBehaviour
         }
 
         // UI 버튼 설정
+        leftArrowButton.onClick.AddListener(OnPreviousRound);
+        rightArrowButton.onClick.AddListener(OnNextRound);
         startBattleButton.onClick.AddListener(OnStartBattle);
-        backButton.onClick.AddListener(OnBack);
 
-        // 초기 상태: 정보 패널 숨김
-        roundInfoPanel.SetActive(false);
-
-        // 카메라 경계 설정 (현재 진행도에 맞춰)
-        UpdateCameraBoundary();
-
-        // 초기 상태: 실루엣 표시, 버튼 숨김
-        ShowSilhouettes(true);
-        ShowButtons(false);
-    }
-
-    /// <summary>
-    /// 전체 맵 보기
-    /// </summary>
-    void ShowFullMap()
-    {
-        mainCamera.Priority.Value = 10;
-        foreach (var cam in roundCameras)
+        // Story Mode: 현재 진행 중인 라운드로 시작
+        // Free Mode: Round 1부터 시작
+        if (GameModeManager.Instance.currentMode == GameMode.StoryMode)
         {
-            cam.Priority.Value = 0;
+            currentRoundIndex = GameModeManager.Instance.currentStoryRound;
         }
-        selectedRoundIndex = -1;
-        roundInfoPanel.SetActive(false);
+        else
+        {
+            currentRoundIndex = 0;
+        }
 
-        // 줌아웃 시: 실루엣 표시, 버튼 숨김
-        ShowSilhouettes(true);
-        ShowButtons(false);
+        // 초기 라운드로 이동
+        ShowRound(currentRoundIndex);
     }
 
     /// <summary>
-    /// 라운드 버튼 클릭 시
+    /// 각 라운드 카메라에 Confiner 설정
+    /// </summary>
+    void SetupRoundCameraConfiners()
+    {
+        for (int i = 0; i < roundCameras.Length; i++)
+        {
+            if (roundCameras[i] != null && roundBoundaries[i] != null)
+            {
+                CinemachineConfiner2D confiner = roundCameras[i].GetComponent<CinemachineConfiner2D>();
+                if (confiner == null)
+                {
+                    confiner = roundCameras[i].gameObject.AddComponent<CinemachineConfiner2D>();
+                }
+                confiner.BoundingShape2D = roundBoundaries[i];
+                Debug.Log($"[Tournament] Round {i + 1} 카메라 Confiner 설정 완료");
+            }
+        }
+    }
+
+    /// <summary>
+    /// 특정 라운드 표시 (카메라 전환 + UI 업데이트)
+    /// </summary>
+    void ShowRound(int roundIndex)
+    {
+        currentRoundIndex = roundIndex;
+
+        // 카메라 우선순위 설정
+        for (int i = 0; i < roundCameras.Length; i++)
+        {
+            roundCameras[i].Priority.Value = (i == roundIndex) ? 10 : 0;
+        }
+
+        // 라운드 정보 표시
+        ShowRoundInfo(roundIndex);
+
+        // 화살표 버튼 활성화 상태 업데이트
+        UpdateNavigationButtons();
+
+        // 현재 라운드 표시 업데이트
+        if (currentRoundIndicator != null)
+        {
+            currentRoundIndicator.text = $"Round {roundIndex + 1} / 5";
+        }
+
+        // 실루엣 숨김, 버튼 표시
+        ShowSilhouettes(false);
+        ShowButtons(true);
+
+        Debug.Log($"[Tournament] Round {roundIndex + 1} 표시");
+    }
+
+    /// <summary>
+    /// 라운드 버튼 클릭 시 (사용 안 함 - 화살표로 대체)
     /// </summary>
     void OnRoundButtonClicked(int roundIndex)
     {
@@ -104,34 +136,83 @@ public class TournamentMapManager : MonoBehaviour
             return;
         }
 
-        selectedRoundIndex = roundIndex;
-
-        // 해당 라운드 카메라로 줌인
-        ZoomToRound(roundIndex);
-
-        // 라운드 정보 표시
-        ShowRoundInfo(roundIndex);
+        // 해당 라운드로 이동
+        ShowRound(roundIndex);
     }
 
     /// <summary>
-    /// 라운드로 줌인 (Cinemachine)
+    /// 이전 라운드로 이동
     /// </summary>
-    void ZoomToRound(int roundIndex)
+    void OnPreviousRound()
     {
-        Debug.Log($"[Tournament] Round {roundIndex + 1}로 줌인!");
+        int prevIndex = currentRoundIndex - 1;
 
-        // 메인 카메라 우선순위 낮춤
-        mainCamera.Priority.Value = 0;
-
-        // 선택된 라운드 카메라 우선순위 높임
-        for (int i = 0; i < roundCameras.Length; i++)
+        // Story Mode: 잠긴 라운드로는 이동 불가
+        if (GameModeManager.Instance.currentMode == GameMode.StoryMode)
         {
-            roundCameras[i].Priority.Value = (i == roundIndex) ? 10 : 0;
+            if (prevIndex < 0 || GameModeManager.Instance.IsRoundLocked(prevIndex))
+            {
+                Debug.Log("[Tournament] 이전 라운드로 이동할 수 없습니다.");
+                return;
+            }
+        }
+        else // Free Mode: 범위 체크만
+        {
+            if (prevIndex < 0)
+            {
+                Debug.Log("[Tournament] 첫 번째 라운드입니다.");
+                return;
+            }
         }
 
-        // 줌인 시: 실루엣 숨김, 버튼 표시
-        ShowSilhouettes(false);
-        ShowButtons(true);
+        ShowRound(prevIndex);
+    }
+
+    /// <summary>
+    /// 다음 라운드로 이동
+    /// </summary>
+    void OnNextRound()
+    {
+        int nextIndex = currentRoundIndex + 1;
+
+        // Story Mode: 잠긴 라운드로는 이동 불가
+        if (GameModeManager.Instance.currentMode == GameMode.StoryMode)
+        {
+            if (nextIndex >= 5 || GameModeManager.Instance.IsRoundLocked(nextIndex))
+            {
+                Debug.Log("[Tournament] 다음 라운드로 이동할 수 없습니다. (잠김)");
+                return;
+            }
+        }
+        else // Free Mode: 범위 체크만
+        {
+            if (nextIndex >= 5)
+            {
+                Debug.Log("[Tournament] 마지막 라운드입니다.");
+                return;
+            }
+        }
+
+        ShowRound(nextIndex);
+    }
+
+    /// <summary>
+    /// 화살표 버튼 활성화 상태 업데이트
+    /// </summary>
+    void UpdateNavigationButtons()
+    {
+        if (GameModeManager.Instance.currentMode == GameMode.StoryMode)
+        {
+            // Story Mode: 잠금 상태 고려
+            leftArrowButton.interactable = (currentRoundIndex > 0 && !GameModeManager.Instance.IsRoundLocked(currentRoundIndex - 1));
+            rightArrowButton.interactable = (currentRoundIndex < 4 && !GameModeManager.Instance.IsRoundLocked(currentRoundIndex + 1));
+        }
+        else
+        {
+            // Free Mode: 범위만 체크
+            leftArrowButton.interactable = (currentRoundIndex > 0);
+            rightArrowButton.interactable = (currentRoundIndex < 4);
+        }
     }
 
     /// <summary>
@@ -146,7 +227,46 @@ public class TournamentMapManager : MonoBehaviour
         enemyPortraitImage.sprite = round.enemyPortrait;
         storyText.text = round.storyText;
 
+        // 난이도 표시
+        if (difficultyText != null)
+        {
+            string difficultyStr = GetDifficultyString(round.difficulty);
+            Color difficultyColor = GetDifficultyColor(round.difficulty);
+            difficultyText.text = $"난이도: {difficultyStr}";
+            difficultyText.color = difficultyColor;
+        }
+
         roundInfoPanel.SetActive(true);
+    }
+
+    /// <summary>
+    /// 난이도를 한글로 변환
+    /// </summary>
+    string GetDifficultyString(RoundData.Difficulty difficulty)
+    {
+        switch (difficulty)
+        {
+            case RoundData.Difficulty.Easy: return "쉬움";
+            case RoundData.Difficulty.Normal: return "보통";
+            case RoundData.Difficulty.Hard: return "어려움";
+            case RoundData.Difficulty.VeryHard: return "매우 어려움";
+            default: return "보통";
+        }
+    }
+
+    /// <summary>
+    /// 난이도별 색상
+    /// </summary>
+    Color GetDifficultyColor(RoundData.Difficulty difficulty)
+    {
+        switch (difficulty)
+        {
+            case RoundData.Difficulty.Easy: return new Color(0.5f, 1f, 0.5f); // 초록
+            case RoundData.Difficulty.Normal: return new Color(1f, 1f, 0.5f); // 노랑
+            case RoundData.Difficulty.Hard: return new Color(1f, 0.6f, 0.3f); // 주황
+            case RoundData.Difficulty.VeryHard: return new Color(1f, 0.3f, 0.3f); // 빨강
+            default: return Color.white;
+        }
     }
 
     /// <summary>
@@ -154,75 +274,23 @@ public class TournamentMapManager : MonoBehaviour
     /// </summary>
     void OnStartBattle()
     {
-        if (selectedRoundIndex < 0) return;
+        RoundData round = GameModeManager.Instance.allRounds[currentRoundIndex];
 
-        Debug.Log($"[Tournament] Round {selectedRoundIndex + 1} 전투 시작!");
+        Debug.Log($"[Tournament] Round {currentRoundIndex + 1} 전투 시작! → {round.sceneName}");
 
-        // 선택된 라운드 데이터를 NoteSpawner에 전달하기 위해 저장
-        PlayerPrefs.SetInt("SelectedRound", selectedRoundIndex);
+        // 선택된 라운드 인덱스 저장 (진행도 추적용)
+        PlayerPrefs.SetInt("SelectedRound", currentRoundIndex);
         PlayerPrefs.Save();
 
-        // 게임 씬으로 이동
-        SceneManager.LoadScene("GameScene"); // 실제 게임 씬 이름으로 변경
-    }
-
-    /// <summary>
-    /// 뒤로 가기 버튼
-    /// </summary>
-    void OnBack()
-    {
-        // 줌아웃하여 전체 맵 보기
-        ShowFullMap();
-    }
-
-    /// <summary>
-    /// 카메라 경계 업데이트
-    /// Story Mode: 현재 라운드까지만 탐색 가능
-    /// Free Mode: 전체 맵 탐색 가능
-    /// </summary>
-    void UpdateCameraBoundary()
-    {
-        if (mainCameraConfiner == null)
+        // 해당 라운드의 전용 씬으로 이동
+        if (!string.IsNullOrEmpty(round.sceneName))
         {
-            Debug.LogWarning("[Tournament] Confiner가 없습니다!");
-            return;
+            SceneManager.LoadScene(round.sceneName);
         }
-
-        // Free Mode에서는 전체 맵 경계 사용
-        if (GameModeManager.Instance.currentMode == GameMode.FreeMode)
+        else
         {
-            if (mapBoundary != null)
-            {
-                mainCameraConfiner.BoundingShape2D = mapBoundary;
-                Debug.Log("[Tournament] Free Mode - 전체 맵 탐색 가능");
-            }
-            return;
+            Debug.LogError($"[Tournament] Round {currentRoundIndex + 1}의 씬 이름이 설정되지 않았습니다!");
         }
-
-        // Story Mode에서는 현재 진행도에 맞는 경계 사용
-        int currentRound = GameModeManager.Instance.currentStoryRound;
-
-        if (progressiveBoundaries != null && currentRound < progressiveBoundaries.Length)
-        {
-            PolygonCollider2D boundary = progressiveBoundaries[currentRound];
-            if (boundary != null)
-            {
-                mainCameraConfiner.BoundingShape2D = boundary;
-                Debug.Log($"[Tournament] Story Mode - Round {currentRound + 1}까지 탐색 가능");
-            }
-            else
-            {
-                Debug.LogWarning($"[Tournament] Round {currentRound + 1}의 경계가 설정되지 않았습니다!");
-            }
-        }
-    }
-
-    /// <summary>
-    /// 게임 모드 변경 시 호출 (외부에서 호출 가능)
-    /// </summary>
-    public void RefreshCameraBoundary()
-    {
-        UpdateCameraBoundary();
     }
 
     /// <summary>

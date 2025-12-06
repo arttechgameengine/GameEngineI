@@ -85,11 +85,36 @@ public class PlayerJudge : MonoBehaviour
                 continue;
             }
 
-            // 노트의 판정 시간이 지나고 goodRange까지 벗어났으면 MISS
+            // 노트가 판정 시간을 지났는지 확인
             if (songTime > n.noteTime + goodRange)
             {
                 Debug.Log($"[MISS] songTime: {songTime:F2}, noteTime: {n.noteTime:F2}, diff: {(songTime - n.noteTime):F2}");
-                Miss(n);
+
+                // LONG_END 노트를 놓쳤으면 롱노트 전체 파괴
+                if (n.noteSubType == "LONG_END" && currentLongNote != null && n.longNoteGroupId == currentLongNote.groupId)
+                {
+                    Debug.Log($"[LONG_END MISS] Duration ended, destroying long note group {n.longNoteGroupId}");
+
+                    // 롱노트 그룹 전체 파괴
+                    DestroyLongNoteGroup(n.longNoteGroupId);
+
+                    // 롱노트 상태 종료
+                    currentLongNote = null;
+
+                    // MISS 판정
+                    judgePopup.ShowJudge("MISS");
+                    ScoreManager.Instance.AddJudge("MISS");
+
+                    // 화면 흔들림
+                    if (cameraShake != null)
+                    {
+                        cameraShake.ShakeOnNormalMiss();
+                    }
+                }
+                else
+                {
+                    Miss(n);
+                }
             }
         }
     }
@@ -101,6 +126,31 @@ public class PlayerJudge : MonoBehaviour
         double songTime = AudioSettings.dspTime - spawner.songStartDspTime;
         NoteMovement[] allNotes = FindObjectsOfType<NoteMovement>();
 
+        // LONG_START 노트를 찾아서 막대 길이 업데이트
+        NoteMovement startNote = null;
+        NoteMovement endNote = null;
+
+        foreach (var n in allNotes)
+        {
+            if (n.longNoteGroupId != currentLongNote.groupId) continue;
+
+            if (n.noteSubType == "LONG_START")
+            {
+                startNote = n;
+            }
+            else if (n.noteSubType == "LONG_END")
+            {
+                endNote = n;
+            }
+        }
+
+        // 막대 길이 업데이트 (START와 END 노트 사이의 거리로 계산)
+        if (startNote != null && endNote != null && startNote.longNoteVisualBar != null)
+        {
+            UpdateLongNoteBarLength(startNote, endNote);
+        }
+
+        // Hold 노트 자동 판정 체크
         foreach (var n in allNotes)
         {
             if (n.isJudged) continue;
@@ -115,6 +165,23 @@ public class PlayerJudge : MonoBehaviour
                 AutoJudgeLongHold(n, currentLongNote.startJudge);
             }
         }
+    }
+
+    void UpdateLongNoteBarLength(NoteMovement startNote, NoteMovement endNote)
+    {
+        if (startNote.longNoteVisualBar == null) return;
+
+        RectTransform barRect = startNote.longNoteVisualBar.GetComponent<RectTransform>();
+        if (barRect == null) return;
+
+        // START 노트와 END 노트 사이의 거리 계산
+        float distance = endNote.transform.localPosition.x - startNote.transform.localPosition.x;
+
+        // 거리가 음수면 0으로 (END가 START보다 왼쪽에 있으면)
+        distance = Mathf.Max(0, distance);
+
+        // 막대 길이 업데이트
+        barRect.sizeDelta = new Vector2(distance, barRect.sizeDelta.y);
     }
 
     void TryHit(string keyType)
@@ -338,8 +405,8 @@ public class PlayerJudge : MonoBehaviour
             }
         }
 
-        // 같은 그룹의 모든 노트 파괴
-        DestroyLongNoteGroup(currentLongNote.groupId);
+        // 롱노트 막대를 회색으로 변경 (파괴하지 않음)
+        FadeLongNoteBar(currentLongNote.groupId);
 
         // 화면 흔들림
         if (cameraShake != null)
@@ -349,6 +416,32 @@ public class PlayerJudge : MonoBehaviour
 
         // 롱노트 상태 종료
         currentLongNote = null;
+    }
+
+    void FadeLongNoteBar(int groupId)
+    {
+        NoteMovement[] allNotes = FindObjectsOfType<NoteMovement>();
+        foreach (var n in allNotes)
+        {
+            if (n.longNoteGroupId == groupId && n.noteSubType == "LONG_START")
+            {
+                // START 노트의 시각적 막대 찾기
+                if (n.longNoteVisualBar != null)
+                {
+                    UnityEngine.UI.Image barImage = n.longNoteVisualBar.GetComponent<UnityEngine.UI.Image>();
+                    if (barImage != null)
+                    {
+                        // 회색으로 변경 + 더 투명하게
+                        Color fadedColor = Color.gray;
+                        fadedColor.a = 0.3f;
+                        barImage.color = fadedColor;
+
+                        Debug.Log($"[LongNote Fail] Faded long note bar for group {groupId}");
+                    }
+                }
+                break;
+            }
+        }
     }
 
     void DestroyLongNoteGroup(int groupId)
@@ -387,9 +480,28 @@ public class PlayerJudge : MonoBehaviour
     {
         n.isJudged = true;  // 판정 완료 표시
 
-        Debug.Log($"MISS ({n.noteType})");
+        Debug.Log($"MISS ({n.noteType}), subType: {n.noteSubType}");
         judgePopup.ShowJudge("MISS");
         ScoreManager.Instance.AddJudge("MISS");
+
+        // LONG_START 노트를 놓쳤으면 롱노트 막대를 회색으로 변경
+        if (n.noteSubType == "LONG_START")
+        {
+            Debug.Log($"[MISS] LONG_START missed! Fading bar for group {n.longNoteGroupId}");
+            FadeLongNoteBar(n.longNoteGroupId);
+
+            // 남은 LONG_HOLD와 LONG_END 노트들도 모두 MISS 처리
+            NoteMovement[] allNotes = FindObjectsOfType<NoteMovement>();
+            foreach (var note in allNotes)
+            {
+                if (note.longNoteGroupId == n.longNoteGroupId && !note.isJudged)
+                {
+                    note.isJudged = true;
+                    ScoreManager.Instance.AddJudge("MISS");
+                    Debug.Log($"[MISS] Auto-miss {note.noteSubType} for group {n.longNoteGroupId}");
+                }
+            }
+        }
 
         // 패링 노트(SPACE) 미스 시 강한 화면 흔들림
         bool isParryNote = (n.noteType == "SPACE");

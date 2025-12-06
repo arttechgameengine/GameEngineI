@@ -1,8 +1,12 @@
-using System.Collections.Generic; 
+using System.Collections.Generic;
 
 [System.Serializable]
 public class PatternData
 {
+    public string songName;
+    public float bpm;
+    public float offset;
+    public int numberOfLanes;
     public List<NoteData> notes;
 }
 
@@ -10,14 +14,13 @@ public class PatternData
 public class NoteData
 {
     public float time;
-    public string type;
+    public int lane;
+    public string type;          // "tap" or "hold"
+    public string arrow;         // "UP", "DOWN", "LEFT", "RIGHT", "SPACE"
+    public float duration;       // hold note duration (only for hold type)
 
-    // 롱노트 타입: "NORMAL", "LONG_START", "LONG_HOLD", "LONG_END"
-    public string noteSubType = "NORMAL";
-
-    // 롱노트 그룹 ID (같은 롱노트는 같은 ID)
-    public int longNoteGroupId = -1;
-
-    // 롱노트 지속시간 (LONG_START에만 사용, 시각적 막대 길이 계산용)
-    public float longNoteDuration = 0f;
+    // 런타임에서 롱노트 처리용 (JSON에는 없음, 로드 후 자동 생성)
+    [System.NonSerialized] public string noteSubType = "NORMAL";    // "NORMAL", "LONG_START", "LONG_HOLD", "LONG_END"
+    [System.NonSerialized] public int longNoteGroupId = -1;
+    [System.NonSerialized] public float longNoteDuration = 0f;
 }

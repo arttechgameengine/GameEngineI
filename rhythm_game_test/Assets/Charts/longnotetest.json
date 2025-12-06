@@ -1,0 +1,17 @@
+{
+    "songName": "round1music2",
+    "bpm": 101.0,
+    "offset": -0.4072920083999634,
+    "numberOfLanes": 1,
+    "notes": [
+
+        {
+            "time": 0.0,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "DOWN",
+            "duration": 175.0
+        }
+        
+    ]
+}

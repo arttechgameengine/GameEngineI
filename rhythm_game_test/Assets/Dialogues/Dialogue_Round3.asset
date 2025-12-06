@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbb4f5274509a3f4d972369981413e90, type: 3}
+  m_Name: Dialogue_Round3
+  m_EditorClassIdentifier: 
+  chapterTitle: "\uC81C 3\uC7A5"
+  backgroundSprite: {fileID: 21300000, guid: 550e5cde59e52de4c80f0ea588784074, type: 3}
+  leftCharacterDefault: {fileID: -1716309329, guid: 608455c0a88d71e418d0f31070c6c486, type: 3}
+  rightCharacterDefault: {fileID: 1781293011, guid: 30e4f4bd85361c342ad83dced012e314, type: 3}
+  lines:
+  - speakerName: "\uB77C\uD5A5"
+    speakerSprite: {fileID: 0}
+    dialogue: "...\uC2DC\uB044\uB7FD\uAD70. \uC65C \uC774\uB807\uAC8C \uBC1D\uC544?
+      \uC2DC\uC791\uB3C4 \uC548\uD588\uB294\uB370 \uBC8C\uC368 \uD53C\uACE4\uD574."
+    isLeftSpeaker: 0
+  - speakerName: "\uC18C\uCC44"
+    speakerSprite: {fileID: 0}
+    dialogue: "\uC804 \uC6D0\uB798 \uC774\uB7F0 \uD3B8\uC774\uC5D0\uC694! \uC624\uB298\uB3C4
+      \uB9DB\uC788\uAC8C \uB9CC\uB4E4\uC5B4\uBCF4\uB824\uACE0\uC694. "
+    isLeftSpeaker: 1
+  - speakerName: "\uC790\uC6C5"
+    speakerSprite: {fileID: 0}
+    dialogue: "\uADF8 \uC6C3\uC74C... \uAC70\uC2AC\uB9B0\uB2E4. \uC9DC\uC7A5\uC740
+      \uAE30\uBD84 \uC88B\uB2E4\uACE0 \uB418\uB294 \uC694\uB9AC\uAC00 \uC544\uB2C8\uC9C0. "
+    isLeftSpeaker: 0
+  - speakerName: "\uC18C\uCC44"
+    speakerSprite: {fileID: 0}
+    dialogue: "\uADF8\uB798\uB3C4 \uC800\uB294 \uD558\uACE0 \uC2F6\uC5B4\uC694. \uC9C0\uAE08
+      \uC81C \uD798\uC73C\uB85C\uC694. "
+    isLeftSpeaker: 1
+  - speakerName: "\uC790\uC6C5"
+    speakerSprite: {fileID: 0}
+    dialogue: "\uD798? \uBD88\uC55E\uC5D0\uC11C \uADF8\uB7F0\uAC74 \uAE08\uBC29 \uB179\uC544\uB0B4\uB9B0\uB2E4.
+      \uB9DB\uC740 \uC608\uBBFC\uD574\uC11C... \uC870\uAE08\uB9CC \uD2C0\uC5B4\uC838\uB3C4
+      \uC8FD\uC9C0. "
+    isLeftSpeaker: 0
+  - speakerName: "\uC18C\uCC44"
+    speakerSprite: {fileID: 0}
+    dialogue: "\uADF8\uB798\uC11C \uB354 \uC870\uC2EC\uD558\uACE0 \uC2F6\uC5B4\uC694.
+      \uD574\uB0BC \uC218 \uC788\uB2E4\uACE0 \uBBFF\uC5B4\uC694!"
+    isLeftSpeaker: 1
+  - speakerName: "\uC790\uC6C5"
+    speakerSprite: {fileID: 0}
+    dialogue: "...\uADF8 \uBBFF\uC74C\uC774 \uAE08\uBC29 \uBB34\uB108\uC9C0\uB294
+      \uAC78 \uB9CE\uC774 \uBD24\uB2E4. \uC5EC\uAE34.. \uBC1D\uC740 \uB9C8\uC74C\uC774
+      \uC624\uB798 \uBC84\uD2F0\uB294 \uACF3\uC774 \uC544\uB2C8\uB2E4. "
+    isLeftSpeaker: 0
+  - speakerName: "\uC18C\uCC44"
+    speakerSprite: {fileID: 0}
+    dialogue: "\uADF8\uB7FC \uB354 \uB2E8\uB2E8\uD574\uC9C8\uAC8C\uC694!"
+    isLeftSpeaker: 1
+  - speakerName: "\uC790\uC6C5"
+    speakerSprite: {fileID: 0}
+    dialogue: "...\uC9C0\uCF1C\uBCF4\uC9C0. \uC5BC\uB9C8\uB098 \uBC84\uD2F0\uB098. "
+    isLeftSpeaker: 0

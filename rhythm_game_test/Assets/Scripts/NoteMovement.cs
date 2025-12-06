@@ -99,6 +99,17 @@ public class NoteMovement : MonoBehaviour
         // localPosition으로 이동 (NotesParent 기준)
         trans.localPosition += Vector3.left * speed * Time.deltaTime;
 
+        // 롱노트 막대가 있으면 START 노트를 따라 이동
+        if (noteSubType == "LONG_START" && longNoteVisualBar != null)
+        {
+            RectTransform barRect = longNoteVisualBar.GetComponent<RectTransform>();
+            if (barRect != null)
+            {
+                // START 노트와 같은 위치에 막대 배치 (pivot이 왼쪽이므로 노트에서 오른쪽으로 늘어남)
+                barRect.localPosition = trans.localPosition;
+            }
+        }
+
         if (trans.localPosition.x < -3000f)
             Destroy(gameObject);
     }

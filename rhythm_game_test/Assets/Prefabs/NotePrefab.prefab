@@ -171,6 +171,9 @@ MonoBehaviour:
   noteTime: 0
   noteType: 
   isJudged: 0
+  noteSubType: NORMAL
+  longNoteGroupId: -1
+  longNoteVisualBar: {fileID: 1038813978548197491, guid: edbe364cbb192ba4fbe4a3f88701db7d, type: 3}
 --- !u!114 &1778180448667121177
 MonoBehaviour:
   m_ObjectHideFlags: 0

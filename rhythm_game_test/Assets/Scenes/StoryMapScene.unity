@@ -5261,7 +5261,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -75}
+  m_AnchoredPosition: {x: -1.5, y: -75}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &769941097
@@ -5286,8 +5286,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "3 \uB77C\uC6B4\uB4DC"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 159a1ac3dcf38bc458fc26d268e6fd76, type: 2}
-  m_sharedMaterial: {fileID: -822682929086186754, guid: 159a1ac3dcf38bc458fc26d268e6fd76, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cfee43cd7d27e624fb2f996c31a53cfa, type: 2}
+  m_sharedMaterial: {fileID: 3382148605407290175, guid: cfee43cd7d27e624fb2f996c31a53cfa, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5311,8 +5311,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5349,7 +5349,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -3.0010986, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -7974,7 +7974,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -75}
+  m_AnchoredPosition: {x: -2, y: -75}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1026359933
@@ -7999,8 +7999,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "4 \uB77C\uC6B4\uB4DC"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 159a1ac3dcf38bc458fc26d268e6fd76, type: 2}
-  m_sharedMaterial: {fileID: -822682929086186754, guid: 159a1ac3dcf38bc458fc26d268e6fd76, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cfee43cd7d27e624fb2f996c31a53cfa, type: 2}
+  m_sharedMaterial: {fileID: 3382148605407290175, guid: cfee43cd7d27e624fb2f996c31a53cfa, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8024,8 +8024,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8062,7 +8062,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -4.999401, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -10930,8 +10930,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "2 \uB77C\uC6B4\uB4DC"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 159a1ac3dcf38bc458fc26d268e6fd76, type: 2}
-  m_sharedMaterial: {fileID: -822682929086186754, guid: 159a1ac3dcf38bc458fc26d268e6fd76, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cfee43cd7d27e624fb2f996c31a53cfa, type: 2}
+  m_sharedMaterial: {fileID: 3382148605407290175, guid: cfee43cd7d27e624fb2f996c31a53cfa, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10955,8 +10955,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -10993,7 +10993,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -0.79686356, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -11477,7 +11477,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -75}
+  m_AnchoredPosition: {x: -1.3, y: -75}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1365953184
@@ -11502,8 +11502,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "5 \uB77C\uC6B4\uB4DC"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 159a1ac3dcf38bc458fc26d268e6fd76, type: 2}
-  m_sharedMaterial: {fileID: -822682929086186754, guid: 159a1ac3dcf38bc458fc26d268e6fd76, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cfee43cd7d27e624fb2f996c31a53cfa, type: 2}
+  m_sharedMaterial: {fileID: 3382148605407290175, guid: cfee43cd7d27e624fb2f996c31a53cfa, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -11527,8 +11527,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -11565,7 +11565,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -3.6145973, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -14352,8 +14352,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "1 \uB77C\uC6B4\uB4DC"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 159a1ac3dcf38bc458fc26d268e6fd76, type: 2}
-  m_sharedMaterial: {fileID: -822682929086186754, guid: 159a1ac3dcf38bc458fc26d268e6fd76, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cfee43cd7d27e624fb2f996c31a53cfa, type: 2}
+  m_sharedMaterial: {fileID: 3382148605407290175, guid: cfee43cd7d27e624fb2f996c31a53cfa, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -14377,8 +14377,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

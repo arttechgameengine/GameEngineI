@@ -36,6 +36,9 @@ public class RhythmPatternAutoGenerator : EditorWindow
     public bool useBeatFiltering = true;
     public BeatInterval beatInterval = BeatInterval.QuarterBeat;
 
+    // 정박 스냅 옵션
+    public bool snapToGrid = false; // 정박에 정확히 맞춰 떨어지게
+
     // 방향 단순화 옵션
     public bool simplifyDirections = false;
     public int maxConsecutiveSameDirection = 2; // 같은 방향 최대 연속 횟수
@@ -100,6 +103,13 @@ public class RhythmPatternAutoGenerator : EditorWindow
         {
             EditorGUI.indentLevel++;
             beatInterval = (BeatInterval)EditorGUILayout.EnumPopup("Beat Interval", beatInterval);
+
+            // 정박 스냅 옵션
+            snapToGrid = EditorGUILayout.Toggle("Snap to Grid (정박만)", snapToGrid);
+            if (snapToGrid)
+            {
+                EditorGUILayout.HelpBox("노트들이 정확히 정박(BPM 그리드)에만 배치됩니다. 오프비트는 무시됩니다.", MessageType.Info);
+            }
 
             // 설명 표시 (BPM 기반)
             string intervalDesc = GetBeatIntervalDescription(beatInterval, bpm);
@@ -432,7 +442,7 @@ public class RhythmPatternAutoGenerator : EditorWindow
 
     /// <summary>
     /// 비트 간격 필터링: 설정된 비트 간격보다 가까운 노트들을 제거
-    /// 원본 타이밍은 유지하되, 너무 빠른 노트만 필터링
+    /// snapToGrid가 true면 정확히 정박에만 노트 배치, false면 원본 타이밍 유지
     /// 예: BPM 120, 1/2박 (0.25초) → 0.25초보다 가까운 노트들 제거
     /// </summary>
     List<NoteData> ApplyBeatFiltering(List<NoteData> candidates, float firstBeatOffset)
@@ -440,21 +450,62 @@ public class RhythmPatternAutoGenerator : EditorWindow
         List<NoteData> filtered = new List<NoteData>();
         float beatIntervalSeconds = GetBeatIntervalInSeconds(beatInterval, bpm);
 
-        float lastAddedTime = firstBeatOffset - beatIntervalSeconds; // 첫 노트가 오프셋 이후 바로 추가될 수 있도록
-
-        foreach (NoteData note in candidates)
+        if (snapToGrid)
         {
-            // 마지막 추가된 노트로부터 비트 간격 이상 떨어져 있으면 추가
-            if (note.time - lastAddedTime >= beatIntervalSeconds)
+            // 정박 스냅 모드: 정확히 BPM 그리드에 맞춰 노트 배치
+            // 각 후보 노트를 가장 가까운 그리드 포인트에 스냅
+            Dictionary<float, NoteData> gridMap = new Dictionary<float, NoteData>();
+
+            foreach (NoteData note in candidates)
             {
-                // 원본 타이밍 그대로 유지
-                filtered.Add(note);
-                lastAddedTime = note.time;
+                // 가장 가까운 그리드 포인트 찾기
+                float relativeTime = note.time - firstBeatOffset;
+                int gridIndex = Mathf.RoundToInt(relativeTime / beatIntervalSeconds);
+                float gridTime = firstBeatOffset + (gridIndex * beatIntervalSeconds);
+
+                // 그리드 포인트가 음수가 아니고, 곡 길이를 넘지 않으면
+                if (gridTime >= 0 && gridTime < audioClip.length)
+                {
+                    // 이미 해당 그리드에 노트가 있으면 더 가까운 것만 선택
+                    if (!gridMap.ContainsKey(gridTime))
+                    {
+                        NoteData snappedNote = note;
+                        snappedNote.time = gridTime; // 정박에 정확히 스냅
+                        gridMap[gridTime] = snappedNote;
+                    }
+                }
             }
-            // 너무 가까운 노트는 건너뜀 (필터링)
+
+            // 그리드 맵에서 정렬된 노트 리스트 생성
+            var sortedKeys = new List<float>(gridMap.Keys);
+            sortedKeys.Sort();
+            foreach (float key in sortedKeys)
+            {
+                filtered.Add(gridMap[key]);
+            }
+
+            Debug.Log($"[Beat Filtering - SNAP] BPM {bpm}, {beatInterval} ({beatIntervalSeconds:F3}s), Offset {firstBeatOffset:F3}s - {candidates.Count} → {filtered.Count} notes (snapped to grid)");
+        }
+        else
+        {
+            // 일반 필터링 모드: 원본 타이밍 유지, 너무 가까운 노트만 제거
+            float lastAddedTime = firstBeatOffset - beatIntervalSeconds; // 첫 노트가 오프셋 이후 바로 추가될 수 있도록
+
+            foreach (NoteData note in candidates)
+            {
+                // 마지막 추가된 노트로부터 비트 간격 이상 떨어져 있으면 추가
+                if (note.time - lastAddedTime >= beatIntervalSeconds)
+                {
+                    // 원본 타이밍 그대로 유지
+                    filtered.Add(note);
+                    lastAddedTime = note.time;
+                }
+                // 너무 가까운 노트는 건너뜀 (필터링)
+            }
+
+            Debug.Log($"[Beat Filtering] BPM {bpm}, {beatInterval} ({beatIntervalSeconds:F3}s), Offset {firstBeatOffset:F3}s - {candidates.Count} → {filtered.Count} notes");
         }
 
-        Debug.Log($"[Beat Filtering] BPM {bpm}, {beatInterval} ({beatIntervalSeconds:F3}s), Offset {firstBeatOffset:F3}s - {candidates.Count} → {filtered.Count} notes");
         return filtered;
     }
 

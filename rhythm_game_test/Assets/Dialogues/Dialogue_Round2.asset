@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Dialogue_Round2
   m_EditorClassIdentifier: 
   chapterTitle: "\uC81C 2\uC7A5"
-  backgroundSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  leftCharacterDefault: {fileID: 877210870, guid: a4f76a9a456bc544aa854c310704f6f2, type: 3}
+  backgroundSprite: {fileID: 21300000, guid: 550e5cde59e52de4c80f0ea588784074, type: 3}
+  leftCharacterDefault: {fileID: -1716309329, guid: 608455c0a88d71e418d0f31070c6c486, type: 3}
   rightCharacterDefault: {fileID: -1424586472, guid: f2870f8a7f82d8844933ca688b87d019, type: 3}
   lines:
   - speakerName: "\uC790\uC6C5"

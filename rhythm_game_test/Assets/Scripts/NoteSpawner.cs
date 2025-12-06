@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class NoteSpawner : MonoBehaviour
@@ -58,7 +58,7 @@ public class NoteSpawner : MonoBehaviour
     public void StartSong(AudioSource audio)
     {
         songStartDspTime = AudioSettings.dspTime;
-        audio.PlayScheduled(songStartDspTime);
+        audio.Play();
         songStarted = true;
     }
 
@@ -116,22 +116,12 @@ public class NoteSpawner : MonoBehaviour
     {
         RectTransform n = Instantiate(notePrefab, notesParent);
 
-        bool isSpaceNote = (data.type == "SPACE");
+        // arrow 필드를 사용 (방향키: UP, DOWN, LEFT, RIGHT, SPACE)
+        string arrowKey = data.arrow;
+        bool isSpaceNote = (arrowKey == "SPACE");
 
-        // 노트가 실제로 hitLine에 도착해야 하는 시간 계산
-        float actualHitTime;
-        float idealSpawnTime = data.time - spawnLeadTime;
-
-        if (idealSpawnTime < 0)
-        {
-            // 늦게 스폰된 경우: 현재 시간 + leadTime이 도착 시간
-            actualHitTime = (float)currentSongTime + spawnLeadTime;
-        }
-        else
-        {
-            // 정상 스폰: 원래 noteTime 사용
-            actualHitTime = data.time;
-        }
+        // 노트의 판정 시간은 JSON 원본 그대로 사용 (준비 시간은 songStartDspTime에 이미 반영됨)
+        float actualHitTime = data.time;
 
         // NotesParent 기준 로컬 좌표로 스폰 위치 설정
         n.localPosition = new Vector3(spawnLocalX, 0, 0);
@@ -140,15 +130,15 @@ public class NoteSpawner : MonoBehaviour
         NoteVisual visual = n.GetComponent<NoteVisual>();
         NoteEffect effect = n.GetComponent<NoteEffect>();
 
-        // 노트 초기화 (noteSubType과 longNoteGroupId 전달)
-        mv.Init(noteSpeed, actualHitTime, data.type, data.noteSubType, data.longNoteGroupId);
+        // 노트 초기화 (arrowKey를 noteType으로, noteSubType과 longNoteGroupId 전달)
+        mv.Init(noteSpeed, actualHitTime, arrowKey, data.noteSubType, data.longNoteGroupId);
 
-        visual.SetType(data.type);
+        visual.SetType(arrowKey);
 
         // 롱노트 시작 노트면 시각적 막대 생성
         if (data.noteSubType == "LONG_START" && data.longNoteDuration > 0f)
         {
-            GameObject longBar = CreateLongNoteBar(n, data.longNoteDuration, data.type);
+            GameObject longBar = CreateLongNoteBar(n, data.longNoteDuration, arrowKey);
             mv.longNoteVisualBar = longBar;
         }
 
@@ -158,11 +148,11 @@ public class NoteSpawner : MonoBehaviour
             effect.enemySprite = enemySprite;
         }
 
-        Debug.Log($"[Spawn] type: {data.type}, subType: {data.noteSubType}, groupId: {data.longNoteGroupId}, time: {actualHitTime:F2}");
+        Debug.Log($"[Spawn] arrow: {arrowKey}, type: {data.type}, subType: {data.noteSubType}, groupId: {data.longNoteGroupId}, time: {actualHitTime:F2}");
     }
 
     /// <summary>
-    /// 롱노트 시각적 막대 생성 (Start 노트에서 End 노트까지 연결)
+    /// 롱노트 시각적 막대 생성 (spawnPoint에서 시작하여 왼쪽으로 늘어나는 막대)
     /// </summary>
     GameObject CreateLongNoteBar(RectTransform startNote, float duration, string noteType)
     {
@@ -175,32 +165,34 @@ public class NoteSpawner : MonoBehaviour
         // 롱노트 막대 생성
         RectTransform bar = Instantiate(longNoteBarPrefab, notesParent);
 
-        // 시작 노트와 같은 위치에 배치
-        bar.localPosition = startNote.localPosition;
-
-        // 길이 계산: duration * noteSpeed
+        // 막대 길이 계산: duration * noteSpeed
         float barLength = duration * noteSpeed;
-        bar.sizeDelta = new Vector2(barLength, bar.sizeDelta.y);
 
-        // 막대의 pivot을 왼쪽으로 설정 (노트에서 시작)
+        // 막대 크기 설정 (가로 길이)
+        bar.sizeDelta = new Vector2(barLength, startNote.sizeDelta.y);
+
+        // 막대의 pivot을 왼쪽으로 설정 (왼쪽 끝이 spawnPoint에 고정, 오른쪽으로 늘어남)
         bar.pivot = new Vector2(0, 0.5f);
 
-        // Start 노트의 스프라이트를 복사하여 막대에 적용
-        UnityEngine.UI.Image barImage = bar.GetComponent<UnityEngine.UI.Image>();
-        UnityEngine.UI.Image noteImage = startNote.GetComponent<UnityEngine.UI.Image>();
-        if (barImage != null && noteImage != null && noteImage.sprite != null)
-        {
-            barImage.sprite = noteImage.sprite;
-            barImage.color = noteImage.color;
+        // spawnLocalX 위치에 막대 배치 (pivot이 왼쪽이므로 막대 왼쪽 끝이 spawnPoint에 위치)
+        bar.localPosition = new Vector3(spawnLocalX, 0, 0);
 
-            // 반투명하게 설정
-            Color c = barImage.color;
-            c.a = 0.5f;
-            barImage.color = c;
+        // 막대 색상 설정 (흰색 반투명)
+        UnityEngine.UI.Image barImage = bar.GetComponent<UnityEngine.UI.Image>();
+        if (barImage != null)
+        {
+            barImage.sprite = null;  // sprite 사용 안 함 (rectangle로 표시)
+            barImage.color = new Color(1f, 1f, 1f, 0.5f);  // 흰색 반투명
+
+            Debug.Log($"[CreateLongNoteBar] Created bar - length: {barLength}, size: {bar.sizeDelta}, pos: {bar.localPosition}");
+        }
+        else
+        {
+            Debug.LogWarning($"[CreateLongNoteBar] barImage is null!");
         }
 
-        // Start 노트 뒤에 표시 (레이어 순서)
-        bar.SetSiblingIndex(startNote.GetSiblingIndex());
+        // START 노트보다 뒤에 표시 (인덱스를 낮게 = 먼저 그려짐 = 뒤에 보임)
+        bar.SetSiblingIndex(0);
 
         return bar.gameObject;
     }

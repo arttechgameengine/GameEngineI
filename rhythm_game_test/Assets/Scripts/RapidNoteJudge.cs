@@ -150,20 +150,22 @@ public class RapidNoteJudge : MonoBehaviour
             ScoreManager.Instance.AddJudge(judgement);
         }
 
-        // 비주얼 성공 연출
-        if (rapidVisual != null)
-        {
-            rapidVisual.OnSuccess(judgement);
-        }
-
         // 요리 애니메이션 트리거
         if (CookingAreaManager.Instance != null)
         {
             CookingAreaManager.Instance.PlayCookingAnimation(assignedArrow);
         }
 
-        // 노트 파괴
-        Invoke(nameof(DestroyNote), 0.3f);
+        // 비주얼 성공 연출 (흰색 번쩍 효과 + 페이드아웃 후 노트 파괴)
+        if (rapidVisual != null)
+        {
+            rapidVisual.OnSuccess(judgement, DestroyNote);
+        }
+        else
+        {
+            // visual이 없으면 바로 파괴
+            DestroyNote();
+        }
     }
 
     /// <summary>

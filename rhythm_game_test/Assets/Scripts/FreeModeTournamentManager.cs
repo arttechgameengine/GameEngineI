@@ -798,8 +798,7 @@ public class FreeModeTournamentManager : MonoBehaviour
     void OnBackToMenu()
     {
         Debug.Log("[Free Tournament] 메인 메뉴로 돌아가기");
-        // TODO: 메인 메뉴 씬 이름으로 변경
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("GameStart");
     }
 
     /// <summary>

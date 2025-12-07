@@ -22,6 +22,7 @@ public class PlayerJudge : MonoBehaviour
         public string noteType;
         public string startJudge;  // START 노트의 판정 등급
         public bool isHolding;
+        public bool isFailed;      // Miss 판정되었지만 bar는 계속 업데이트 중
     }
     private LongNoteState currentLongNote = null;
 
@@ -35,8 +36,8 @@ public class PlayerJudge : MonoBehaviour
         // 일시정지 중에는 입력 무시
         if (PauseManager.IsPaused) return;
 
-        // 롱노트 진행 중이면 키 홀딩 체크
-        if (currentLongNote != null)
+        // 롱노트 진행 중이면 키 홀딩 체크 (실패한 경우는 제외)
+        if (currentLongNote != null && !currentLongNote.isFailed)
         {
             KeyCode keyCode = GetKeyCode(currentLongNote.noteType);
             currentLongNote.isHolding = Input.GetKey(keyCode);
@@ -83,8 +84,14 @@ public class PlayerJudge : MonoBehaviour
             // 이미 판정된 노트는 무시
             if (n.isJudged) continue;
 
-            // 롱노트 진행 중이면 현재 그룹의 노트가 아닌 것은 무시
-            if (currentLongNote != null && n.longNoteGroupId != currentLongNote.groupId)
+            // 롱노트 진행 중이면 현재 그룹의 노트가 아닌 것은 무시 (실패한 경우는 모두 무시)
+            if (currentLongNote != null && !currentLongNote.isFailed && n.longNoteGroupId != currentLongNote.groupId)
+            {
+                continue;
+            }
+
+            // 롱노트가 실패 상태면 해당 그룹의 노트는 모두 무시 (이미 MISS 처리됨)
+            if (currentLongNote != null && currentLongNote.isFailed && n.longNoteGroupId == currentLongNote.groupId)
             {
                 continue;
             }
@@ -164,7 +171,7 @@ public class PlayerJudge : MonoBehaviour
         double songTime = AudioSettings.dspTime - spawner.songStartDspTime;
         NoteMovement[] allNotes = FindObjectsOfType<NoteMovement>();
 
-        // LONG_START 노트를 찾아서 막대 길이 업데이트
+        // LONG_START 노트를 찾아서 막대 길이 업데이트 (실패 상태여도 계속 업데이트)
         NoteMovement startNote = null;
         NoteMovement endNote = null;
 
@@ -183,24 +190,28 @@ public class PlayerJudge : MonoBehaviour
         }
 
         // 막대 길이 업데이트 (START와 END 노트 사이의 거리로 계산)
+        // 실패 상태여도 bar가 계속 짧아지도록 업데이트
         if (startNote != null && endNote != null && startNote.longNoteVisualBar != null)
         {
             UpdateLongNoteBarLength(startNote, endNote);
         }
 
-        // Hold 노트 자동 판정 체크
-        foreach (var n in allNotes)
+        // Hold 노트 자동 판정 체크 (실패 상태면 스킵)
+        if (!currentLongNote.isFailed)
         {
-            if (n.isJudged) continue;
-            if (n.longNoteGroupId != currentLongNote.groupId) continue;
-            if (n.noteSubType != "LONG_HOLD") continue;
-
-            // Hold 노트가 판정 시간에 도달하면 자동 판정
-            float timeDelta = Mathf.Abs((float)(songTime - n.noteTime));
-            if (timeDelta <= goodRange)
+            foreach (var n in allNotes)
             {
-                // Start 노트의 판정 등급으로 자동 판정
-                AutoJudgeLongHold(n, currentLongNote.startJudge);
+                if (n.isJudged) continue;
+                if (n.longNoteGroupId != currentLongNote.groupId) continue;
+                if (n.noteSubType != "LONG_HOLD") continue;
+
+                // Hold 노트가 판정 시간에 도달하면 자동 판정
+                float timeDelta = Mathf.Abs((float)(songTime - n.noteTime));
+                if (timeDelta <= goodRange)
+                {
+                    // Start 노트의 판정 등급으로 자동 판정
+                    AutoJudgeLongHold(n, currentLongNote.startJudge);
+                }
             }
         }
     }
@@ -250,6 +261,12 @@ public class PlayerJudge : MonoBehaviour
                     }
                 }
                 continue; // 롱노트 진행 중에는 다른 노트 무시
+            }
+
+            // 롱노트가 실패 상태면 키 입력 무시
+            if (currentLongNote != null && currentLongNote.isFailed)
+            {
+                continue;
             }
 
             // 일반 모드: 가장 가까운 노트 찾기
@@ -389,7 +406,8 @@ public class PlayerJudge : MonoBehaviour
             groupId = n.longNoteGroupId,
             noteType = n.noteType,
             startJudge = judge,
-            isHolding = true
+            isHolding = true,
+            isFailed = false
         };
 
         // 요리 효과 재생 (기존 시스템) - 주석 처리: CookingAreaManager 사용
@@ -483,8 +501,8 @@ public class PlayerJudge : MonoBehaviour
             cameraShake.ShakeOnNormalMiss();
         }
 
-        // 롱노트 상태 종료
-        currentLongNote = null;
+        // 롱노트 상태를 실패로 표시 (null로 만들지 않고 bar 업데이트는 계속)
+        currentLongNote.isFailed = true;
     }
 
     void FadeLongNoteBar(int groupId)
@@ -519,11 +537,30 @@ public class PlayerJudge : MonoBehaviour
                         }
 
                         Debug.Log($"[LongNote Fail] Faded long note bar for group {groupId}, will destroy after {duration:F2}s");
-                        Destroy(n.longNoteVisualBar, duration);
+
+                        // duration 후에 bar 파괴 + currentLongNote null 처리
+                        StartCoroutine(DestroyBarAfterDuration(n.longNoteVisualBar, duration, groupId));
                     }
                 }
                 break;
             }
+        }
+    }
+
+    System.Collections.IEnumerator DestroyBarAfterDuration(GameObject bar, float duration, int groupId)
+    {
+        yield return new WaitForSeconds(duration);
+
+        if (bar != null)
+        {
+            Destroy(bar);
+        }
+
+        // duration이 끝나면 currentLongNote null 처리
+        if (currentLongNote != null && currentLongNote.groupId == groupId)
+        {
+            Debug.Log($"[LongNote Fail] Duration ended, clearing currentLongNote for group {groupId}");
+            currentLongNote = null;
         }
     }
 
@@ -571,6 +608,17 @@ public class PlayerJudge : MonoBehaviour
         if (n.noteSubType == "LONG_START")
         {
             Debug.Log($"[MISS] LONG_START missed! Fading bar for group {n.longNoteGroupId}");
+
+            // currentLongNote 설정 (bar 업데이트를 위해)
+            currentLongNote = new LongNoteState
+            {
+                groupId = n.longNoteGroupId,
+                noteType = n.noteType,
+                startJudge = "MISS",
+                isHolding = false,
+                isFailed = true
+            };
+
             FadeLongNoteBar(n.longNoteGroupId);
 
             // 남은 LONG_HOLD와 LONG_END 노트들도 모두 MISS 처리

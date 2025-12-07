@@ -303,6 +303,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1513586478}
   - {fileID: 27618302}
   m_Father: {fileID: 1898027572}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -365,7 +366,9 @@ MonoBehaviour:
   rightCookingSprite: {fileID: 634333861}
   upCookingSprite: {fileID: 1163368599}
   downCookingSprite: {fileID: 831707175}
-  cookTriggerName: cook
+  cookAnimationName: Cook
+  idleAnimationName: Idle
+  animationCooldown: 0.1
 --- !u!1 &183202315
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,8 +1595,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -709, y: -286}
-  m_SizeDelta: {x: 300, y: 300}
+  m_AnchoredPosition: {x: -712, y: -255}
+  m_SizeDelta: {x: 300, y: 583.2519}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &651287778
 MonoBehaviour:
@@ -3919,7 +3922,9 @@ MonoBehaviour:
   rightCookingSprite: {fileID: 634333861}
   upCookingSprite: {fileID: 1163368599}
   downCookingSprite: {fileID: 831707175}
-  cookTriggerName: cook
+  cookAnimationName: Cook
+  idleAnimationName: Idle
+  animationCooldown: 0.1
 --- !u!4 &1223608900
 Transform:
   m_ObjectHideFlags: 0
@@ -4301,6 +4306,81 @@ RectTransform:
   m_AnchoredPosition: {x: -1.2001224, y: -0.5}
   m_SizeDelta: {x: 33.9512, y: 22.7743}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1513586477
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1513586478}
+  - component: {fileID: 1513586480}
+  - component: {fileID: 1513586479}
+  m_Layer: 5
+  m_Name: CuttingBoard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1513586478
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513586477}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 153278780}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -689, y: -85.703}
+  m_SizeDelta: {x: 355.2036, y: 171.4064}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1513586479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513586477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 1256849722, guid: aabb913a1b1a6c54083704ac35f44983, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1513586480
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513586477}
+  m_CullTransparentMesh: 1
 --- !u!1 &1524851038
 GameObject:
   m_ObjectHideFlags: 0

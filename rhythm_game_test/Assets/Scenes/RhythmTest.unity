@@ -1010,6 +1010,7 @@ MonoBehaviour:
   perfectRange: 0.05
   greatRange: 0.1
   goodRange: 0.15
+  longNoteEndRange: 0.5
   spawner: {fileID: 767341542}
   judgePopup: {fileID: 648025290}
 --- !u!114 &525632779
@@ -2157,7 +2158,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 767341542}
   bgmSource: {fileID: 759572563}
-  jsonPattern: {fileID: 4900000, guid: 3355f0f02a2ea774da5b72ff1a93319e, type: 3}
+  jsonPattern: {fileID: 4900000, guid: 9d4c3c10f84739041b5f77f7358a8f3f, type: 3}
+  prepareTime: 6
 --- !u!4 &759572565
 Transform:
   m_ObjectHideFlags: 0
@@ -2207,8 +2209,10 @@ MonoBehaviour:
   hitLine: {fileID: 525632777}
   notesParent: {fileID: 1524851039}
   noteSpeed: 500
+  shakeablePanel: {fileID: 1898027572}
   enemySprite: {fileID: 928989697}
   longNoteBarPrefab: {fileID: 9162522032867097388, guid: edbe364cbb192ba4fbe4a3f88701db7d, type: 3}
+  rapidNoteUIPrefab: {fileID: 6971528200285518254, guid: 49cc4c7f45d4d7c47b698258286aec67, type: 3}
   bgmSource: {fileID: 759572563}
   endDelay: 2
   songStartDspTime: 0
@@ -2908,8 +2912,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0052266, y: -0.0025177}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_AnchoredPosition: {x: 0.0052266, y: -0.50298}
+  m_SizeDelta: {x: 1920, y: 1152.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &940287254
 MonoBehaviour:

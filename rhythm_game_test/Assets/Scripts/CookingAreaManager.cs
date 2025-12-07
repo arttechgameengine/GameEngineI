@@ -94,8 +94,16 @@ public class CookingAreaManager : MonoBehaviour
 
             if (hasCookTrigger)
             {
+                // 이전 트리거 리셋 (중복 방지)
+                targetAnimator.ResetTrigger(cookTriggerName);
+
+                // Cook 애니메이션 강제 재시작 (Idle로 돌아간 뒤 다시 Cook 재생)
+                targetAnimator.Play("Idle", 0, 0f);  // 0번 레이어, 0% 지점부터 재생
+                targetAnimator.Update(0f);  // 즉시 상태 업데이트
+
+                // Cook 트리거 설정
                 targetAnimator.SetTrigger(cookTriggerName);
-                Debug.Log($"[CookingAreaManager] {noteType} Cook 애니메이션 트리거 성공! (현재 상태: {targetAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle")})");
+                Debug.Log($"[CookingAreaManager] {noteType} Cook 애니메이션 트리거 성공! (강제 리셋 후 재시작)");
             }
             else
             {

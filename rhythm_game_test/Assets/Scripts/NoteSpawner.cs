@@ -9,11 +9,17 @@ public class NoteSpawner : MonoBehaviour
     public RectTransform notesParent;
     public float noteSpeed = 500f;
 
+    [Header("Visual Scale")]
+    public RectTransform shakeablePanel;  // 전체 게임플레이 UI (스케일 조정용)
+
     [Header("Enemy Reference")]
     public Transform enemySprite;  // 적 스프라이트 (Canvas 안의 Enemy Image)
 
     [Header("Long Note Visual")]
     public RectTransform longNoteBarPrefab;  // 롱노트 시각적 막대 Prefab
+
+    [Header("Rapid Note Visual")]
+    public RectTransform rapidNoteUIPrefab;  // 연타 노트 UI Prefab (타이머, 카운터)
 
     [Header("Audio")]
     public AudioSource bgmSource;
@@ -40,12 +46,6 @@ public class NoteSpawner : MonoBehaviour
         // NotesParent 기준 로컬 좌표로 변환
         spawnLocalX = notesParent.InverseTransformPoint(spawnPoint.position).x;
         hitLineLocalX = notesParent.InverseTransformPoint(hitLine.position).x;
-
-        // 거리 계산
-        float distance = spawnLocalX - hitLineLocalX;
-        spawnLeadTime = distance / noteSpeed;
-
-        Debug.Log($"[NoteSpawner] spawnLocalX: {spawnLocalX}, hitLineLocalX: {hitLineLocalX}, distance: {distance}, spawnLeadTime: {spawnLeadTime}");
     }
 
     public void LoadPattern(PatternData pattern)
@@ -53,6 +53,19 @@ public class NoteSpawner : MonoBehaviour
         notes = pattern.notes;
         nextIndex = 0;
         songStarted = false;
+
+        // JSON의 노트 속도 적용
+        if (pattern.noteSpeed > 0)
+        {
+            noteSpeed = pattern.noteSpeed;
+            Debug.Log($"[NoteSpawner] Loaded noteSpeed from JSON: {noteSpeed}");
+        }
+
+        // 거리 계산 및 leadTime 재계산
+        float distance = spawnLocalX - hitLineLocalX;
+        spawnLeadTime = distance / noteSpeed;
+
+        Debug.Log($"[NoteSpawner] spawnLocalX: {spawnLocalX}, hitLineLocalX: {hitLineLocalX}, distance: {distance}, spawnLeadTime: {spawnLeadTime}");
     }
 
     public void StartSong(AudioSource audio)
@@ -74,11 +87,22 @@ public class NoteSpawner : MonoBehaviour
 
         double songTime = AudioSettings.dspTime - songStartDspTime;
 
-        while (nextIndex < notes.Count &&
-               notes[nextIndex].time - spawnLeadTime <= songTime)
+        while (nextIndex < notes.Count)
         {
-            Spawn(notes[nextIndex], songTime);
-            nextIndex++;
+            NoteData note = notes[nextIndex];
+
+            // SPACE 노트는 등장 애니메이션 시간(0.5초)만큼 일찍 스폰
+            float extraLeadTime = (note.arrow == "SPACE") ? 0.5f : 0f;
+
+            if (note.time - spawnLeadTime - extraLeadTime <= songTime)
+            {
+                Spawn(note, songTime);
+                nextIndex++;
+            }
+            else
+            {
+                break;
+            }
         }
 
         // 곡 종료 체크: 음악이 끝났고, 모든 노트가 스폰되었고, 화면에 노트가 없으면
@@ -87,28 +111,67 @@ public class NoteSpawner : MonoBehaviour
 
     void CheckSongEnd()
     {
+        // 이미 종료 처리 중이면 리턴
+        if (songEnded) return;
+
         // 음악이 재생 중이면 아직 끝나지 않음
-        if (bgmSource != null && bgmSource.isPlaying) return;
+        if (bgmSource != null && bgmSource.isPlaying)
+        {
+            return;
+        }
 
         // 모든 노트가 스폰되지 않았으면 아직 끝나지 않음
-        if (nextIndex < notes.Count) return;
+        if (nextIndex < notes.Count)
+        {
+            Debug.Log($"[NoteSpawner] Song not ended - {notes.Count - nextIndex} notes remaining to spawn");
+            return;
+        }
 
         // 화면에 노트가 남아있으면 아직 끝나지 않음
-        if (notesParent.childCount > 0) return;
+        if (notesParent.childCount > 0)
+        {
+            Debug.Log($"[NoteSpawner] Song not ended - {notesParent.childCount} notes still on screen");
+            return;
+        }
 
         // 곡 종료!
         songEnded = true;
-        Debug.Log("[NoteSpawner] Song ended! Going to result scene...");
+        Debug.Log($"[NoteSpawner] ===== SONG ENDED! ===== Music stopped: {!bgmSource.isPlaying}, All notes spawned: {nextIndex}/{notes.Count}, Notes on screen: {notesParent.childCount}");
 
         // 잠시 후 결과 화면으로 이동
+        Debug.Log($"[NoteSpawner] Invoking GoToResult in {endDelay} seconds...");
         Invoke(nameof(GoToResult), endDelay);
     }
 
     void GoToResult()
     {
+        Debug.Log("[NoteSpawner] GoToResult() called!");
+
         if (ScoreManager.Instance != null)
         {
+            Debug.Log($"[NoteSpawner] ScoreManager found. Stats - Score: {ScoreManager.Instance.currentScore}, Combo: {ScoreManager.Instance.maxCombo}");
+            Debug.Log("[NoteSpawner] Calling GoToResultScene()...");
+
+            ScoreManager.Instance.PrintStats();
             ScoreManager.Instance.GoToResultScene();
+
+            Debug.Log("[NoteSpawner] GoToResultScene() finished!");
+        }
+        else
+        {
+            Debug.LogError("[NoteSpawner] ===== ERROR: ScoreManager.Instance is NULL! =====");
+            Debug.LogError("[NoteSpawner] Cannot go to result scene! Check if ScoreManager exists in the scene!");
+
+            // ScoreManager 찾기 시도
+            ScoreManager sm = FindObjectOfType<ScoreManager>();
+            if (sm != null)
+            {
+                Debug.LogError($"[NoteSpawner] Found ScoreManager in scene, but Instance is null! Object: {sm.gameObject.name}");
+            }
+            else
+            {
+                Debug.LogError("[NoteSpawner] No ScoreManager found in the entire scene!");
+            }
         }
     }
 
@@ -133,7 +196,37 @@ public class NoteSpawner : MonoBehaviour
         // 노트 초기화 (arrowKey를 noteType으로, noteSubType과 longNoteGroupId 전달)
         mv.Init(noteSpeed, actualHitTime, arrowKey, data.noteSubType, data.longNoteGroupId);
 
-        visual.SetType(arrowKey);
+        // 연타 노트가 아닌 경우에만 부모 노트에 방향키 sprite 설정
+        if (data.noteSubType != "RAPID")
+        {
+            visual.SetType(arrowKey);
+        }
+
+        // 연타 노트 처리
+        if (data.noteSubType == "RAPID")
+        {
+            // RapidNoteJudge 컴포넌트 추가
+            RapidNoteJudge rapidJudge = n.gameObject.AddComponent<RapidNoteJudge>();
+            rapidJudge.Initialize(data.rapidCount, data.rapidDuration, arrowKey);
+
+            // Rapid UI 프리팹 생성 (Long Note Bar처럼)
+            GameObject rapidUI = CreateRapidNoteUI(n, data.rapidCount, visual);
+            if (rapidUI != null)
+            {
+                // RapidNoteVisual 컴포넌트 찾기
+                RapidNoteVisual rapidVisual = rapidUI.GetComponent<RapidNoteVisual>();
+                if (rapidVisual != null)
+                {
+                    rapidJudge.rapidVisual = rapidVisual;
+                    rapidVisual.SetRapidInfo(data.rapidCount);
+
+                    // 연타 노트는 rapidBackground에 방향키 sprite 설정 (clipping 방지)
+                    rapidVisual.SetArrowSprite(visual, arrowKey);
+                }
+            }
+
+            Debug.Log($"[Spawn] Rapid Note - Arrow: {arrowKey}, Count: {data.rapidCount}, Duration: {data.rapidDuration}s");
+        }
 
         // 롱노트 시작 노트면 시각적 막대 생성
         if (data.noteSubType == "LONG_START" && data.longNoteDuration > 0f)
@@ -195,5 +288,44 @@ public class NoteSpawner : MonoBehaviour
         bar.SetSiblingIndex(0);
 
         return bar.gameObject;
+    }
+
+    /// <summary>
+    /// 연타 노트 UI 생성 (타이머, 카운터)
+    /// </summary>
+    GameObject CreateRapidNoteUI(RectTransform parentNote, int requiredCount, NoteVisual visual)
+    {
+        if (rapidNoteUIPrefab == null)
+        {
+            Debug.LogWarning("[NoteSpawner] rapidNoteUIPrefab이 설정되지 않았습니다!");
+            return null;
+        }
+
+        // 부모 노트의 RectMask2D 제거 (clipping 방지)
+        UnityEngine.UI.RectMask2D rectMask = parentNote.GetComponent<UnityEngine.UI.RectMask2D>();
+        if (rectMask != null)
+        {
+            Destroy(rectMask);
+            Debug.Log($"[CreateRapidNoteUI] Removed RectMask2D from parent note");
+        }
+
+        // 부모 노트의 Image는 비활성화 (자식 UI가 보이도록)
+        UnityEngine.UI.Image parentImage = parentNote.GetComponent<UnityEngine.UI.Image>();
+        if (parentImage != null)
+        {
+            parentImage.enabled = false;  // Image 컴포넌트 비활성화 (alpha 상속 문제 방지)
+            Debug.Log($"[CreateRapidNoteUI] Disabled parent image");
+        }
+
+        // Rapid UI 프리팹 생성 (노트의 자식으로)
+        RectTransform rapidUI = Instantiate(rapidNoteUIPrefab, parentNote);
+
+        // 로컬 위치 초기화 (노트 중앙)
+        rapidUI.localPosition = Vector3.zero;
+        rapidUI.localScale = Vector3.one;
+
+        Debug.Log($"[CreateRapidNoteUI] Created Rapid UI - Required Count: {requiredCount}");
+
+        return rapidUI.gameObject;
     }
 }

@@ -1,0 +1,1107 @@
+{
+    "songName": "rapid_byte_test_1",
+    "bpm": 101.3499984741211,
+    "offset": -0.4072920083999634,
+    "numberOfLanes": 1,
+    "noteSpeed": 500.0,
+    "notes": [
+        {
+            "time": 4.736000061035156,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 3,
+            "rapidDuration": 1.466847538948059
+        },
+        {
+            "time": 6.697000026702881,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 7.289000034332275,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 7.88100004196167,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 8.472999572753907,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 9.0649995803833,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "SPACE",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 9.472000122070313,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 3,
+            "rapidDuration": 1.4336950778961182
+        },
+        {
+            "time": 9.656999588012696,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 10.24899959564209,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 10.840999603271485,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 11.432999610900879,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 12.024999618530274,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 12.616999626159668,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 13.208999633789063,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 13.800999641418457,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 14.208000183105469,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 4,
+            "rapidDuration": 1.4005427360534669
+        },
+        {
+            "time": 14.392999649047852,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 14.984999656677246,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 15.57699966430664,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 16.16900062561035,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "SPACE",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 16.76099967956543,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 17.94499969482422,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 18.944000244140626,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 4,
+            "rapidDuration": 1.3673902750015259
+        },
+        {
+            "time": 19.128999710083009,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 19.72100067138672,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 20.312999725341798,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 20.905000686645509,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "SPACE",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 21.496999740600587,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 23.68000030517578,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 4,
+            "rapidDuration": 1.334237813949585
+        },
+        {
+            "time": 27.41699981689453,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 28.009000778198243,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 28.416000366210939,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 4,
+            "rapidDuration": 1.301085352897644
+        },
+        {
+            "time": 28.60099983215332,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 29.19300079345703,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 29.78499984741211,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 30.37700080871582,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 30.9689998626709,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 31.56100082397461,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 32.15299987792969,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 32.744998931884769,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 33.152000427246097,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 5,
+            "rapidDuration": 1.2679328918457032
+        },
+        {
+            "time": 33.33700180053711,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 33.92900085449219,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 34.520999908447269,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 35.112998962402347,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "SPACE",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 35.70500183105469,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 36.888999938964847,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 37.888999938964847,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 5,
+            "rapidDuration": 1.2347804307937623
+        },
+        {
+            "time": 38.073001861572269,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 38.665000915527347,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 39.25699996948242,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 39.8489990234375,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 40.441001892089847,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 41.03300094604492,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 41.625,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 42.21699905395508,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 42.625,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 5,
+            "rapidDuration": 1.2016280889511109
+        },
+        {
+            "time": 42.808998107910159,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 43.4010009765625,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 47.361000061035159,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 5,
+            "rapidDuration": 1.16847562789917
+        },
+        {
+            "time": 51.68899917602539,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 52.09700012207031,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 6,
+            "rapidDuration": 1.135323166847229
+        },
+        {
+            "time": 52.28099822998047,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 52.87300109863281,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 53.46500015258789,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 54.05699920654297,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 54.64899826049805,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 55.24100112915039,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 55.83300018310547,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 56.42499923706055,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 56.83300018310547,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 6,
+            "rapidDuration": 1.1021708250045777
+        },
+        {
+            "time": 57.016998291015628,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 57.60900115966797,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 58.20100021362305,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 61.569000244140628,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 6,
+            "rapidDuration": 1.0690183639526368
+        },
+        {
+            "time": 62.641998291015628,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 66.30500030517578,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 6,
+            "rapidDuration": 1.0358659029006959
+        },
+        {
+            "time": 67.67400360107422,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 71.04100036621094,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 7,
+            "rapidDuration": 1.0027134418487549
+        },
+        {
+            "time": 75.7770004272461,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 7,
+            "rapidDuration": 0.9695610404014587
+        },
+        {
+            "time": 75.96199798583985,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 80.4020004272461,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 80.51300048828125,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 7,
+            "rapidDuration": 0.9364086389541626
+        },
+        {
+            "time": 84.84200286865235,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 85.2490005493164,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 7,
+            "rapidDuration": 0.9032562375068665
+        },
+        {
+            "time": 89.98500061035156,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 7,
+            "rapidDuration": 0.8701037764549255
+        },
+        {
+            "time": 91.35399627685547,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 94.72100067138672,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.8369513154029846
+        },
+        {
+            "time": 98.45800018310547,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 99.45700073242188,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.8037989139556885
+        },
+        {
+            "time": 102.60199737548828,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 104.19300079345703,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.800000011920929
+        },
+        {
+            "time": 107.93000030517578,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 108.92900085449219,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.800000011920929
+        },
+        {
+            "time": 113.66500091552735,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.800000011920929
+        },
+        {
+            "time": 116.80999755859375,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 118.4020004272461,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.800000011920929
+        },
+        {
+            "time": 119.91799926757813,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 123.13800048828125,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.800000011920929
+        },
+        {
+            "time": 123.3219985961914,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 126.13400268554688,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 127.8740005493164,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.800000011920929
+        },
+        {
+            "time": 129.093994140625,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 132.0540008544922,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 132.61000061035157,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.800000011920929
+        },
+        {
+            "time": 135.31100463867188,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 137.3459930419922,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.800000011920929
+        },
+        {
+            "time": 139.15899658203126,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 142.08200073242188,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.800000011920929
+        },
+        {
+            "time": 142.71099853515626,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "SPACE",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 146.41099548339845,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 146.8179931640625,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.800000011920929
+        },
+        {
+            "time": 149.37100219726563,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 151.5540008544922,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.800000011920929
+        },
+        {
+            "time": 154.4029998779297,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "UP",
+            "duration": 0.5400000214576721,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 156.2899932861328,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.800000011920929
+        },
+        {
+            "time": 159.13900756835938,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 161.0260009765625,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.800000011920929
+        },
+        {
+            "time": 163.13499450683595,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 165.76199340820313,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.800000011920929
+        },
+        {
+            "time": 167.13099670410157,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 170.4980010986328,
+            "lane": 0,
+            "type": "rapid",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 8,
+            "rapidDuration": 0.800000011920929
+        }
+    ]
+}

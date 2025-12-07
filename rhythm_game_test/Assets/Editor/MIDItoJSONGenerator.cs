@@ -42,6 +42,7 @@ public class MidiToJsonConverter : EditorWindow
 
     [Header("Beat Quantization")]
     private bool quantizeToGrid = false; // 정박에만 노트 추출
+    private bool snapToGrid = false; // 체크 시 정박에 완전히 스냅 (원본 타이밍 무시)
     private enum BeatInterval {
         WholeBeat,     // 온음표 (4박)
         HalfBeat,      // 2분음표 (2박)
@@ -197,16 +198,30 @@ public class MidiToJsonConverter : EditorWindow
             beatInterval = (BeatInterval)EditorGUILayout.EnumPopup("Beat Interval", beatInterval);
             quantizeTolerance = EditorGUILayout.Slider("Snap Tolerance (seconds)", quantizeTolerance, 0.01f, 0.2f);
 
+            snapToGrid = EditorGUILayout.Toggle("Snap to Perfect Grid", snapToGrid);
+
             // BPM 값 가져오기
             float currentBPM = autoDetectBPM ? 120f : manualBPM;
             float intervalSeconds = GetBeatIntervalInSeconds(beatInterval, currentBPM);
 
-            EditorGUILayout.HelpBox(
-                $"정박 간격: {intervalSeconds:F3}초\n" +
-                $"허용 오차: ±{quantizeTolerance:F3}초\n" +
-                "정박(BPM 그리드)에서 허용 오차 이내에 있는 노트만 추출됩니다.",
-                MessageType.Info
-            );
+            if (snapToGrid)
+            {
+                EditorGUILayout.HelpBox(
+                    $"정박 간격: {intervalSeconds:F3}초\n" +
+                    $"허용 오차: ±{quantizeTolerance:F3}초\n" +
+                    "노트 타이밍이 정박에 완전히 스냅됩니다 (원본 타이밍 무시).",
+                    MessageType.Warning
+                );
+            }
+            else
+            {
+                EditorGUILayout.HelpBox(
+                    $"정박 간격: {intervalSeconds:F3}초\n" +
+                    $"허용 오차: ±{quantizeTolerance:F3}초\n" +
+                    "정박(BPM 그리드)에서 허용 오차 이내에 있는 노트만 추출됩니다 (원본 타이밍 유지).",
+                    MessageType.Info
+                );
+            }
             EditorGUI.indentLevel--;
         }
         else
@@ -396,7 +411,7 @@ public class MidiToJsonConverter : EditorWindow
                         }
                     }
 
-                    // 시간 계산 - 원본 타이밍 유지 (정박에 스냅하지 않음)
+                    // 시간 계산
                     var metricTime = TimeConverter.ConvertTo<MetricTimeSpan>(closestNote.Time, tempoMap);
                     float originalTime = (float)metricTime.TotalSeconds;
 
@@ -408,7 +423,8 @@ public class MidiToJsonConverter : EditorWindow
                         continue;
                     }
 
-                    float time = originalTime + firstNoteOffset;
+                    // snapToGrid가 켜져있으면 정박에 완전히 스냅, 아니면 원본 타이밍 유지
+                    float time = snapToGrid ? (gridTime + firstNoteOffset) : (originalTime + firstNoteOffset);
 
                     // 노트 길이 계산
                     var metricLength = LengthConverter.ConvertTo<MetricTimeSpan>(closestNote.Length, closestNote.Time, tempoMap);
@@ -505,6 +521,7 @@ public class MidiToJsonConverter : EditorWindow
                 bpm = bpm,
                 offset = firstNoteOffset,
                 numberOfLanes = numberOfLanes,
+                noteSpeed = 500f,  // 기본 속도
                 notes = chartNotes
             };
 

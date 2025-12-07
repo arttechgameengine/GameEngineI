@@ -1,0 +1,36 @@
+{
+    "songName": "byte_test",
+    "bpm": 120.0,
+    "offset": -0.4072920083999634,
+    "numberOfLanes": 4,
+    "noteSpeed": 500.0,
+    "notes": [
+        {
+            "time": 8.258999824523926,
+            "lane": 1,
+            "type": "tap",
+            "arrow": "RIGHT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 132.59100341796876,
+            "lane": 2,
+            "type": "tap",
+            "arrow": "UP",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 132.74600219726563,
+            "lane": 2,
+            "type": "tap",
+            "arrow": "LEFT",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        }
+    ]
+}

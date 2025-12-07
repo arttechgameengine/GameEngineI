@@ -51,12 +51,7 @@ public class NoteMovement : MonoBehaviour
                 // 중간 지점 기본 설정
                 appearDistance = totalDistance * 0.5f;
 
-                // 애니메이션 동안 이동하는 거리만큼 판정 시간 조정
-                float distanceDuringAnim = speed * APPEAR_ANIM_DURATION;
-                float timeDuringAnim = distanceDuringAnim / speed;
-
-                // 판정 시간을 애니메이션 시간만큼 늦춤
-                noteTime += timeDuringAnim;
+                // 판정 시간은 JSON 원본 그대로 사용 (NoteSpawner에서 스폰 타이밍 조정함)
             }
 
             // 처음엔 숨김

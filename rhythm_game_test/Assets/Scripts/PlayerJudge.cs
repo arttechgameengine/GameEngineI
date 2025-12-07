@@ -7,6 +7,9 @@ public class PlayerJudge : MonoBehaviour
     public float greatRange = 0.15f;
     public float goodRange = 0.25f;
 
+    [Header("Long Note Settings")]
+    public float longNoteEndRange = 0.5f; // 롱노트 끝 판정 범위 (더 관대함)
+
     public NoteSpawner spawner;
     public JudgePopup judgePopup;
 
@@ -45,6 +48,7 @@ public class PlayerJudge : MonoBehaviour
             }
         }
 
+        // 키 입력 처리
         if (Input.GetKeyDown(KeyCode.LeftArrow)) TryHit("LEFT");
         if (Input.GetKeyDown(KeyCode.RightArrow)) TryHit("RIGHT");
         if (Input.GetKeyDown(KeyCode.UpArrow)) TryHit("UP");
@@ -85,10 +89,44 @@ public class PlayerJudge : MonoBehaviour
                 continue;
             }
 
-            // 노트가 판정 시간을 지났는지 확인
-            if (songTime > n.noteTime + goodRange)
+            // 연타 노트 자동 활성화 체크
+            if (n.noteSubType == "RAPID")
             {
-                Debug.Log($"[MISS] songTime: {songTime:F2}, noteTime: {n.noteTime:F2}, diff: {(songTime - n.noteTime):F2}");
+                RapidNoteJudge rapidJudge = n.GetComponent<RapidNoteJudge>();
+                if (rapidJudge != null)
+                {
+                    // 이미 완료되었거나 실패한 경우 무시
+                    if (rapidJudge.isCompleted || rapidJudge.isFailed)
+                    {
+                        continue;
+                    }
+
+                    float timeDelta = Mathf.Abs((float)(songTime - n.noteTime));
+
+                    // HitLine 도달 시 자동 활성화 (perfectRange 이내)
+                    if (!rapidJudge.isActive && timeDelta <= perfectRange)
+                    {
+                        Debug.Log($"[PlayerJudge] Auto-activating rapid note at HitLine");
+                        rapidJudge.Activate();
+                        // isJudged는 설정하지 않음 (키 입력을 받아야 하므로)
+                    }
+                    // 활성화도 못하고 지나가면 Miss
+                    else if (!rapidJudge.isActive && songTime > n.noteTime + goodRange)
+                    {
+                        Debug.Log($"[PlayerJudge] Rapid note missed activation window");
+                        rapidJudge.OnMissed();
+                    }
+                }
+                continue;
+            }
+
+            // 노트가 판정 시간을 지났는지 확인
+            // LONG_END 노트는 더 관대한 범위 사용
+            float missRange = (n.noteSubType == "LONG_END") ? longNoteEndRange : goodRange;
+
+            if (songTime > n.noteTime + missRange)
+            {
+                Debug.Log($"[MISS] songTime: {songTime:F2}, noteTime: {n.noteTime:F2}, diff: {(songTime - n.noteTime):F2}, missRange: {missRange:F2}");
 
                 // LONG_END 노트를 놓쳤으면 롱노트 전체 파괴
                 if (n.noteSubType == "LONG_END" && currentLongNote != null && n.longNoteGroupId == currentLongNote.groupId)
@@ -224,11 +262,21 @@ public class PlayerJudge : MonoBehaviour
 
         if (target == null) return;
 
+        // 연타 노트 처리
+        if (target.noteSubType == "RAPID")
+        {
+            HandleRapidNote(keyType, target);
+            return;
+        }
+
         // 판정 등급 계산
+        // LONG_END 노트는 더 관대한 범위 사용
+        float judgementRange = (target.noteSubType == "LONG_END") ? longNoteEndRange : goodRange;
+
         string judge = "";
         if (minTimeDelta <= perfectRange) judge = "PERFECT";
         else if (minTimeDelta <= greatRange) judge = "GREAT";
-        else if (minTimeDelta <= goodRange) judge = "GOOD";
+        else if (minTimeDelta <= judgementRange) judge = "GOOD";
         else
         {
             Miss();
@@ -248,6 +296,27 @@ public class PlayerJudge : MonoBehaviour
         {
             Hit(judge, target);
         }
+    }
+
+    /// <summary>
+    /// 연타 노트 처리 (키 입력만 전달, 활성화는 CheckMissedNotes에서 자동 처리)
+    /// </summary>
+    void HandleRapidNote(string keyType, NoteMovement target)
+    {
+        // RapidNoteJudge 컴포넌트 확인
+        RapidNoteJudge rapidJudge = target.GetComponent<RapidNoteJudge>();
+        if (rapidJudge == null)
+        {
+            Debug.LogWarning($"[PlayerJudge] Rapid note without RapidNoteJudge component!");
+            return;
+        }
+
+        // 활성화된 상태에서만 키 입력 전달
+        if (rapidJudge.isActive)
+        {
+            rapidJudge.OnKeyPressed(keyType);
+        }
+        // 활성화 안 됐으면 무시 (CheckMissedNotes에서 자동 활성화 대기 중)
     }
 
     void Hit(string judge, NoteMovement n)
@@ -431,12 +500,26 @@ public class PlayerJudge : MonoBehaviour
                     UnityEngine.UI.Image barImage = n.longNoteVisualBar.GetComponent<UnityEngine.UI.Image>();
                     if (barImage != null)
                     {
-                        // 회색으로 변경 + 더 투명하게
+                        // 회색으로 변경 (잘 보이도록)
                         Color fadedColor = Color.gray;
-                        fadedColor.a = 0.3f;
+                        fadedColor.a = 0.8f;
                         barImage.color = fadedColor;
 
-                        Debug.Log($"[LongNote Fail] Faded long note bar for group {groupId}");
+                        // 롱노트 duration 이후에 막대 파괴
+                        float duration = 0f;
+
+                        // duration 정보 찾기 (LONG_END 노트의 시간 - LONG_START 노트의 시간)
+                        double songTime = AudioSettings.dspTime - spawner.songStartDspTime;
+                        NoteMovement endNote = System.Array.Find(allNotes, note =>
+                            note.longNoteGroupId == groupId && note.noteSubType == "LONG_END");
+
+                        if (endNote != null)
+                        {
+                            duration = Mathf.Max(0, endNote.noteTime - (float)songTime);
+                        }
+
+                        Debug.Log($"[LongNote Fail] Faded long note bar for group {groupId}, will destroy after {duration:F2}s");
+                        Destroy(n.longNoteVisualBar, duration);
                     }
                 }
                 break;

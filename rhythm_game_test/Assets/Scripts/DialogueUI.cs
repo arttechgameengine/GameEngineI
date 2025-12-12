@@ -31,6 +31,10 @@ public class DialogueUI : MonoBehaviour
     public Color activeSpeakerColor = Color.white;
     public Color inactiveSpeakerColor = new Color(0.5f, 0.5f, 0.5f, 1f);
 
+    [Header("Effect Sprites")]
+    public Transform effectSpritesContainer;  // 효과 스프라이트를 담을 부모 오브젝트
+    private GameObject[] currentEffectObjects;  // 현재 표시 중인 효과 오브젝트들
+
     [Header("Scene Transition")]
     public string nextSceneName = "RhythmTest";  // 대화 후 이동할 씬
 
@@ -121,6 +125,9 @@ public class DialogueUI : MonoBehaviour
 
         // 대화창 flip 업데이트
         UpdateDialogueBoxFlip(line.isLeftSpeaker);
+
+        // 효과 스프라이트 업데이트
+        UpdateEffectSprites(line.effectSprites);
     }
 
     void UpdateSpeakerHighlight(bool isLeftSpeaker)
@@ -208,12 +215,147 @@ public class DialogueUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 효과 스프라이트 업데이트 (이전 효과는 제거하고 새 효과 생성)
+    /// </summary>
+    void UpdateEffectSprites(EffectSpriteData[] effectSprites)
+    {
+        // 이전 효과 스프라이트 제거
+        ClearEffectSprites();
+
+        // 효과 스프라이트가 없으면 종료
+        if (effectSprites == null || effectSprites.Length == 0)
+            return;
+
+        // 컨테이너 확인
+        if (effectSpritesContainer == null)
+        {
+            Debug.LogWarning("[DialogueUI] effectSpritesContainer가 설정되지 않았습니다! Inspector에서 설정하세요.");
+            return;
+        }
+
+        // 새 효과 스프라이트 생성
+        currentEffectObjects = new GameObject[effectSprites.Length];
+
+        for (int i = 0; i < effectSprites.Length; i++)
+        {
+            EffectSpriteData data = effectSprites[i];
+            if (data == null || data.effectSprite == null)
+                continue;
+
+            // 새 GameObject 생성
+            GameObject effectObj = new GameObject($"EffectSprite_{i}");
+            effectObj.transform.SetParent(effectSpritesContainer, false);
+
+            // Image 컴포넌트 추가
+            Image effectImage = effectObj.AddComponent<Image>();
+            effectImage.sprite = data.effectSprite;
+            effectImage.color = new Color(data.tintColor.r, data.tintColor.g, data.tintColor.b, data.alpha);
+
+            // RectTransform 설정
+            RectTransform rectTransform = effectObj.GetComponent<RectTransform>();
+
+            // 앵커 설정
+            SetAnchorPreset(rectTransform, data.anchorPreset);
+
+            // 위치, 크기, 회전, 스케일 설정
+            rectTransform.anchoredPosition = data.position;
+            rectTransform.sizeDelta = data.size;
+            rectTransform.localRotation = Quaternion.Euler(data.rotation);
+            rectTransform.localScale = data.scale;
+
+            // Sorting order 설정 (Canvas가 있는 경우)
+            Canvas canvas = effectObj.AddComponent<Canvas>();
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = data.sortingOrder;
+
+            currentEffectObjects[i] = effectObj;
+
+            Debug.Log($"[DialogueUI] 효과 스프라이트 생성: {data.effectSprite.name} at {data.position}");
+        }
+    }
+
+    /// <summary>
+    /// 현재 표시 중인 모든 효과 스프라이트 제거
+    /// </summary>
+    void ClearEffectSprites()
+    {
+        if (currentEffectObjects == null)
+            return;
+
+        foreach (GameObject obj in currentEffectObjects)
+        {
+            if (obj != null)
+                Destroy(obj);
+        }
+
+        currentEffectObjects = null;
+    }
+
+    /// <summary>
+    /// RectTransform의 앵커 프리셋 설정
+    /// </summary>
+    void SetAnchorPreset(RectTransform rect, AnchorPreset preset)
+    {
+        switch (preset)
+        {
+            case AnchorPreset.TopLeft:
+                rect.anchorMin = new Vector2(0, 1);
+                rect.anchorMax = new Vector2(0, 1);
+                rect.pivot = new Vector2(0, 1);
+                break;
+            case AnchorPreset.TopCenter:
+                rect.anchorMin = new Vector2(0.5f, 1);
+                rect.anchorMax = new Vector2(0.5f, 1);
+                rect.pivot = new Vector2(0.5f, 1);
+                break;
+            case AnchorPreset.TopRight:
+                rect.anchorMin = new Vector2(1, 1);
+                rect.anchorMax = new Vector2(1, 1);
+                rect.pivot = new Vector2(1, 1);
+                break;
+            case AnchorPreset.MiddleLeft:
+                rect.anchorMin = new Vector2(0, 0.5f);
+                rect.anchorMax = new Vector2(0, 0.5f);
+                rect.pivot = new Vector2(0, 0.5f);
+                break;
+            case AnchorPreset.MiddleCenter:
+                rect.anchorMin = new Vector2(0.5f, 0.5f);
+                rect.anchorMax = new Vector2(0.5f, 0.5f);
+                rect.pivot = new Vector2(0.5f, 0.5f);
+                break;
+            case AnchorPreset.MiddleRight:
+                rect.anchorMin = new Vector2(1, 0.5f);
+                rect.anchorMax = new Vector2(1, 0.5f);
+                rect.pivot = new Vector2(1, 0.5f);
+                break;
+            case AnchorPreset.BottomLeft:
+                rect.anchorMin = new Vector2(0, 0);
+                rect.anchorMax = new Vector2(0, 0);
+                rect.pivot = new Vector2(0, 0);
+                break;
+            case AnchorPreset.BottomCenter:
+                rect.anchorMin = new Vector2(0.5f, 0);
+                rect.anchorMax = new Vector2(0.5f, 0);
+                rect.pivot = new Vector2(0.5f, 0);
+                break;
+            case AnchorPreset.BottomRight:
+                rect.anchorMin = new Vector2(1, 0);
+                rect.anchorMax = new Vector2(1, 0);
+                rect.pivot = new Vector2(1, 0);
+                break;
+        }
+    }
+
     void OnDialogueEnd()
     {
+        // 효과 스프라이트 정리
+        ClearEffectSprites();
+
         // 대화 종료 시 다음 씬으로 이동
         if (!string.IsNullOrEmpty(nextSceneName))
         {
-            SceneManager.LoadScene(nextSceneName);
+            SceneFader.LoadScene(nextSceneName);
         }
     }
 

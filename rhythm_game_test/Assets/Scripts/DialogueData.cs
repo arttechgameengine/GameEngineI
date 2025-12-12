@@ -8,6 +8,9 @@ public class DialogueLine
     [TextArea(2, 5)]
     public string dialogue;              // 대사 내용
     public bool isLeftSpeaker = true;    // true: 왼쪽, false: 오른쪽
+
+    [Header("Effect Sprites")]
+    public EffectSpriteData[] effectSprites;  // 이 대사에 표시할 효과 스프라이트들
 }
 
 [CreateAssetMenu(fileName = "NewDialogue", menuName = "Dialogue/DialogueData")]

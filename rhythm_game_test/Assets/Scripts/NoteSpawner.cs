@@ -43,9 +43,31 @@ public class NoteSpawner : MonoBehaviour
 
     void Awake()
     {
+        UpdateSpawnPositions();
+    }
+
+    // Editor에서 값 변경 시에도 업데이트 (Unity Editor 전용)
+    void OnValidate()
+    {
+        if (Application.isPlaying && notesParent != null && spawnPoint != null && hitLine != null)
+        {
+            UpdateSpawnPositions();
+        }
+    }
+
+    /// <summary>
+    /// SpawnPoint와 HitLine의 로컬 좌표 업데이트
+    /// </summary>
+    void UpdateSpawnPositions()
+    {
+        if (notesParent == null || spawnPoint == null || hitLine == null)
+            return;
+
         // NotesParent 기준 로컬 좌표로 변환
         spawnLocalX = notesParent.InverseTransformPoint(spawnPoint.position).x;
         hitLineLocalX = notesParent.InverseTransformPoint(hitLine.position).x;
+
+        Debug.Log($"[NoteSpawner] Updated spawn positions - spawnLocalX: {spawnLocalX}, hitLineLocalX: {hitLineLocalX}");
     }
 
     public void LoadPattern(PatternData pattern)
@@ -60,6 +82,9 @@ public class NoteSpawner : MonoBehaviour
             noteSpeed = pattern.noteSpeed;
             Debug.Log($"[NoteSpawner] Loaded noteSpeed from JSON: {noteSpeed}");
         }
+
+        // SpawnPoint 위치 재계산 (Unity에서 위치를 변경했을 수 있으므로)
+        UpdateSpawnPositions();
 
         // 거리 계산 및 leadTime 재계산
         float distance = spawnLocalX - hitLineLocalX;
@@ -127,16 +152,41 @@ public class NoteSpawner : MonoBehaviour
             return;
         }
 
-        // 화면에 노트가 남아있으면 아직 끝나지 않음
-        if (notesParent.childCount > 0)
+        // 화면에 노트가 남아있는지 확인 (NoteMovement 컴포넌트가 있는 것만)
+        NoteMovement[] remainingNotes = notesParent.GetComponentsInChildren<NoteMovement>();
+        if (remainingNotes.Length > 0)
         {
-            Debug.Log($"[NoteSpawner] Song not ended - {notesParent.childCount} notes still on screen");
+            Debug.Log($"[NoteSpawner] Song not ended - {remainingNotes.Length} notes still on screen (childCount: {notesParent.childCount})");
+
+            // 디버깅: 남아있는 노트 정보 출력
+            foreach (var note in remainingNotes)
+            {
+                Debug.Log($"  - Remaining note: {note.noteType} ({note.noteSubType}), judged: {note.isJudged}");
+            }
+
+            return;
+        }
+
+        // 롱노트 막대가 남아있는지 확인 (RapidNoteJudge 컴포넌트가 없는 자식들)
+        // 롱노트 막대는 NoteMovement가 없지만 notesParent의 직접 자식으로 남아있을 수 있음
+        int childCount = notesParent.childCount;
+        if (childCount > 0)
+        {
+            Debug.Log($"[NoteSpawner] Song not ended - {childCount} child objects still on screen (likely long note bars or UI elements)");
+
+            // 디버깅: 남아있는 자식 오브젝트 정보 출력
+            for (int i = 0; i < childCount; i++)
+            {
+                Transform child = notesParent.GetChild(i);
+                Debug.Log($"  - Remaining child: {child.name} (has NoteMovement: {child.GetComponent<NoteMovement>() != null})");
+            }
+
             return;
         }
 
         // 곡 종료!
         songEnded = true;
-        Debug.Log($"[NoteSpawner] ===== SONG ENDED! ===== Music stopped: {!bgmSource.isPlaying}, All notes spawned: {nextIndex}/{notes.Count}, Notes on screen: {notesParent.childCount}");
+        Debug.Log($"[NoteSpawner] ===== SONG ENDED! ===== Music stopped: {!bgmSource.isPlaying}, All notes spawned: {nextIndex}/{notes.Count}, Notes on screen: 0");
 
         // 잠시 후 결과 화면으로 이동
         Debug.Log($"[NoteSpawner] Invoking GoToResult in {endDelay} seconds...");
@@ -150,12 +200,23 @@ public class NoteSpawner : MonoBehaviour
         if (ScoreManager.Instance != null)
         {
             Debug.Log($"[NoteSpawner] ScoreManager found. Stats - Score: {ScoreManager.Instance.currentScore}, Combo: {ScoreManager.Instance.maxCombo}");
-            Debug.Log("[NoteSpawner] Calling GoToResultScene()...");
-
             ScoreManager.Instance.PrintStats();
-            ScoreManager.Instance.GoToResultScene();
 
-            Debug.Log("[NoteSpawner] GoToResultScene() finished!");
+            // GameResultData에 저장
+            GameResultData.SaveFromScoreManager(ScoreManager.Instance);
+            Debug.Log($"[NoteSpawner] Saved to GameResultData. Rank: {GameResultData.GetRank()}, Accuracy: {GameResultData.Accuracy:F1}%");
+
+            // DishRevealTransition이 있으면 전환 화면 재생, 없으면 바로 ScoreScene으로 이동
+            if (DishRevealTransition.Instance != null)
+            {
+                Debug.Log("[NoteSpawner] Starting DishRevealTransition...");
+                DishRevealTransition.Instance.StartTransition();
+            }
+            else
+            {
+                Debug.LogWarning("[NoteSpawner] DishRevealTransition.Instance not found! Going directly to ScoreScene...");
+                ScoreManager.Instance.GoToResultScene();
+            }
         }
         else
         {

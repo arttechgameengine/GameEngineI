@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Linq;
+using System.Collections;
 
 public class RoundManager : MonoBehaviour
 {
@@ -20,7 +21,26 @@ public class RoundManager : MonoBehaviour
 
         spawner.LoadPattern(pattern);
 
-        // 음악 즉시 시작 (준비 시간은 노트 타이밍에 이미 반영됨)
+        // ⚠️ SceneFader의 fade in이 완료될 때까지 대기한 후 음악 시작
+        StartCoroutine(WaitForFadeInAndStartMusic());
+    }
+
+    /// <summary>
+    /// SceneFader의 fade in이 완료될 때까지 대기 후 음악 시작
+    /// </summary>
+    IEnumerator WaitForFadeInAndStartMusic()
+    {
+        Debug.Log("[RoundManager] Waiting for SceneFader fade in to complete...");
+
+        // SceneFader의 fade in이 완료될 때까지 대기
+        while (!SceneFader.IsFadeInComplete)
+        {
+            yield return null;
+        }
+
+        Debug.Log("[RoundManager] Fade in complete! Starting music now...");
+
+        // 음악 시작 (준비 시간은 노트 타이밍에 이미 반영됨)
         spawner.StartSong(bgmSource);
     }
 

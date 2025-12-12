@@ -784,7 +784,7 @@ public class FreeModeTournamentManager : MonoBehaviour
         // 해당 라운드의 전용 씬으로 이동
         if (!string.IsNullOrEmpty(round.sceneName))
         {
-            SceneManager.LoadScene(round.sceneName);
+            SceneFader.LoadScene(round.sceneName);
         }
         else
         {
@@ -798,7 +798,7 @@ public class FreeModeTournamentManager : MonoBehaviour
     void OnBackToMenu()
     {
         Debug.Log("[Free Tournament] 메인 메뉴로 돌아가기");
-        SceneManager.LoadScene("GameStart");
+        SceneFader.LoadScene("GameStart");
     }
 
     /// <summary>

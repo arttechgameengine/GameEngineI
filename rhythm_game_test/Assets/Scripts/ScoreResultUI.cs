@@ -168,7 +168,7 @@ public class ScoreResultUI : MonoBehaviour
     void OnRetry()
     {
         // RhythmTest 씬으로 다시 이동
-        SceneManager.LoadScene("RhythmTest");
+        SceneFader.LoadScene("RhythmTest");
     }
 
     /// <summary>
@@ -181,23 +181,23 @@ public class ScoreResultUI : MonoBehaviour
             if (GameModeManager.Instance.currentMode == GameMode.StoryMode)
             {
                 Debug.Log("[ScoreResultUI] Story Mode → StoryMapScene으로 복귀");
-                SceneManager.LoadScene("StoryMapScene");
+                SceneFader.LoadScene("StoryMapScene");
             }
             else if (GameModeManager.Instance.currentMode == GameMode.FreeMode)
             {
                 Debug.Log("[ScoreResultUI] Free Mode → FreeMapScene으로 복귀");
-                SceneManager.LoadScene("FreeMapScene");
+                SceneFader.LoadScene("FreeMapScene");
             }
             else
             {
                 Debug.LogWarning("[ScoreResultUI] 알 수 없는 모드. GameStart로 이동합니다.");
-                SceneManager.LoadScene("GameStart");
+                SceneFader.LoadScene("GameStart");
             }
         }
         else
         {
             Debug.LogWarning("[ScoreResultUI] GameModeManager.Instance가 null입니다. GameStart로 이동합니다.");
-            SceneManager.LoadScene("GameStart");
+            SceneFader.LoadScene("GameStart");
         }
     }
 
@@ -207,7 +207,7 @@ public class ScoreResultUI : MonoBehaviour
     void OnExitToMenu()
     {
         Debug.Log("[ScoreResultUI] GameStart로 이동");
-        SceneManager.LoadScene("GameStart");
+        SceneFader.LoadScene("GameStart");
     }
 
     /// <summary>

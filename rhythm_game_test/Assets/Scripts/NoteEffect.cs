@@ -24,6 +24,8 @@ public class NoteEffect : MonoBehaviour
     public Vector3 enemyPosition = new Vector3(17f, 124f, 0);  // "적" 위치 (로컬 좌표)
     public Transform enemySprite;  // 적 스프라이트 참조 (Inspector에서 할당)
 
+    private EnemyShakeEffect enemyShakeEffect;  // Enemy 흔들림 효과
+
     private Color originalColor;
     private Vector3 originalScale;
 
@@ -44,6 +46,25 @@ public class NoteEffect : MonoBehaviour
             Color c = overlayImage.color;
             c.a = 0f;
             overlayImage.color = c;
+        }
+    }
+
+    /// <summary>
+    /// Enemy Shake Effect 참조 가져오기 (필요할 때 호출)
+    /// </summary>
+    void InitEnemyShakeEffect()
+    {
+        if (enemyShakeEffect == null && enemySprite != null)
+        {
+            enemyShakeEffect = enemySprite.GetComponent<EnemyShakeEffect>();
+            if (enemyShakeEffect == null)
+            {
+                Debug.LogWarning("[NoteEffect] Enemy Sprite에 EnemyShakeEffect 컴포넌트가 없습니다!");
+            }
+            else
+            {
+                Debug.Log("[NoteEffect] EnemyShakeEffect 찾음!");
+            }
         }
     }
 
@@ -152,6 +173,9 @@ public class NoteEffect : MonoBehaviour
         var movement = GetComponent<NoteMovement>();
         if (movement != null) movement.enabled = false;
 
+        // Enemy Shake Effect 초기화 (enemySprite가 할당된 이후)
+        InitEnemyShakeEffect();
+
         float elapsed = 0f;
         Vector3 startPos = transform.localPosition;
 
@@ -204,6 +228,13 @@ public class NoteEffect : MonoBehaviour
 
         // 회전 초기화
         transform.localRotation = Quaternion.identity;
+
+        // 적 위치에 도착! Enemy 흔들기
+        if (enemyShakeEffect != null)
+        {
+            enemyShakeEffect.PlayShake();
+            Debug.Log("[NoteEffect] Enemy shake 트리거!");
+        }
 
         // 2단계: 적 위치에 도착 후 scale & fade 효과
         elapsed = 0f;

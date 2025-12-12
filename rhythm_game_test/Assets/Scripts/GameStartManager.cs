@@ -107,6 +107,6 @@ public class GameStartManager : MonoBehaviour
     /// </summary>
     void LoadTournamentMap()
     {
-        SceneManager.LoadScene("TournamentMap"); // 토너먼트 맵 씬 이름
+        SceneFader.LoadScene("TournamentMap"); // 토너먼트 맵 씬 이름
     }
 }

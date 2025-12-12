@@ -834,7 +834,7 @@ public class StoryModeTournamentManager : MonoBehaviour
         string dialogueSceneName = $"DialogueScene_Round{currentRoundIndex + 1}";
 
         // 해당 라운드의 대화씬으로 이동
-        SceneManager.LoadScene(dialogueSceneName);
+        SceneFader.LoadScene(dialogueSceneName);
     }
 
     /// <summary>
@@ -843,7 +843,7 @@ public class StoryModeTournamentManager : MonoBehaviour
     void OnBackToMenu()
     {
         Debug.Log("[Story Tournament] 메인 메뉴로 돌아가기");
-        SceneManager.LoadScene("GameStart");
+        SceneFader.LoadScene("GameStart");
     }
 
     /// <summary>

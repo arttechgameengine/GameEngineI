@@ -55,7 +55,7 @@ public class GameModeManager : MonoBehaviour
     {
         SetGameMode(GameMode.StoryMode);
         ResetProgress(); // Story Mode 시작 시 진행도 초기화
-        UnityEngine.SceneManagement.SceneManager.LoadScene("StoryMapScene");
+        SceneFader.LoadScene("StoryMapScene");
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ public class GameModeManager : MonoBehaviour
     public void StartFreeMode()
     {
         SetGameMode(GameMode.FreeMode);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("FreeMapScene");
+        SceneFader.LoadScene("FreeMapScene");
     }
 
     /// <summary>

@@ -285,7 +285,7 @@ public class TournamentMapManager : MonoBehaviour
         // 해당 라운드의 전용 씬으로 이동
         if (!string.IsNullOrEmpty(round.sceneName))
         {
-            SceneManager.LoadScene(round.sceneName);
+            SceneFader.LoadScene(round.sceneName);
         }
         else
         {

@@ -138,7 +138,7 @@ public class PauseManager : MonoBehaviour
         // 게임 시간 복원 후 현재 씬 재시작
         Time.timeScale = 1f;
         IsPaused = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneFader.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void ExitToGameStart()
@@ -146,7 +146,7 @@ public class PauseManager : MonoBehaviour
         // 게임 시간 복원 후 씬 이동
         Time.timeScale = 1f;
         IsPaused = false;
-        SceneManager.LoadScene("GameStart");
+        SceneFader.LoadScene("GameStart");
     }
 
     void OnDestroy()

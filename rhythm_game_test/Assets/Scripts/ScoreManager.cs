@@ -14,6 +14,7 @@ public class ScoreManager : MonoBehaviour
     public int perfectScore = 1000;
     public int greatScore = 750;
     public int goodScore = 500;
+    public int missPenalty = 200;  // MISS 판정 시 감점
 
     [Header("Stats")]
     public int currentScore = 0;
@@ -72,6 +73,7 @@ public class ScoreManager : MonoBehaviour
                 break;
             case "MISS":
                 missCount++;
+                SubtractScore(missPenalty);  // 점수 감점
                 ResetCombo();
                 break;
         }
@@ -80,6 +82,17 @@ public class ScoreManager : MonoBehaviour
     void AddScore(int baseScore)
     {
         currentScore += baseScore;
+        UpdateScoreUI();
+    }
+
+    void SubtractScore(int penalty)
+    {
+        currentScore -= penalty;
+        // 점수가 음수가 되지 않도록 방지
+        if (currentScore < 0)
+        {
+            currentScore = 0;
+        }
         UpdateScoreUI();
     }
 
@@ -145,6 +158,6 @@ public class ScoreManager : MonoBehaviour
         // 결과 데이터 저장
         GameResultData.SaveFromScoreManager(this);
         // ScoreScene으로 이동
-        SceneManager.LoadScene("ScoreScene");
+        SceneFader.LoadScene("ScoreScene");
     }
 }

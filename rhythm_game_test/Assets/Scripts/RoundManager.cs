@@ -14,6 +14,13 @@ public class RoundManager : MonoBehaviour
 
     void Start()
     {
+        // 라운드 시작 시 ingredient idle 애니메이션 재개 (이전 라운드에서 멈췄을 수 있음)
+        if (CookingAreaManager.Instance != null)
+        {
+            CookingAreaManager.Instance.ResumeAllIdleAnimations();
+            Debug.Log("[RoundManager] Resumed all ingredient idle animations");
+        }
+
         PatternData pattern = PatternLoader.Load(jsonPattern.text);
 
         // 준비 시간 적용

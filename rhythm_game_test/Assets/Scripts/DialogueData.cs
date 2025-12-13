@@ -26,4 +26,8 @@ public class DialogueData : ScriptableObject
 
     [Header("Dialogue Lines")]
     public DialogueLine[] lines;         // 대사 목록
+
+    [Header("Scene Transition")]
+    [Tooltip("대화 종료 후 전환할 씬 이름 (BattleDialogueScene 또는 RhythmTestScene 등). 비어있으면 DialogueUI의 nextSceneName 사용")]
+    public string nextSceneName;         // 대화 종료 후 이동할 씬
 }

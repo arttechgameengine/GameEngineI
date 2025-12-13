@@ -140,4 +140,68 @@ public class CookingAreaManager : MonoBehaviour
             default: return null;
         }
     }
+
+    /// <summary>
+    /// 모든 ingredient의 Idle 애니메이션 멈추기 (Dish Reveal Panel 전환 시 호출)
+    /// </summary>
+    public void StopAllIdleAnimations()
+    {
+        if (leftAnimator != null)
+        {
+            leftAnimator.enabled = false;
+            Debug.Log("[CookingAreaManager] LEFT Animator stopped");
+        }
+
+        if (rightAnimator != null)
+        {
+            rightAnimator.enabled = false;
+            Debug.Log("[CookingAreaManager] RIGHT Animator stopped");
+        }
+
+        if (upAnimator != null)
+        {
+            upAnimator.enabled = false;
+            Debug.Log("[CookingAreaManager] UP Animator stopped");
+        }
+
+        if (downAnimator != null)
+        {
+            downAnimator.enabled = false;
+            Debug.Log("[CookingAreaManager] DOWN Animator stopped");
+        }
+
+        Debug.Log("[CookingAreaManager] All ingredient idle animations stopped!");
+    }
+
+    /// <summary>
+    /// 모든 ingredient의 Idle 애니메이션 재개하기 (필요한 경우)
+    /// </summary>
+    public void ResumeAllIdleAnimations()
+    {
+        if (leftAnimator != null)
+        {
+            leftAnimator.enabled = true;
+            Debug.Log("[CookingAreaManager] LEFT Animator resumed");
+        }
+
+        if (rightAnimator != null)
+        {
+            rightAnimator.enabled = true;
+            Debug.Log("[CookingAreaManager] RIGHT Animator resumed");
+        }
+
+        if (upAnimator != null)
+        {
+            upAnimator.enabled = true;
+            Debug.Log("[CookingAreaManager] UP Animator resumed");
+        }
+
+        if (downAnimator != null)
+        {
+            downAnimator.enabled = true;
+            Debug.Log("[CookingAreaManager] DOWN Animator resumed");
+        }
+
+        Debug.Log("[CookingAreaManager] All ingredient idle animations resumed!");
+    }
 }

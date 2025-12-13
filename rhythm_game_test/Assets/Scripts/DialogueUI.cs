@@ -24,12 +24,40 @@ public class DialogueUI : MonoBehaviour
     private Vector2 originalDialogueTextPos;
     private bool positionsSaved = false;
 
+    // 캐릭터 슬라이드 인 애니메이션용
+    private Vector2 leftCharacterTargetPos;
+    private Vector2 rightCharacterTargetPos;
+    private bool isSlideInComplete = false;
+
     [Header("Chapter Title")]
     public TextMeshProUGUI chapterTitleText;
+
+    [Header("Character Animation")]
+    [Tooltip("캐릭터 슬라이드 인 애니메이션 사용 여부")]
+    public bool useCharacterSlideIn = false;
+
+    [Tooltip("캐릭터 슬라이드 인 시간 (초)")]
+    public float characterSlideInDuration = 0.8f;
+
+    [Tooltip("왼쪽 캐릭터 슬라이드 인 시작 X 위치 (오프셋)")]
+    public float leftCharacterStartOffsetX = -1500f;
+
+    [Tooltip("오른쪽 캐릭터 슬라이드 인 시작 X 위치 (오프셋)")]
+    public float rightCharacterStartOffsetX = 1500f;
 
     [Header("Visual Settings")]
     public Color activeSpeakerColor = Color.white;
     public Color inactiveSpeakerColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+
+    [Header("Typing Effect")]
+    [Tooltip("타이핑 효과 사용 여부")]
+    public bool useTypingEffect = false;
+    [Tooltip("타이핑 속도 (글자/초)")]
+    public float typingSpeed = 30f;
+
+    private bool isTyping = false;
+    private Coroutine typingCoroutine;
+    private string currentDialogueText = ""; // 현재 대사 전체 텍스트 저장
 
     [Header("Effect Sprites")]
     public Transform effectSpritesContainer;  // 효과 스프라이트를 담을 부모 오브젝트
@@ -46,6 +74,12 @@ public class DialogueUI : MonoBehaviour
         if (dialogueManager == null)
             dialogueManager = DialogueManager.Instance;
 
+        // 슬라이드 인 애니메이션 사용 시 대화창 미리 숨김
+        if (useCharacterSlideIn && dialogueBox != null)
+        {
+            dialogueBox.SetActive(false);
+        }
+
         // 이벤트 연결
         if (dialogueManager != null)
         {
@@ -56,6 +90,41 @@ public class DialogueUI : MonoBehaviour
             // 대화 자동 시작
             dialogueManager.StartCurrentDialogue();
         }
+    }
+
+    void Update()
+    {
+        // 타이핑 효과가 켜져 있고, 타이핑 중일 때만 스킵 가능
+        if (useTypingEffect && isTyping)
+        {
+            // Space, Enter, 마우스 클릭, 오른쪽 방향키, D 키로 타이핑 스킵
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) ||
+                Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.RightArrow) ||
+                Input.GetKeyDown(KeyCode.D))
+            {
+                SkipTyping();
+            }
+        }
+    }
+
+    /// <summary>
+    /// 타이핑 효과 즉시 완료
+    /// </summary>
+    void SkipTyping()
+    {
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+            typingCoroutine = null;
+        }
+
+        // 저장된 현재 대사 전체를 표시
+        if (dialogueText != null && !string.IsNullOrEmpty(currentDialogueText))
+        {
+            dialogueText.text = currentDialogueText;
+        }
+
+        isTyping = false;
     }
 
     void OnDialogueStart()
@@ -85,9 +154,21 @@ public class DialogueUI : MonoBehaviour
             rightCharacterImage.gameObject.SetActive(true);
         }
 
-        // 대화창 표시
-        if (dialogueBox != null)
-            dialogueBox.SetActive(true);
+        // 슬라이드 인 애니메이션 사용 여부에 따라 처리
+        if (useCharacterSlideIn)
+        {
+            // 캐릭터를 화면 밖으로 즉시 배치
+            HideCharactersOffscreen();
+            // 슬라이드 인 애니메이션 시작
+            StartCoroutine(SlideInCharacters());
+        }
+        else
+        {
+            // 슬라이드 인 없이 바로 대화창 표시
+            if (dialogueBox != null)
+                dialogueBox.SetActive(true);
+            isSlideInComplete = true;
+        }
     }
 
     void OnLineChanged(DialogueLine line)
@@ -99,12 +180,29 @@ public class DialogueUI : MonoBehaviour
             speakerNameText.overflowMode = TextOverflowModes.Truncate;
         }
 
-        // 대사 표시
+        // 대사 표시 (타이핑 효과 적용 여부에 따라)
         if (dialogueText != null)
         {
-            dialogueText.text = line.dialogue;
             dialogueText.overflowMode = TextOverflowModes.Truncate;
             dialogueText.enableWordWrapping = true;
+
+            // 현재 대사 저장 (타이핑 스킵에 사용)
+            currentDialogueText = line.dialogue;
+
+            if (useTypingEffect)
+            {
+                // 타이핑 효과 사용
+                if (typingCoroutine != null)
+                {
+                    StopCoroutine(typingCoroutine);
+                }
+                typingCoroutine = StartCoroutine(TypeText(line.dialogue));
+            }
+            else
+            {
+                // 타이핑 효과 없이 바로 표시
+                dialogueText.text = line.dialogue;
+            }
         }
 
         // 캐릭터 스프라이트 업데이트 (대사별로 다른 표정 등)
@@ -347,15 +445,58 @@ public class DialogueUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 타이핑 효과 코루틴
+    /// </summary>
+    System.Collections.IEnumerator TypeText(string text)
+    {
+        isTyping = true;
+        dialogueText.text = "";
+
+        foreach (char c in text)
+        {
+            dialogueText.text += c;
+            yield return new WaitForSeconds(1f / typingSpeed);
+        }
+
+        isTyping = false;
+    }
+
     void OnDialogueEnd()
     {
         // 효과 스프라이트 정리
         ClearEffectSprites();
 
         // 대화 종료 시 다음 씬으로 이동
-        if (!string.IsNullOrEmpty(nextSceneName))
+        // DialogueData에 nextSceneName이 지정되어 있으면 그걸 사용, 없으면 기본값 사용
+        string targetScene = nextSceneName; // 기본값
+
+        if (dialogueManager != null && dialogueManager.currentDialogue != null)
         {
-            SceneFader.LoadScene(nextSceneName);
+            if (!string.IsNullOrEmpty(dialogueManager.currentDialogue.nextSceneName))
+            {
+                targetScene = dialogueManager.currentDialogue.nextSceneName;
+            }
+        }
+
+        if (!string.IsNullOrEmpty(targetScene))
+        {
+            Debug.Log($"[DialogueUI] Transitioning to scene: {targetScene}");
+
+            // BattleDialogueScene으로 가는 경우 Fade 없이 바로 전환
+            if (targetScene.Contains("BattleDialogue"))
+            {
+                SceneManager.LoadScene(targetScene);
+            }
+            else
+            {
+                // 다른 씬으로는 Fade 사용
+                SceneFader.LoadScene(targetScene);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("[DialogueUI] No next scene specified!");
         }
     }
 
@@ -368,5 +509,102 @@ public class DialogueUI : MonoBehaviour
             dialogueManager.onDialogueEnd.RemoveListener(OnDialogueEnd);
             dialogueManager.onLineChanged.RemoveListener(OnLineChanged);
         }
+    }
+
+    /// <summary>
+    /// 캐릭터를 화면 밖으로 즉시 배치 (슬라이드 인 애니메이션용)
+    /// </summary>
+    void HideCharactersOffscreen()
+    {
+        if (leftCharacterImage != null)
+        {
+            // 목표 위치 저장
+            RectTransform leftRect = leftCharacterImage.GetComponent<RectTransform>();
+            if (leftRect != null)
+            {
+                leftCharacterTargetPos = leftRect.anchoredPosition;
+                // 화면 밖으로 즉시 이동
+                leftRect.anchoredPosition = new Vector2(
+                    leftCharacterTargetPos.x + leftCharacterStartOffsetX,
+                    leftCharacterTargetPos.y
+                );
+            }
+        }
+
+        if (rightCharacterImage != null)
+        {
+            // 목표 위치 저장
+            RectTransform rightRect = rightCharacterImage.GetComponent<RectTransform>();
+            if (rightRect != null)
+            {
+                rightCharacterTargetPos = rightRect.anchoredPosition;
+                // 화면 밖으로 즉시 이동
+                rightRect.anchoredPosition = new Vector2(
+                    rightCharacterTargetPos.x + rightCharacterStartOffsetX,
+                    rightCharacterTargetPos.y
+                );
+            }
+        }
+
+        Debug.Log("[DialogueUI] Characters hidden offscreen for slide-in animation");
+    }
+
+    /// <summary>
+    /// 양쪽 캐릭터 슬라이드 인 애니메이션
+    /// </summary>
+    System.Collections.IEnumerator SlideInCharacters()
+    {
+        RectTransform leftRect = leftCharacterImage != null ? leftCharacterImage.GetComponent<RectTransform>() : null;
+        RectTransform rightRect = rightCharacterImage != null ? rightCharacterImage.GetComponent<RectTransform>() : null;
+
+        if (leftRect == null || rightRect == null)
+        {
+            // 애니메이션 없이 대화창 표시
+            if (dialogueBox != null)
+                dialogueBox.SetActive(true);
+            isSlideInComplete = true;
+            yield break;
+        }
+
+        // 시작 위치는 이미 HideCharactersOffscreen()에서 설정됨
+        Vector2 leftStartPos = leftRect.anchoredPosition;
+        Vector2 rightStartPos = rightRect.anchoredPosition;
+
+        float elapsed = 0f;
+
+        while (elapsed < characterSlideInDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / characterSlideInDuration;
+
+            // EaseOutCubic
+            float easeT = 1f - Mathf.Pow(1f - t, 3f);
+
+            if (leftRect != null)
+            {
+                leftRect.anchoredPosition = Vector2.Lerp(leftStartPos, leftCharacterTargetPos, easeT);
+            }
+
+            if (rightRect != null)
+            {
+                rightRect.anchoredPosition = Vector2.Lerp(rightStartPos, rightCharacterTargetPos, easeT);
+            }
+
+            yield return null;
+        }
+
+        if (leftRect != null)
+            leftRect.anchoredPosition = leftCharacterTargetPos;
+
+        if (rightRect != null)
+            rightRect.anchoredPosition = rightCharacterTargetPos;
+
+        Debug.Log("[DialogueUI] Characters slide-in complete");
+
+        // 슬라이드 인 완료 후 대화창 표시
+        if (dialogueBox != null)
+            dialogueBox.SetActive(true);
+
+        isSlideInComplete = true;
     }
 }

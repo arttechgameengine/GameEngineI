@@ -14,6 +14,7 @@ public class PlayerJudge : MonoBehaviour
     public JudgePopup judgePopup;
 
     private CameraShakeManager cameraShake;
+    private ParryMissEffectType currentParryMissEffect;
 
     // 롱노트 진행 상태
     private class LongNoteState
@@ -29,6 +30,13 @@ public class PlayerJudge : MonoBehaviour
     void Start()
     {
         cameraShake = GetComponent<CameraShakeManager>();
+
+        // NoteSpawner에서 패링 미스 효과 타입 가져오기
+        if (spawner != null)
+        {
+            currentParryMissEffect = spawner.parryMissEffect;
+            Debug.Log($"[PlayerJudge] 패링 미스 효과 설정: {currentParryMissEffect}");
+        }
     }
 
     void Update()
@@ -634,13 +642,14 @@ public class PlayerJudge : MonoBehaviour
             }
         }
 
-        // 패링 노트(SPACE) 미스 시 강한 화면 흔들림
+        // 패링 노트(SPACE) 미스 시 선택된 효과 적용
         bool isParryNote = (n.noteType == "SPACE");
         if (cameraShake != null)
         {
             if (isParryNote)
             {
-                cameraShake.ShakeOnParryMiss();
+                // 선택된 패링 미스 효과 재생
+                cameraShake.PlayParryMissEffect(currentParryMissEffect);
             }
             else
             {

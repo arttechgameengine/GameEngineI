@@ -1,6 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+public enum ParryMissEffectType
+{
+    ScreenShake,     // 화면 흔들림
+    ImageSplatter,   // 이미지 스플래터
+    ScreenFlash      // 화면 플래시
+}
+
 public class NoteSpawner : MonoBehaviour
 {
     public RectTransform notePrefab;
@@ -21,6 +28,10 @@ public class NoteSpawner : MonoBehaviour
     [Header("Rapid Note Visual")]
     public RectTransform rapidNoteUIPrefab;  // 연타 노트 UI Prefab (타이머, 카운터)
 
+    [Header("Parry Miss Effect")]
+    [Tooltip("패링 노트 Miss 시 적용될 효과\n- ScreenShake: 화면 흔들림 (shakeablePanel 사용)\n- ImageSplatter: 이미지 스플래터 (CameraShakeManager의 Splatter 설정 필요)\n- ScreenFlash: 화면 플래시 (CameraShakeManager의 Flash 설정 필요)")]
+    public ParryMissEffectType parryMissEffect = ParryMissEffectType.ScreenShake;
+
     [Header("Audio")]
     public AudioSource bgmSource;
 
@@ -36,8 +47,9 @@ public class NoteSpawner : MonoBehaviour
     // SpawnPoint에서 HitLine까지의 거리를 기반으로 계산된 leadTime
     private float spawnLeadTime;
 
-    // 스폰 시 사용할 로컬 X 좌표 (NotesParent 기준)
+    // 스폰 시 사용할 로컬 X, Y 좌표 (NotesParent 기준)
     private float spawnLocalX;
+    private float spawnLocalY;
     // HitLine의 로컬 X 좌표 (NotesParent 기준) - 판정용으로 공개
     public float hitLineLocalX { get; private set; }
 
@@ -64,10 +76,12 @@ public class NoteSpawner : MonoBehaviour
             return;
 
         // NotesParent 기준 로컬 좌표로 변환
-        spawnLocalX = notesParent.InverseTransformPoint(spawnPoint.position).x;
+        Vector3 spawnLocalPos = notesParent.InverseTransformPoint(spawnPoint.position);
+        spawnLocalX = spawnLocalPos.x;
+        spawnLocalY = spawnLocalPos.y;
         hitLineLocalX = notesParent.InverseTransformPoint(hitLine.position).x;
 
-        Debug.Log($"[NoteSpawner] Updated spawn positions - spawnLocalX: {spawnLocalX}, hitLineLocalX: {hitLineLocalX}");
+        Debug.Log($"[NoteSpawner] Updated spawn positions - spawnLocalX: {spawnLocalX}, spawnLocalY: {spawnLocalY}, hitLineLocalX: {hitLineLocalX}");
     }
 
     public void LoadPattern(PatternData pattern)
@@ -263,8 +277,8 @@ public class NoteSpawner : MonoBehaviour
         // 노트의 판정 시간은 JSON 원본 그대로 사용 (준비 시간은 songStartDspTime에 이미 반영됨)
         float actualHitTime = data.time;
 
-        // NotesParent 기준 로컬 좌표로 스폰 위치 설정
-        n.localPosition = new Vector3(spawnLocalX, 0, 0);
+        // NotesParent 기준 로컬 좌표로 스폰 위치 설정 (SpawnPoint의 X, Y 좌표 사용)
+        n.localPosition = new Vector3(spawnLocalX, spawnLocalY, 0);
 
         NoteMovement mv = n.GetComponent<NoteMovement>();
         NoteVisual visual = n.GetComponent<NoteVisual>();
@@ -344,8 +358,8 @@ public class NoteSpawner : MonoBehaviour
         // 막대의 pivot을 왼쪽으로 설정 (왼쪽 끝이 spawnPoint에 고정, 오른쪽으로 늘어남)
         bar.pivot = new Vector2(0, 0.5f);
 
-        // spawnLocalX 위치에 막대 배치 (pivot이 왼쪽이므로 막대 왼쪽 끝이 spawnPoint에 위치)
-        bar.localPosition = new Vector3(spawnLocalX, 0, 0);
+        // SpawnPoint 위치에 막대 배치 (pivot이 왼쪽이므로 막대 왼쪽 끝이 spawnPoint에 위치)
+        bar.localPosition = new Vector3(spawnLocalX, spawnLocalY, 0);
 
         // 막대 색상 설정 (흰색 반투명)
         UnityEngine.UI.Image barImage = bar.GetComponent<UnityEngine.UI.Image>();

@@ -13,11 +13,13 @@ public class DishRevealTransition : MonoBehaviour
     public Image dishImage;                 // 요리 이미지 (등급에 따라 변경)
 
     [Header("Dish Images by Grade")]
-    [Tooltip("S, A 등급용 요리 이미지 (최고급)")]
+    [Tooltip("S/A 등급 요리 이미지 (최고급)")]
     public Sprite dishPerfect;
-    [Tooltip("B, C 등급용 요리 이미지 (보통)")]
+
+    [Tooltip("B/C 등급 요리 이미지 (보통)")]
     public Sprite dishGood;
-    [Tooltip("D, F 등급용 요리 이미지 (실패작)")]
+
+    [Tooltip("D/F 등급 요리 이미지 (실패)")]
     public Sprite dishBad;
 
     [Header("Animation Settings")]
@@ -36,6 +38,12 @@ public class DishRevealTransition : MonoBehaviour
     [Tooltip("커버 들릴 때 페이드 아웃 여부")]
     public bool fadeCoverOnLift = true;
 
+    [Tooltip("요리 이미지 Scale Up 애니메이션 여부")]
+    public bool scaleUpDish = true;
+
+    [Tooltip("요리 이미지가 커질 최종 Scale 배율 (1.0 = 원본)")]
+    public float dishScaleMultiplier = 1.15f;
+
     [Tooltip("요리를 보여준 후 대기 시간 (초)")]
     public float displayDuration = 2.0f;
 
@@ -46,6 +54,8 @@ public class DishRevealTransition : MonoBehaviour
     private Vector2 panelStartPos;  // Panel의 시작 위치 (화면 아래)
     private Vector2 panelEndPos;    // Panel의 최종 위치 (화면 중앙)
     private Vector2 coverStartPos;  // Cover의 시작 위치
+    private Vector3 dishOriginalScale; // Dish의 원본 Scale (Inspector 설정값)
+    private Vector3 dishStartScale; // Dish의 애니메이션 시작 Scale
     private bool isTransitioning = false;
 
     void Awake()
@@ -56,6 +66,12 @@ public class DishRevealTransition : MonoBehaviour
         if (transitionPanel != null)
         {
             transitionPanel.gameObject.SetActive(false);
+        }
+
+        // Dish 이미지의 원본 Scale 저장 (Inspector에서 설정된 값)
+        if (dishImage != null)
+        {
+            dishOriginalScale = dishImage.rectTransform.localScale;
         }
     }
 
@@ -150,6 +166,13 @@ public class DishRevealTransition : MonoBehaviour
             coverColor.a = 1f;
             coverImage.color = coverColor;
         }
+
+        // 요리 이미지 Scale 초기화 (항상 1, 1, 1부터 시작)
+        if (dishImage != null)
+        {
+            dishStartScale = Vector3.one;
+            dishImage.rectTransform.localScale = dishStartScale;
+        }
     }
 
     IEnumerator SlideUpPanel()
@@ -183,21 +206,38 @@ public class DishRevealTransition : MonoBehaviour
         Color startColor = coverImage.color;
         Color endColor = new Color(startColor.r, startColor.g, startColor.b, fadeCoverOnLift ? 0f : 1f);
 
+        // 요리 이미지 Scale Up 설정
+        RectTransform dishRect = dishImage != null ? dishImage.rectTransform : null;
+        Vector3 dishEndScale = dishStartScale * dishScaleMultiplier;
+
         while (elapsed < coverLiftDuration)
         {
             elapsed += Time.deltaTime;
             float t = elapsed / coverLiftDuration;
 
             // EaseOutQuad로 부드러운 감속
-            t = 1f - (1f - t) * (1f - t);
+            float easeT = 1f - (1f - t) * (1f - t);
 
             // 커버 위로 이동
-            coverRect.anchoredPosition = Vector2.Lerp(coverStartPos, coverEndPos, t);
+            coverRect.anchoredPosition = Vector2.Lerp(coverStartPos, coverEndPos, easeT);
 
             // 커버 페이드 아웃 (옵션)
             if (fadeCoverOnLift)
             {
-                coverImage.color = Color.Lerp(startColor, endColor, t);
+                coverImage.color = Color.Lerp(startColor, endColor, easeT);
+            }
+
+            // 요리 이미지 Scale Up (옵션)
+            if (scaleUpDish && dishRect != null)
+            {
+                // EaseOutBack으로 약간 튕기는 효과
+                float scaleT = easeT;
+                float overshoot = 1.1f; // 살짝 오버슈팅
+                if (scaleT < 1f)
+                {
+                    scaleT = scaleT * scaleT * ((overshoot + 1) * scaleT - overshoot);
+                }
+                dishRect.localScale = Vector3.Lerp(dishStartScale, dishEndScale, scaleT);
             }
 
             yield return null;
@@ -205,6 +245,12 @@ public class DishRevealTransition : MonoBehaviour
 
         coverRect.anchoredPosition = coverEndPos;
         coverImage.color = endColor;
+
+        // 요리 이미지 최종 Scale 설정
+        if (scaleUpDish && dishRect != null)
+        {
+            dishRect.localScale = dishEndScale;
+        }
     }
 
     /// <summary>

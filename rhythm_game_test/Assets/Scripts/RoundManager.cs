@@ -26,21 +26,50 @@ public class RoundManager : MonoBehaviour
     }
 
     /// <summary>
-    /// SceneFader의 fade in이 완료될 때까지 대기 후 음악 시작
+    /// 팝업 먼저 표시, Fade In 완료 후 팝업 닫힘 대기, 그 다음 음악 시작
     /// </summary>
     IEnumerator WaitForFadeInAndStartMusic()
     {
+        // 1. 팝업 UI 먼저 표시 (Fade In과 동시에, Time.timeScale은 건드리지 않음)
+        if (RoundStartPopup.Instance != null)
+        {
+            RoundStartPopup.Instance.ShowPopup();
+            Debug.Log("[RoundManager] Popup UI shown (during fade in, timeScale not changed yet)");
+        }
+
         Debug.Log("[RoundManager] Waiting for SceneFader fade in to complete...");
 
-        // SceneFader의 fade in이 완료될 때까지 대기
+        // 2. SceneFader의 fade in이 완료될 때까지 대기
         while (!SceneFader.IsFadeInComplete)
         {
             yield return null;
         }
 
-        Debug.Log("[RoundManager] Fade in complete! Starting music now...");
+        Debug.Log("[RoundManager] Fade in complete!");
 
-        // 음악 시작 (준비 시간은 노트 타이밍에 이미 반영됨)
+        // 3. Fade In 완료 후 게임 일시정지 (Time.timeScale = 0)
+        if (RoundStartPopup.Instance != null)
+        {
+            RoundStartPopup.Instance.PauseGame();
+            Debug.Log("[RoundManager] Game paused (Time.timeScale = 0)");
+        }
+
+        // 4. 팝업이 닫힐 때까지 대기 (팝업이 있으면)
+        if (RoundStartPopup.Instance != null)
+        {
+            Debug.Log("[RoundManager] Waiting for popup to close...");
+
+            while (!RoundStartPopup.IsPopupClosed)
+            {
+                yield return null;
+            }
+
+            Debug.Log("[RoundManager] Popup closed!");
+        }
+
+        Debug.Log("[RoundManager] Starting music now...");
+
+        // 5. 음악 시작 (준비 시간은 노트 타이밍에 이미 반영됨)
         spawner.StartSong(bgmSource);
     }
 

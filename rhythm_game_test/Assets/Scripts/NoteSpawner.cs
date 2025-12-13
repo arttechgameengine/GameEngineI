@@ -152,19 +152,35 @@ public class NoteSpawner : MonoBehaviour
             return;
         }
 
-        // 화면에 노트가 남아있는지 확인 (NoteMovement 컴포넌트가 있는 것만)
+        // 화면에 노트가 남아있는지 확인 (판정 안 된 노트만 체크)
         NoteMovement[] remainingNotes = notesParent.GetComponentsInChildren<NoteMovement>();
+        int unjudgedCount = 0;
+        foreach (var note in remainingNotes)
+        {
+            if (!note.isJudged)
+            {
+                unjudgedCount++;
+            }
+        }
+
+        if (unjudgedCount > 0)
+        {
+            Debug.Log($"[NoteSpawner] Song not ended - {unjudgedCount} unjudged notes still on screen");
+            return;
+        }
+
+        // 판정된 노트들만 남아있다면 정리
         if (remainingNotes.Length > 0)
         {
-            Debug.Log($"[NoteSpawner] Song not ended - {remainingNotes.Length} notes still on screen (childCount: {notesParent.childCount})");
-
-            // 디버깅: 남아있는 노트 정보 출력
+            Debug.Log($"[NoteSpawner] Cleaning up {remainingNotes.Length} judged notes...");
             foreach (var note in remainingNotes)
             {
-                Debug.Log($"  - Remaining note: {note.noteType} ({note.noteSubType}), judged: {note.isJudged}");
+                if (note.longNoteVisualBar != null)
+                {
+                    Destroy(note.longNoteVisualBar);
+                }
+                Destroy(note.gameObject);
             }
-
-            return;
         }
 
         // 롱노트 막대가 남아있는지 확인 (RapidNoteJudge 컴포넌트가 없는 자식들)

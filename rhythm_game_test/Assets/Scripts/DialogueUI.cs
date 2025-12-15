@@ -206,15 +206,28 @@ public class DialogueUI : MonoBehaviour
         }
 
         // 캐릭터 스프라이트 업데이트 (대사별로 다른 표정 등)
-        if (line.speakerSprite != null)
+        if (line.isLeftSpeaker && leftCharacterImage != null)
         {
-            if (line.isLeftSpeaker && leftCharacterImage != null)
+            // speakerSprite가 있으면 사용, 없으면 기본 스프라이트로 복원
+            if (line.speakerSprite != null)
             {
                 leftCharacterImage.sprite = line.speakerSprite;
             }
-            else if (!line.isLeftSpeaker && rightCharacterImage != null)
+            else if (dialogueManager != null && dialogueManager.currentDialogue != null && dialogueManager.currentDialogue.leftCharacterDefault != null)
+            {
+                leftCharacterImage.sprite = dialogueManager.currentDialogue.leftCharacterDefault;
+            }
+        }
+        else if (!line.isLeftSpeaker && rightCharacterImage != null)
+        {
+            // speakerSprite가 있으면 사용, 없으면 기본 스프라이트로 복원
+            if (line.speakerSprite != null)
             {
                 rightCharacterImage.sprite = line.speakerSprite;
+            }
+            else if (dialogueManager != null && dialogueManager.currentDialogue != null && dialogueManager.currentDialogue.rightCharacterDefault != null)
+            {
+                rightCharacterImage.sprite = dialogueManager.currentDialogue.rightCharacterDefault;
             }
         }
 
@@ -332,8 +345,19 @@ public class DialogueUI : MonoBehaviour
             return;
         }
 
+        // 컨테이너 RectTransform을 Canvas 전체 크기로 설정 (Empty GameObject는 크기가 0이라 자식이 안 보임)
+        RectTransform containerRect = effectSpritesContainer.GetComponent<RectTransform>();
+        if (containerRect != null)
+        {
+            containerRect.anchorMin = Vector2.zero;
+            containerRect.anchorMax = Vector2.one;
+            containerRect.offsetMin = Vector2.zero;
+            containerRect.offsetMax = Vector2.zero;
+        }
+
         // 새 효과 스프라이트 생성
         currentEffectObjects = new GameObject[effectSprites.Length];
+        Debug.Log($"[DialogueUI] 효과 스프라이트 {effectSprites.Length}개 생성 시작");
 
         for (int i = 0; i < effectSprites.Length; i++)
         {
@@ -342,13 +366,18 @@ public class DialogueUI : MonoBehaviour
                 continue;
 
             // 새 GameObject 생성
-            GameObject effectObj = new GameObject($"EffectSprite_{i}");
+            GameObject effectObj = new GameObject($"EffectSprite_{i}", typeof(RectTransform));
+            effectObj.layer = 5; // UI Layer
             effectObj.transform.SetParent(effectSpritesContainer, false);
+
+            // CanvasRenderer 명시적 추가 (Image 전에)
+            effectObj.AddComponent<CanvasRenderer>();
 
             // Image 컴포넌트 추가
             Image effectImage = effectObj.AddComponent<Image>();
             effectImage.sprite = data.effectSprite;
             effectImage.color = new Color(data.tintColor.r, data.tintColor.g, data.tintColor.b, data.alpha);
+            effectImage.raycastTarget = false; // UI 입력 차단 방지
 
             // RectTransform 설정
             RectTransform rectTransform = effectObj.GetComponent<RectTransform>();
@@ -358,18 +387,49 @@ public class DialogueUI : MonoBehaviour
 
             // 위치, 크기, 회전, 스케일 설정
             rectTransform.anchoredPosition = data.position;
-            rectTransform.sizeDelta = data.size;
+
+            // 비율 유지하면서 크기 설정
+            Vector2 spriteSize = new Vector2(data.effectSprite.rect.width, data.effectSprite.rect.height);
+
+            if (data.size == Vector2.zero)
+            {
+                // size가 (0, 0)이면 원본 크기 사용
+                rectTransform.sizeDelta = spriteSize;
+            }
+            else if (data.size.x > 0 && data.size.y == 0)
+            {
+                // width만 지정: 비율 유지하면서 height 자동 계산
+                float aspectRatio = spriteSize.y / spriteSize.x;
+                rectTransform.sizeDelta = new Vector2(data.size.x, data.size.x * aspectRatio);
+            }
+            else if (data.size.x == 0 && data.size.y > 0)
+            {
+                // height만 지정: 비율 유지하면서 width 자동 계산
+                float aspectRatio = spriteSize.x / spriteSize.y;
+                rectTransform.sizeDelta = new Vector2(data.size.y * aspectRatio, data.size.y);
+            }
+            else
+            {
+                // 둘 다 지정되면 그대로 사용 (비율 무시)
+                rectTransform.sizeDelta = data.size;
+            }
+
             rectTransform.localRotation = Quaternion.Euler(data.rotation);
             rectTransform.localScale = data.scale;
 
-            // Sorting order 설정 (Canvas가 있는 경우)
-            Canvas canvas = effectObj.AddComponent<Canvas>();
-            canvas.overrideSorting = true;
-            canvas.sortingOrder = data.sortingOrder;
+            // 계층 구조 내 렌더링 순서 설정 (Canvas는 부모에만 있어야 함)
+            // sortingOrder를 hierarchy 순서로 반영하려면 SetAsLastSibling() 사용
+            effectObj.transform.SetSiblingIndex(effectSpritesContainer.childCount - 1 + data.sortingOrder);
 
             currentEffectObjects[i] = effectObj;
 
-            Debug.Log($"[DialogueUI] 효과 스프라이트 생성: {data.effectSprite.name} at {data.position}");
+            // 디버깅: 실제 월드 좌표와 부모 정보 출력
+            Vector3 worldPos = rectTransform.position;
+            Debug.Log($"[DialogueUI] === Effect {i}: {data.effectSprite.name} ===");
+            Debug.Log($"  - Size (sizeDelta): {rectTransform.sizeDelta} (설정값: {data.size})");
+            Debug.Log($"  - Scale (localScale): {rectTransform.localScale} (설정값: {data.scale})");
+            Debug.Log($"  - 결과 크기: {rectTransform.sizeDelta.x * rectTransform.localScale.x} x {rectTransform.sizeDelta.y * rectTransform.localScale.y}");
+            Debug.Log($"  - Position: {rectTransform.anchoredPosition}");
         }
     }
 

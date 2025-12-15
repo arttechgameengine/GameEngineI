@@ -1286,7 +1286,7 @@ MonoBehaviour:
   backToTournamentButton: {fileID: 1365995437}
   exitToMenuButton: {fileID: 1909801187}
   resultText: {fileID: 348939292}
-  passingRank: F
+  passingRank: C
   passColor: {r: 0.4, g: 1, b: 0.4, a: 1}
   failColor: {r: 1, g: 0.4, b: 0.4, a: 1}
   rankS: {r: 1, g: 0.84, b: 0, a: 1}

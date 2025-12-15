@@ -3323,7 +3323,7 @@ MonoBehaviour:
   enemySprite: {fileID: 928989697}
   longNoteBarPrefab: {fileID: 9162522032867097388, guid: edbe364cbb192ba4fbe4a3f88701db7d, type: 3}
   rapidNoteUIPrefab: {fileID: 6971528200285518254, guid: 49cc4c7f45d4d7c47b698258286aec67, type: 3}
-  parryMissEffect: 2
+  parryMissEffect: 0
   bgmSource: {fileID: 759572563}
   endDelay: 2
   songStartDspTime: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 608455c0a88d71e418d0f31070c6c486
+guid: d5407fe493e3bd04ba8e5f2a1f3cdef5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: KakaoTalk_20251201_125806605_05_0
+      name: ge_effect_question_L_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 884
-        height: 785
+        x: 167
+        y: 658
+        width: 155
+        height: 195
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,30 +112,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 242779ff22de3ca4ca646c23b8a7cb8b
-      internalID: -1716309329
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: KakaoTalk_20251201_125806605_05_1
-      rect:
-        serializedVersion: 2
-        x: 960
-        y: 0
-        width: 960
-        height: 1080
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f3cd60d459939324282c56fca957d6b1
-      internalID: 979625702
+      spriteID: a3708e330e3d8d940863419285ac9d82
+      internalID: 1406881338
       vertices: []
       indices: 
       edges: []
@@ -144,7 +122,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 4fa65c1d9002de141a9729f962bfff03
+    spriteID: e0ce397571f6a6a479fb03d2adc85848
     internalID: 0
     vertices: []
     indices: 
@@ -154,8 +132,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      KakaoTalk_20251201_125806605_05_0: -1716309329
-      KakaoTalk_20251201_125806605_05_1: 979625702
+      ge_effect_question_L_0: 1406881338
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

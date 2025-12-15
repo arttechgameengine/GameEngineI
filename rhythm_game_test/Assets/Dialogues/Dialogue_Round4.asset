@@ -19,46 +19,103 @@ MonoBehaviour:
   lines:
   - speakerName: "\uB77C\uCC2C"
     speakerSprite: {fileID: 0}
-    dialogue: "...\uC2DC\uB044\uB7FD\uAD70. \uC65C \uC774\uB807\uAC8C \uBC1D\uC544?
-      \uC2DC\uC791\uB3C4 \uC548\uD588\uB294\uB370 \uBC8C\uC368 \uD53C\uACE4\uD574."
+    dialogue: "\uB4DC\uB514\uC5B4 \uC5EC\uAE30\uAE4C\uC9C0 \uC654\uB124.\r\n\uC0DD\uAC01\uBCF4\uB2E4
+      \uC624\uB798 \uBC84\uD2F0\uC796\uC544?"
     isLeftSpeaker: 0
+    effectSprites: []
   - speakerName: "\uC18C\uCC44"
     speakerSprite: {fileID: 0}
-    dialogue: "\uC804 \uC6D0\uB798 \uC774\uB7F0 \uD3B8\uC774\uC5D0\uC694! \uC624\uB298\uB3C4
-      \uB9DB\uC788\uAC8C \uB9CC\uB4E4\uC5B4\uBCF4\uB824\uACE0\uC694. "
+    dialogue: "\uC544\uC9C1 \uD798 \uB0A8\uC558\uC5B4\uC694! \uC624\uB298\uB3C4 \uD798\uB0BC\uAC8C\uC694!"
     isLeftSpeaker: 1
-  - speakerName: "\uC790\uC6C5"
+    effectSprites:
+    - {fileID: 11400000, guid: baf6333a53ef57c468b3b12048edf193, type: 2}
+  - speakerName: "\uB77C\uCC2C"
     speakerSprite: {fileID: 0}
-    dialogue: "\uADF8 \uC6C3\uC74C... \uAC70\uC2AC\uB9B0\uB2E4. \uC9DC\uC7A5\uC740
-      \uAE30\uBD84 \uC88B\uB2E4\uACE0 \uB418\uB294 \uC694\uB9AC\uAC00 \uC544\uB2C8\uC9C0. "
+    dialogue: "\uADF8 \uB9D0, \uC5EC\uAE30\uAE4C\uC9C0 \uC62C\uB77C\uC628 \uC0AC\uB78C
+      \uC911\uC5D0 \uAC00\uC7A5 \uB2A6\uAC8C \uBB34\uB108\uC9C4 \uD0C0\uC785\uC774\uB354\uB77C."
     isLeftSpeaker: 0
+    effectSprites:
+    - {fileID: 11400000, guid: 2dd2c27ae025b124b9cfcf2380e69eb2, type: 2}
+    - {fileID: 11400000, guid: 4a3edd7e68c506b47a93ea78b64ce3b0, type: 2}
   - speakerName: "\uC18C\uCC44"
     speakerSprite: {fileID: 0}
-    dialogue: "\uADF8\uB798\uB3C4 \uC800\uB294 \uD558\uACE0 \uC2F6\uC5B4\uC694. \uC9C0\uAE08
-      \uC81C \uD798\uC73C\uB85C\uC694. "
+    dialogue: "\uBB34\uB108\uC9C0\uC9C0 \uC54A\uC744 \uAC70\uC608\uC694. \uB05D\uAE4C\uC9C0
+      \uB9CC\uB4E4\uACE0 \uC2F6\uC73C\uB2C8\uAE4C\uC694"
     isLeftSpeaker: 1
-  - speakerName: "\uC790\uC6C5"
+    effectSprites:
+    - {fileID: 11400000, guid: e9ec13dd2c5b3be4fb1495d399d9afa2, type: 2}
+  - speakerName: "\uB77C\uCC2C"
     speakerSprite: {fileID: 0}
-    dialogue: "\uD798? \uBD88\uC55E\uC5D0\uC11C \uADF8\uB7F0\uAC74 \uAE08\uBC29 \uB179\uC544\uB0B4\uB9B0\uB2E4.
-      \uB9DB\uC740 \uC608\uBBFC\uD574\uC11C... \uC870\uAE08\uB9CC \uD2C0\uC5B4\uC838\uB3C4
-      \uC8FD\uC9C0. "
+    dialogue: "\uD750\uC74C\u2026 \uCD08\uBC18\uC5D0 \uC2F8\uC6B4 \uC560\uB4E4\uBCF4\uB2E8
+      \uD6E8\uC52C \uC548\uC815\uB410\uACE0,\r\n\uC801\uB2F9\uD788 \uC790\uC2E0\uAC10\uB3C4
+      \uC788\uACE0\u2026\r\n\uAC70\uC2AC\uB9B4 \uC815\uB3C4\uB85C \uBC1D\uB124?"
     isLeftSpeaker: 0
+    effectSprites:
+    - {fileID: 11400000, guid: 9d703ad028027ee4abb790299cd9e6d9, type: 2}
+  - speakerName: "\uB77C\uCC2C"
+    speakerSprite: {fileID: 0}
+    dialogue: "\uADFC\uB370 \uB9D0\uC774\uC9C0\u2014 \uBC1D\uC740 \uC0AC\uB78C\uC77C\uC218\uB85D,\r\n\uB9C8\uB77C\uC758
+      \uC5BC\uC5BC\uD568\uC774 \uB4A4\uB2A6\uAC8C \uD655 \uC62C\uB77C\uC624\uBA74\r\n\uD45C\uC815\uC774
+      \uC544\uC8FC \uADC0\uC5FD\uAC8C \uBCC0\uD558\uAC70\uB4E0."
+    isLeftSpeaker: 0
+    effectSprites:
+    - {fileID: 11400000, guid: 03efb5b7b700eed48b5a44993007c9a9, type: 2}
   - speakerName: "\uC18C\uCC44"
     speakerSprite: {fileID: 0}
-    dialogue: "\uADF8\uB798\uC11C \uB354 \uC870\uC2EC\uD558\uACE0 \uC2F6\uC5B4\uC694.
-      \uD574\uB0BC \uC218 \uC788\uB2E4\uACE0 \uBBFF\uC5B4\uC694!"
+    dialogue: "\uADF8\uB7FC \uD45C\uC815 \uBB34\uB108\uC9C0\uC9C0 \uC54A\uAC8C \uB354
+      \uC9D1\uC911\uD560\uAC8C\uC694."
     isLeftSpeaker: 1
-  - speakerName: "\uC790\uC6C5"
+    effectSprites:
+    - {fileID: 11400000, guid: 35d33e6c035d2134a8afaf8fb186450f, type: 2}
+  - speakerName: "\uB77C\uCC2C"
     speakerSprite: {fileID: 0}
-    dialogue: "...\uADF8 \uBBFF\uC74C\uC774 \uAE08\uBC29 \uBB34\uB108\uC9C0\uB294
-      \uAC78 \uB9CE\uC774 \uBD24\uB2E4. \uC5EC\uAE34.. \uBC1D\uC740 \uB9C8\uC74C\uC774
-      \uC624\uB798 \uBC84\uD2F0\uB294 \uACF3\uC774 \uC544\uB2C8\uB2E4. "
+    dialogue: "\uADF8\uAC70\uC57C \uC88B\uC9C0.\r\n\uC9C0\uAE08 \uC774 \uBAA8\uC2B5\u2026\r\n\uAF64
+      \uBCF4\uAE30 \uC88B\uAC70\uB4E0."
     isLeftSpeaker: 0
+    effectSprites:
+    - {fileID: 11400000, guid: 03efb5b7b700eed48b5a44993007c9a9, type: 2}
+  - speakerName: "\uB77C\uCC2C"
+    speakerSprite: {fileID: 0}
+    dialogue: "\uC194\uC9C1\uD788 \uB9D0\uD558\uC790\uBA74\u2014\r\n\uB124\uAC00
+      \uC5EC\uAE30\uAE4C\uC9C0 \uC62C\uB77C\uC62C \uC904\uC740 \uBAB0\uB790\uC5B4.\r\n\uADFC\uB370
+      \uC62C\uB77C\uC654\uC796\uC544?\r\n\uADF8\uAC8C \uC81C\uC77C \uD765\uBBF8\uB85C\uC6CC"
+    isLeftSpeaker: 0
+    effectSprites:
+    - {fileID: 11400000, guid: 26016cb8e344cd340be134a2cbe534de, type: 2}
   - speakerName: "\uC18C\uCC44"
     speakerSprite: {fileID: 0}
-    dialogue: "\uADF8\uB7FC \uB354 \uB2E8\uB2E8\uD574\uC9C8\uAC8C\uC694!"
+    dialogue: "\uC624\uB298\uB3C4 \uC798\uD574\uBCFC\uAC8C\uC694. \uC81C\uAC00 \uB418\uB294
+      \uB9CC\uD07C!"
     isLeftSpeaker: 1
-  - speakerName: "\uC790\uC6C5"
+    effectSprites:
+    - {fileID: 11400000, guid: e9ec13dd2c5b3be4fb1495d399d9afa2, type: 2}
+  - speakerName: "\uB77C\uCC2C"
     speakerSprite: {fileID: 0}
-    dialogue: "...\uC9C0\uCF1C\uBCF4\uC9C0. \uC5BC\uB9C8\uB098 \uBC84\uD2F0\uB098. "
+    dialogue: "\u2026\uADF8 \uC21C\uC218\uD568,\r\n\uC5B8\uC81C \uBC14\uB014\uAE4C
+      \uAD81\uAE08\uD574\uC11C \uB9D0\uC774\uC57C."
     isLeftSpeaker: 0
+    effectSprites:
+    - {fileID: 11400000, guid: 4a3edd7e68c506b47a93ea78b64ce3b0, type: 2}
+    - {fileID: 11400000, guid: dad629af8819bb94581446743a65a5a0, type: 2}
+  - speakerName: "\uB77C\uCC2C"
+    speakerSprite: {fileID: 0}
+    dialogue: "\uC790, \uC62C\uB77C\uC628 \uB9CC\uD07C \uBCF4\uC5EC\uC918.\r\n\uC5EC\uAE30\uC11C\uBD80\uD130\uB294\u2014\r\n\uC2E4\uC218
+      \uD558\uB098\uC5D0\uB3C4 \uD45C\uC815\uC774 \uB2EC\uB77C\uC9C0\uAC70\uB4E0."
+    isLeftSpeaker: 0
+    effectSprites:
+    - {fileID: 11400000, guid: 4a3edd7e68c506b47a93ea78b64ce3b0, type: 2}
+  - speakerName: "\uC18C\uCC44"
+    speakerSprite: {fileID: 0}
+    dialogue: "\uAD1C\uCC2E\uC544\uC694! \uB05D\uAE4C\uC9C0 \uC81C \uB9DB\uC73C\uB85C
+      \uC2B9\uBD80\uD560\uB798\uC694!"
+    isLeftSpeaker: 1
+    effectSprites:
+    - {fileID: 11400000, guid: e9ec13dd2c5b3be4fb1495d399d9afa2, type: 2}
+  - speakerName: "\uB77C\uCC2C"
+    speakerSprite: {fileID: 0}
+    dialogue: "\uC88B\uC544.\r\n\uADF8 \uD45C\uC815\uC774 \uC5B8\uC81C \uD754\uB4E4\uB9B4\uC9C0\u2026\r\n\uCC9C\uCC9C\uD788
+      \uC990\uACA8\uBCFC\uAC8C."
+    isLeftSpeaker: 0
+    effectSprites:
+    - {fileID: 11400000, guid: 03efb5b7b700eed48b5a44993007c9a9, type: 2}
+  nextSceneName: 

@@ -114,6 +114,12 @@ public class RapidNoteJudge : MonoBehaviour
         currentHitCount++;
         Debug.Log($"[RapidNoteJudge] Hit {currentHitCount}/{requiredHitCount}");
 
+        // 연타 진행 애니메이션 재생 (각 키입력마다)
+        if (CookingAreaManager.Instance != null)
+        {
+            CookingAreaManager.Instance.PlayRapidHitAnimation(assignedArrow);
+        }
+
         // 비주얼 피드백
         if (rapidVisual != null)
         {
@@ -150,10 +156,10 @@ public class RapidNoteJudge : MonoBehaviour
             ScoreManager.Instance.AddJudge(judgement);
         }
 
-        // 요리 애니메이션 트리거
+        // 연타 성공 애니메이션 재생
         if (CookingAreaManager.Instance != null)
         {
-            CookingAreaManager.Instance.PlayCookingAnimation(assignedArrow);
+            CookingAreaManager.Instance.PlayRapidSuccessAnimation(assignedArrow);
         }
 
         // 비주얼 성공 연출 (흰색 번쩍 효과 + 페이드아웃 후 노트 파괴)

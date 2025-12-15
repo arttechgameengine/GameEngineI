@@ -365,19 +365,13 @@ public class PlayerJudge : MonoBehaviour
             }
         }
 
-        // 요리 효과 재생 (기존 시스템) - 주석 처리: CookingAreaManager 사용
-        // if (CookingEffect.Instance != null)
-        // {
-        //     CookingEffect.Instance.PlayCookingEffect(n.noteType);
-        // }
-
-        // 고정 요리 스프라이트 애니메이션 재생 (새로운 시스템)
+        // 고정 요리 스프라이트 애니메이션 재생 (단일 노트)
         bool shouldPlayCooking = (CookingAreaManager.Instance != null && n.noteType != "SPACE");
         Debug.Log($"[PlayerJudge Hit] noteType={n.noteType}, Instance={CookingAreaManager.Instance != null}, shouldPlay={shouldPlayCooking}");
 
         if (shouldPlayCooking)
         {
-            CookingAreaManager.Instance.PlayCookingAnimation(n.noteType);
+            CookingAreaManager.Instance.PlaySingleNoteAnimation(n.noteType);
         }
 
         // 히트 효과 재생 후 파괴
@@ -418,16 +412,12 @@ public class PlayerJudge : MonoBehaviour
             isFailed = false
         };
 
-        // 요리 효과 재생 (기존 시스템) - 주석 처리: CookingAreaManager 사용
-        // if (CookingEffect.Instance != null)
-        // {
-        //     CookingEffect.Instance.PlayCookingEffect(n.noteType);
-        // }
-
-        // 고정 요리 스프라이트 애니메이션 재생 (새로운 시스템)
+        // 고정 요리 스프라이트 애니메이션 재생 (롱노트 시작)
         if (CookingAreaManager.Instance != null && n.noteType != "SPACE")
         {
-            CookingAreaManager.Instance.PlayCookingAnimation(n.noteType);
+            CookingAreaManager.Instance.PlayLongStartAnimation(n.noteType);
+            // 시작 애니메이션 후 Hold 애니메이션으로 전환
+            StartCoroutine(PlayLongHoldAfterDelay(n.noteType, 0.2f));
         }
 
         // Start 노트는 히트 효과만 재생, 파괴하지 않음 (End까지 유지)
@@ -452,16 +442,10 @@ public class PlayerJudge : MonoBehaviour
         judgePopup.ShowJudge(judge);
         ScoreManager.Instance.AddJudge(judge);
 
-        // 요리 효과 재생 (기존 시스템) - 주석 처리: CookingAreaManager 사용
-        // if (CookingEffect.Instance != null)
-        // {
-        //     CookingEffect.Instance.PlayCookingEffect(n.noteType);
-        // }
-
-        // 고정 요리 스프라이트 애니메이션 재생 (새로운 시스템)
+        // 고정 요리 스프라이트 애니메이션 재생 (롱노트 성공)
         if (CookingAreaManager.Instance != null && n.noteType != "SPACE")
         {
-            CookingAreaManager.Instance.PlayCookingAnimation(n.noteType);
+            CookingAreaManager.Instance.PlayLongSuccessAnimation(n.noteType);
         }
 
         // 같은 그룹의 모든 노트 파괴 (Start, Hold 포함)
@@ -507,6 +491,12 @@ public class PlayerJudge : MonoBehaviour
         if (cameraShake != null)
         {
             cameraShake.ShakeOnNormalMiss();
+        }
+
+        // 롱노트 실패 시 Idle 애니메이션으로 복귀 (Long_Hold Loop 중단)
+        if (CookingAreaManager.Instance != null && currentLongNote.noteType != "SPACE")
+        {
+            CookingAreaManager.Instance.PlayIdleAnimation(currentLongNote.noteType);
         }
 
         // 롱노트 상태를 실패로 표시 (null로 만들지 않고 bar 업데이트는 계속)
@@ -569,6 +559,17 @@ public class PlayerJudge : MonoBehaviour
         {
             Debug.Log($"[LongNote Fail] Duration ended, clearing currentLongNote for group {groupId}");
             currentLongNote = null;
+        }
+    }
+
+    System.Collections.IEnumerator PlayLongHoldAfterDelay(string noteType, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Hold 애니메이션 재생 (롱노트가 아직 진행 중인 경우에만)
+        if (currentLongNote != null && !currentLongNote.isFailed && CookingAreaManager.Instance != null)
+        {
+            CookingAreaManager.Instance.PlayLongHoldAnimation(noteType);
         }
     }
 

@@ -505,9 +505,32 @@ MonoBehaviour:
   rightCookingSprite: {fileID: 634333861}
   upCookingSprite: {fileID: 1163368599}
   downCookingSprite: {fileID: 831707175}
-  cookAnimationName: Cook
   idleAnimationName: Idle
   animationCooldown: 0.1
+  leftSingleAnimation: Left_Single
+  leftRapidHitAnimation: Left_Rapid_Hit
+  leftRapidSuccessAnimation: Left_Rapid_Success
+  leftLongStartAnimation: Left_Long_Start
+  leftLongHoldAnimation: Left_Long_Hold
+  leftLongSuccessAnimation: Left_Long_Success
+  rightSingleAnimation: Right_Single
+  rightRapidHitAnimation: Right_Rapid_Hit
+  rightRapidSuccessAnimation: Right_Rapid_Success
+  rightLongStartAnimation: Right_Long_Start
+  rightLongHoldAnimation: Right_Long_Hold
+  rightLongSuccessAnimation: Right_Long_Success
+  upSingleAnimation: Up_Single
+  upRapidHitAnimation: Up_Rapid_Hit
+  upRapidSuccessAnimation: Up_Rapid_Success
+  upLongStartAnimation: Up_Long_Start
+  upLongHoldAnimation: Up_Long_Hold
+  upLongSuccessAnimation: Up_Long_Success
+  downSingleAnimation: Down_Single
+  downRapidHitAnimation: Down_Rapid_Hit
+  downRapidSuccessAnimation: Down_Rapid_Success
+  downLongStartAnimation: Down_Long_Start
+  downLongHoldAnimation: Down_Long_Hold
+  downLongSuccessAnimation: Down_Long_Success
 --- !u!1 &155819624
 GameObject:
   m_ObjectHideFlags: 0
@@ -5221,8 +5244,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 306, y: -231}
-  m_SizeDelta: {x: 346.147, y: 672.9695}
+  m_AnchoredPosition: {x: 474.55, y: -76}
+  m_SizeDelta: {x: 949.0916, y: 1067.728}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1163368601
 MonoBehaviour:
@@ -5393,9 +5416,32 @@ MonoBehaviour:
   rightCookingSprite: {fileID: 634333861}
   upCookingSprite: {fileID: 1163368599}
   downCookingSprite: {fileID: 831707175}
-  cookAnimationName: Cook
   idleAnimationName: Idle
   animationCooldown: 0.1
+  leftSingleAnimation: Cook
+  leftRapidHitAnimation: Cook
+  leftRapidSuccessAnimation: Cook
+  leftLongStartAnimation: Cook
+  leftLongHoldAnimation: Cook
+  leftLongSuccessAnimation: Cook
+  rightSingleAnimation: Cook
+  rightRapidHitAnimation: Cook
+  rightRapidSuccessAnimation: Cook
+  rightLongStartAnimation: Cook
+  rightLongHoldAnimation: Cook
+  rightLongSuccessAnimation: Cook
+  upSingleAnimation: Cook
+  upRapidHitAnimation: Up_Rapid_Hit
+  upRapidSuccessAnimation: Up_Rapid_Success
+  upLongStartAnimation: Up_Long_Start
+  upLongHoldAnimation: Up_Long_Hold
+  upLongSuccessAnimation: Up_Long_End
+  downSingleAnimation: Cook
+  downRapidHitAnimation: Cook
+  downRapidSuccessAnimation: Cook
+  downLongStartAnimation: Cook
+  downLongHoldAnimation: Cook
+  downLongSuccessAnimation: Cook
 --- !u!4 &1223608900
 Transform:
   m_ObjectHideFlags: 0

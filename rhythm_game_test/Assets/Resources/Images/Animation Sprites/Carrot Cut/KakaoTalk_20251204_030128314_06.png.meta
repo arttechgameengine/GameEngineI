@@ -100,10 +100,10 @@ TextureImporter:
       name: KakaoTalk_20251204_030128314_06_0
       rect:
         serializedVersion: 2
-        x: 984
+        x: 960
         y: 0
-        width: 442
-        height: 780
+        width: 960
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

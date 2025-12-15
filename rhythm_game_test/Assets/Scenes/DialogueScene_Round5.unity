@@ -480,13 +480,13 @@ MonoBehaviour:
   speakerNameText: {fileID: 719935935}
   dialogueText: {fileID: 1851908760}
   chapterTitleText: {fileID: 1877878609}
-  useCharacterSlideIn: 0
+  useCharacterSlideIn: 1
   characterSlideInDuration: 0.8
   leftCharacterStartOffsetX: -1500
   rightCharacterStartOffsetX: 1500
   activeSpeakerColor: {r: 1, g: 1, b: 1, a: 1}
   inactiveSpeakerColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  useTypingEffect: 0
+  useTypingEffect: 1
   typingSpeed: 30
   effectSpritesContainer: {fileID: 1258135889}
   nextSceneName: RhythmTest

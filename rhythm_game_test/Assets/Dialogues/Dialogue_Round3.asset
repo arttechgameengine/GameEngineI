@@ -75,7 +75,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 6f34b8e7a44ad444e937d41dc305f9d9, type: 2}
   - speakerName: "\uB77C\uD5A5"
     speakerSprite: {fileID: 0}
-    dialogue: "\uC88B\uC544.\r\n\uB124 \uB9DB\uC774 \uC5B4\uB290 \uC21C\uAC04 \uBB34\uB108\uC9C0\uB294\uC9C0,\r\n\uD639\uC740\u2026
+    dialogue: "\uC88B\uC544. \uB124 \uB9DB\uC774 \uC5B4\uB290 \uC21C\uAC04 \uBB34\uB108\uC9C0\uB294\uC9C0,\r\n\uD639\uC740\u2026
       \uB05D\uAE4C\uC9C0 \uC0B4\uC544\uB0A8\uB294\uC9C0.\r\n\uC9C0\uCF1C\uBCFC\uAC8C."
     isLeftSpeaker: 0
     effectSprites:

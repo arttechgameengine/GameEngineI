@@ -113,7 +113,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: e9ec13dd2c5b3be4fb1495d399d9afa2, type: 2}
   - speakerName: "\uB77C\uCC2C"
     speakerSprite: {fileID: 0}
-    dialogue: "\uC88B\uC544.\r\n\uADF8 \uD45C\uC815\uC774 \uC5B8\uC81C \uD754\uB4E4\uB9B4\uC9C0\u2026\r\n\uCC9C\uCC9C\uD788
+    dialogue: "\uC88B\uC544. \uADF8 \uD45C\uC815\uC774 \uC5B8\uC81C \uD754\uB4E4\uB9B4\uC9C0\u2026\r\n\uCC9C\uCC9C\uD788
       \uC990\uACA8\uBCFC\uAC8C."
     isLeftSpeaker: 0
     effectSprites:

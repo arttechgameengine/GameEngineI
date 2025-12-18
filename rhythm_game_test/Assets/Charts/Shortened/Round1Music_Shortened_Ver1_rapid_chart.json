@@ -1,0 +1,234 @@
+{
+    "songName": "Round1Music_Shortened_Ver1",
+    "bpm": 99.9000015258789,
+    "offset": -0.45833298563957217,
+    "numberOfLanes": 1,
+    "noteSpeed": 500.0,
+    "notes": [
+        {
+            "time": 53.29499816894531,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "UP",
+            "duration": 0.4350000023841858,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 54.49700164794922,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "RIGHT",
+            "duration": 0.42500001192092898,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 55.09700012207031,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "UP",
+            "duration": 2.005000114440918,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 57.5,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "RIGHT",
+            "duration": 0.49000000953674319,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 58.099998474121097,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "RIGHT",
+            "duration": 0.4350000023841858,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 58.70100021362305,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "RIGHT",
+            "duration": 0.39500001072883608,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 59.30099868774414,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "DOWN",
+            "duration": 0.38499999046325686,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 59.902000427246097,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "UP",
+            "duration": 0.4650000035762787,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 60.50299835205078,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "DOWN",
+            "duration": 0.4449999928474426,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 61.10300064086914,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "UP",
+            "duration": 0.48500001430511477,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 61.854000091552737,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "UP",
+            "duration": 0.4950000047683716,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 63.65599822998047,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "LEFT",
+            "duration": 0.48500001430511477,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 65.45800018310547,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "RIGHT",
+            "duration": 0.4449999928474426,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 67.25900268554688,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "UP",
+            "duration": 0.47999998927116396,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 69.06099700927735,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "DOWN",
+            "duration": 0.42500001192092898,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 70.86299896240235,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "DOWN",
+            "duration": 0.4749999940395355,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 72.66500091552735,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "UP",
+            "duration": 0.5849999785423279,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 74.46700286865235,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "DOWN",
+            "duration": 1.590000033378601,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 77.91999816894531,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "DOWN",
+            "duration": 0.4050000011920929,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 79.72200012207031,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "RIGHT",
+            "duration": 0.5550000071525574,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 82.1240005493164,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "LEFT",
+            "duration": 0.4650000035762787,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 83.9260025024414,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "RIGHT",
+            "duration": 1.8600000143051148,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 87.52999877929688,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "UP",
+            "duration": 0.4699999988079071,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 89.33100128173828,
+            "lane": 0,
+            "type": "hold",
+            "arrow": "LEFT",
+            "duration": 0.5550000071525574,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        },
+        {
+            "time": 91.73400115966797,
+            "lane": 0,
+            "type": "tap",
+            "arrow": "DOWN",
+            "duration": 0.0,
+            "rapidCount": 0,
+            "rapidDuration": 0.0
+        }
+    ]
+}

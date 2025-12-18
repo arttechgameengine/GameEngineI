@@ -6,7 +6,9 @@ using TMPro;
 public class ScoreResultUI : MonoBehaviour
 {
     [Header("Rank Display")]
-    public TextMeshProUGUI rankText;
+    public Image rankImage;
+    public Sprite goodImage;
+    public Sprite badImage;
 
     [Header("Stats Display")]
     public TextMeshProUGUI scoreText;
@@ -64,11 +66,14 @@ public class ScoreResultUI : MonoBehaviour
     {
         // 등급 표시
         string rank = GameResultData.GetRank();
-        if (rankText != null)
-        {
-            rankText.text = rank;
-            rankText.color = GetRankColor(rank);
-        }
+bool isClear = IsPassingRank(rank);
+
+if (rankImage != null)
+{
+    rankImage.sprite = isClear ? goodImage : badImage;
+    rankImage.color = Color.white;
+}
+
 
         // 점수 표시
         if (scoreText != null)

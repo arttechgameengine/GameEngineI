@@ -3191,7 +3191,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 4ab9950d4bda95344908bff638b22d65, type: 3}
+  m_Resource: {fileID: 8300000, guid: b9c0b92a795ce02449b40f1d70a4e114, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -3291,7 +3291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 767341542}
   bgmSource: {fileID: 759572563}
-  jsonPattern: {fileID: 4900000, guid: 9d4c3c10f84739041b5f77f7358a8f3f, type: 3}
+  jsonPattern: {fileID: 4900000, guid: 27e567f6a891a1c48968e50acd075800, type: 3}
   prepareTime: 6
 --- !u!4 &759572565
 Transform:

@@ -179,7 +179,7 @@ public class PlayerJudge : MonoBehaviour
         double songTime = AudioSettings.dspTime - spawner.songStartDspTime;
         NoteMovement[] allNotes = FindObjectsOfType<NoteMovement>();
 
-        // LONG_START 노트를 찾아서 막대 길이 업데이트 (실패 상태여도 계속 업데이트)
+        // LONG_START 노트를 찾아서 막대 길이 업데이트 (성공/실패 상태 관계없이 항상 업데이트)
         NoteMovement startNote = null;
         NoteMovement endNote = null;
 
@@ -198,7 +198,7 @@ public class PlayerJudge : MonoBehaviour
         }
 
         // 막대 길이 업데이트 (START와 END 노트 사이의 거리로 계산)
-        // 실패 상태여도 bar가 계속 짧아지도록 업데이트
+        // 성공/실패 상태 관계없이 bar가 계속 짧아지도록 업데이트!
         if (startNote != null && endNote != null && startNote.longNoteVisualBar != null)
         {
             UpdateLongNoteBarLength(startNote, endNote);
@@ -231,13 +231,19 @@ public class PlayerJudge : MonoBehaviour
         RectTransform barRect = startNote.longNoteVisualBar.GetComponent<RectTransform>();
         if (barRect == null) return;
 
-        // START 노트와 END 노트 사이의 거리 계산
-        float distance = endNote.transform.localPosition.x - startNote.transform.localPosition.x;
+        // 막대의 시작점은 항상 HitLine
+        float hitX = spawner.hitLineLocalX;
 
-        // 거리가 음수면 0으로 (END가 START보다 왼쪽에 있으면)
+        // 막대를 HitLine 위치에 고정 (Y는 startNote에 맞춰 유지)
+        Vector3 p = barRect.localPosition;
+        p.x = hitX;
+        p.y = startNote.transform.localPosition.y;
+        barRect.localPosition = p;
+
+        // 막대 길이는 END 노트의 현재 X - HitLine X
+        float distance = endNote.transform.localPosition.x - hitX;
         distance = Mathf.Max(0, distance);
 
-        // 막대 길이 업데이트
         barRect.sizeDelta = new Vector2(distance, barRect.sizeDelta.y);
     }
 
@@ -402,6 +408,9 @@ public class PlayerJudge : MonoBehaviour
         judgePopup.ShowJudge(judge);
         ScoreManager.Instance.AddJudge(judge);
 
+        // START 노트를 HitLine에 고정 (GOOD/GREAT이어도 항상 HitLine에서 보이게)
+        n.transform.localPosition = new Vector3(spawner.hitLineLocalX, n.transform.localPosition.y, n.transform.localPosition.z);
+
         // 롱노트 상태 시작
         currentLongNote = new LongNoteState
         {
@@ -485,6 +494,7 @@ public class PlayerJudge : MonoBehaviour
         }
 
         // 롱노트 막대를 회색으로 변경 (파괴하지 않음)
+        // START 노트는 계속 이동하면서 Bar도 같이 이동하며 줄어듦
         FadeLongNoteBar(currentLongNote.groupId);
 
         // 화면 흔들림

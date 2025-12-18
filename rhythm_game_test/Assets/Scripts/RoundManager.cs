@@ -76,7 +76,7 @@ public class RoundManager : MonoBehaviour
 
         Debug.Log("[RoundManager] Starting music now...");
 
-        // 5. 음악 시작 (준비 시간은 노트 타이밍에 이미 반영됨)
+        // 5. 음악 시작 (음악은 즉시 시작, 노트는 prepareTime만큼 늦게)
         spawner.StartSong(bgmSource);
     }
 

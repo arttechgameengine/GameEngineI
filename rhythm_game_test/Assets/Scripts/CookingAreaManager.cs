@@ -304,10 +304,22 @@ public class CookingAreaManager : MonoBehaviour
     /// </summary>
     private IEnumerator PlayAnimationCoroutine(Animator animator, string animationName, string noteType, string animTypeLabel)
     {
-        // 애니메이션 직접 재생 (트리거 없이)
-        animator.Play(animationName, 0, 0f);
+        // Rapid_Hit은 강제로 처음부터 재생 (이미 재생 중이어도)
+        bool isRapidHit = (animTypeLabel == "RapidHit");
 
-        Debug.Log($"[CookingAreaManager] {noteType} {animTypeLabel} 애니메이션 재생: {animationName}");
+        if (isRapidHit)
+        {
+            // 현재 애니메이션 상태와 관계없이 강제로 처음부터 재생
+            animator.Play(animationName, 0, 0f);
+            animator.Update(0f); // 즉시 적용
+            Debug.Log($"[CookingAreaManager] {noteType} {animTypeLabel} 애니메이션 강제 재생: {animationName}");
+        }
+        else
+        {
+            // 일반 애니메이션
+            animator.Play(animationName, 0, 0f);
+            Debug.Log($"[CookingAreaManager] {noteType} {animTypeLabel} 애니메이션 재생: {animationName}");
+        }
 
         yield return null; // 1프레임 대기
     }

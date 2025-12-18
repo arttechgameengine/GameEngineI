@@ -187,10 +187,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 3168487252443732319}
-  leftSprite: {fileID: 21300000, guid: 0e3588bd6507d4164b8cf749ed372de5, type: 3}
-  rightSprite: {fileID: 21300000, guid: 8de82cd3a8b8d4fe6be6148f48b9396b, type: 3}
-  upSprite: {fileID: 21300000, guid: de99b78e476e449da9e89297222df8df, type: 3}
-  downSprite: {fileID: 21300000, guid: 50515b87527a140efb4a20420d8a7afe, type: 3}
+  leftSprite: {fileID: 21300000, guid: 768567e34d17fe14db9b5a7f8579d363, type: 3}
+  rightSprite: {fileID: 21300000, guid: e3a7e348e60d8ed419b0e675707043b2, type: 3}
+  upSprite: {fileID: 21300000, guid: ef61854c1f59ded408953adaefd497fb, type: 3}
+  downSprite: {fileID: 21300000, guid: 2aeccd281673cba4c9af3f4949a01152, type: 3}
   spaceSprite: {fileID: 21300000, guid: 43a1334df9a0845cdbc95da101c15cd1, type: 3}
 --- !u!114 &7010916551834882764
 MonoBehaviour:

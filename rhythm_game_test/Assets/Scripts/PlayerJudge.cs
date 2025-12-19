@@ -8,7 +8,7 @@ public class PlayerJudge : MonoBehaviour
     public float goodRange = 0.25f;
 
     [Header("Long Note Settings")]
-    public float longNoteEndRange = 0.5f; // 롱노트 끝 판정 범위 (더 관대함)
+    public float longNoteEndRange = 2.0f; // 롱노트 끝 판정 범위 (매우 관대함 - 키를 늦게 떼도 OK)
 
     public NoteSpawner spawner;
     public JudgePopup judgePopup;
@@ -24,6 +24,7 @@ public class PlayerJudge : MonoBehaviour
         public string startJudge;  // START 노트의 판정 등급
         public bool isHolding;
         public bool isFailed;      // Miss 판정되었지만 bar는 계속 업데이트 중
+        public float endTime;      // END 노트의 시간 (미리 저장)
     }
     private LongNoteState currentLongNote = null;
 
@@ -45,17 +46,47 @@ public class PlayerJudge : MonoBehaviour
         if (PauseManager.IsPaused) return;
 
         // 롱노트 진행 중이면 키 홀딩 체크 (실패한 경우는 제외)
-        if (currentLongNote != null && !currentLongNote.isFailed)
-        {
-            KeyCode keyCode = GetKeyCode(currentLongNote.noteType);
-            currentLongNote.isHolding = Input.GetKey(keyCode);
+if (currentLongNote != null && !currentLongNote.isFailed)
+{
+    KeyCode keyCode = GetKeyCode(currentLongNote.noteType);
+    bool wasHolding = currentLongNote.isHolding;
+    currentLongNote.isHolding = Input.GetKey(keyCode);
 
-            // 키를 떼면 롱노트 실패 처리
-            if (!currentLongNote.isHolding)
+    // 키를 떼면 롱노트 판정 처리
+    if (wasHolding && !currentLongNote.isHolding)
+    {
+        // END 노트가 아직 있는지 확인
+        double songTime = AudioSettings.dspTime - spawner.songStartDspTime;
+        NoteMovement[] allNotes = FindObjectsOfType<NoteMovement>();
+        NoteMovement endNote = System.Array.Find(allNotes, n => 
+            n.longNoteGroupId == currentLongNote.groupId && 
+            n.noteSubType == "LONG_END" && 
+            !n.isJudged);
+
+        if (endNote != null)
+        {
+            float timeDiff = Mathf.Abs((float)(songTime - endNote.noteTime));
+            
+            // END 노트 시간 ± longNoteEndRange 범위 내면 성공
+            if (timeDiff <= longNoteEndRange)
             {
+                // 자동으로 TryHit 호출 (LONG_END 판정)
+                string judge = "";
+                if (timeDiff <= perfectRange) judge = "PERFECT";
+                else if (timeDiff <= greatRange) judge = "GREAT";
+                else judge = "GOOD";
+                
+                HitLongEnd(judge, endNote);
+            }
+            else if (songTime < endNote.noteTime - longNoteEndRange)
+            {
+                // 너무 일찍 뗀 경우만 MISS
                 FailLongNote();
             }
+            // songTime > endNote.noteTime + longNoteEndRange 인 경우는 늦게 뗐지만 성공으로 처리 (아무것도 안 함)
         }
+    }
+}
 
         // 키 입력 처리
         if (Input.GetKeyDown(KeyCode.LeftArrow)) TryHit("LEFT");
@@ -136,33 +167,44 @@ public class PlayerJudge : MonoBehaviour
             }
 
             // 노트가 판정 시간을 지났는지 확인
-            // LONG_END 노트는 더 관대한 범위 사용
-            float missRange = (n.noteSubType == "LONG_END") ? longNoteEndRange : goodRange;
+            // LONG_END 노트는 매우 관대한 범위 사용 (키를 늦게 떼도 괜찮음)
+// 노트가 판정 시간을 지났는지 확인
+// LONG_END 노트는 매우 관대한 범위 사용 (키를 늦게 떼도 괜찮음)
+float missRange = (n.noteSubType == "LONG_END") ? longNoteEndRange : goodRange;
 
-            if (songTime > n.noteTime + missRange)
-            {
+// LONG_END 노트는 체크하지 않음 (키를 뗄 때만 판정)
+if (n.noteSubType == "LONG_END")
+{
+    continue;
+}
+
+if (songTime > n.noteTime + missRange)
+{
                 Debug.Log($"[MISS] songTime: {songTime:F2}, noteTime: {n.noteTime:F2}, diff: {(songTime - n.noteTime):F2}, missRange: {missRange:F2}");
 
-                // LONG_END 노트를 놓쳤으면 롱노트 전체 파괴
+                // LONG_END 노트를 놓쳤으면 조용히 판정만 처리 (파괴하지 않음)
                 if (n.noteSubType == "LONG_END" && currentLongNote != null && n.longNoteGroupId == currentLongNote.groupId)
                 {
-                    Debug.Log($"[LONG_END MISS] Duration ended, destroying long note group {n.longNoteGroupId}");
-
-                    // 롱노트 그룹 전체 파괴
-                    DestroyLongNoteGroup(n.longNoteGroupId);
-
-                    // 롱노트 상태 종료
-                    currentLongNote = null;
-
-                    // MISS 판정
-                    judgePopup.ShowJudge("MISS");
-                    ScoreManager.Instance.AddJudge("MISS");
-
-                    // 화면 흔들림
-                    if (cameraShake != null)
+                    Debug.Log($"[LONG_END MISS] Duration ended for group {n.longNoteGroupId}");
+                    
+                    n.isJudged = true;
+                    
+                    // 실패 상태가 아니면 MISS 판정 추가 (이미 실패했으면 추가 안 함)
+                    if (!currentLongNote.isFailed)
                     {
-                        cameraShake.ShakeOnNormalMiss();
+                        judgePopup.ShowJudge("MISS");
+                        ScoreManager.Instance.AddJudge("MISS");
+                        
+                        if (cameraShake != null)
+                        {
+                            cameraShake.ShakeOnNormalMiss();
+                        }
                     }
+                    
+                    // LONG_END만 조용히 파괴 (막대는 DestroyBarAfterDuration에서 자동으로 파괴됨)
+                    Destroy(n.gameObject);
+                    
+                    // currentLongNote는 DestroyBarAfterDuration 코루틴이 끝날 때 null이 됨
                 }
                 else
                 {
@@ -197,11 +239,19 @@ public class PlayerJudge : MonoBehaviour
             }
         }
 
-        // 막대 길이 업데이트 (START와 END 노트 사이의 거리로 계산)
-        // 성공/실패 상태 관계없이 bar가 계속 짧아지도록 업데이트!
-        if (startNote != null && endNote != null && startNote.longNoteVisualBar != null)
+        // 막대 길이 업데이트
+        if (startNote != null && startNote.longNoteVisualBar != null)
         {
-            UpdateLongNoteBarLength(startNote, endNote);
+            // END 노트가 있으면 END 노트 위치 기준으로 업데이트
+            if (endNote != null)
+            {
+                UpdateLongNoteBarLength(startNote, endNote);
+            }
+            // END 노트가 없으면 (파괴됨) 시간 기준으로 계산
+            else if (currentLongNote.endTime > 0f)
+            {
+                UpdateLongNoteBarByTime(startNote, currentLongNote.endTime, songTime);
+            }
         }
 
         // Hold 노트 자동 판정 체크 (실패 상태면 스킵)
@@ -247,6 +297,36 @@ public class PlayerJudge : MonoBehaviour
         barRect.sizeDelta = new Vector2(distance, barRect.sizeDelta.y);
     }
 
+    /// <summary>
+    /// 시간 기준으로 롱노트 막대 길이 업데이트 (END 노트가 없을 때 사용)
+    /// </summary>
+    void UpdateLongNoteBarByTime(NoteMovement startNote, float endTime, double currentSongTime)
+    {
+        if (startNote.longNoteVisualBar == null) return;
+
+        RectTransform barRect = startNote.longNoteVisualBar.GetComponent<RectTransform>();
+        if (barRect == null) return;
+
+        // 막대의 시작점은 항상 HitLine
+        float hitX = spawner.hitLineLocalX;
+
+        // 막대를 HitLine 위치에 고정
+        Vector3 p = barRect.localPosition;
+        p.x = hitX;
+        p.y = startNote.transform.localPosition.y;
+        barRect.localPosition = p;
+
+        // 남은 시간 계산
+        float remainingTime = endTime - (float)currentSongTime;
+        remainingTime = Mathf.Max(0, remainingTime);
+
+        // 남은 거리 = 남은 시간 * 속도
+        float remainingDistance = remainingTime * spawner.noteSpeed;
+
+        // 막대 길이 업데이트
+        barRect.sizeDelta = new Vector2(remainingDistance, barRect.sizeDelta.y);
+    }
+
     void TryHit(string keyType)
     {
         double songTime = AudioSettings.dspTime - spawner.songStartDspTime;
@@ -263,8 +343,8 @@ public class PlayerJudge : MonoBehaviour
 
             float timeDelta = Mathf.Abs((float)(songTime - n.noteTime));
 
-            // 롱노트 진행 중이면 현재 그룹의 LONG_END 노트만 판정 가능
-            if (currentLongNote != null)
+            // 롱노트 진행 중이면 (실패하지 않은 경우) 현재 그룹의 LONG_END 노트만 판정 가능
+            if (currentLongNote != null && !currentLongNote.isFailed)
             {
                 if (n.longNoteGroupId == currentLongNote.groupId && n.noteSubType == "LONG_END")
                 {
@@ -277,8 +357,8 @@ public class PlayerJudge : MonoBehaviour
                 continue; // 롱노트 진행 중에는 다른 노트 무시
             }
 
-            // 롱노트가 실패 상태면 키 입력 무시
-            if (currentLongNote != null && currentLongNote.isFailed)
+            // 롱노트 실패 상태면 해당 그룹의 노트만 무시 (다른 노트는 판정 가능!)
+            if (currentLongNote != null && currentLongNote.isFailed && n.longNoteGroupId == currentLongNote.groupId)
             {
                 continue;
             }
@@ -301,7 +381,7 @@ public class PlayerJudge : MonoBehaviour
         }
 
         // 판정 등급 계산
-        // LONG_END 노트는 더 관대한 범위 사용
+        // LONG_END 노트는 관대한 범위 사용 (키를 늦게 떼도 OK)
         float judgementRange = (target.noteSubType == "LONG_END") ? longNoteEndRange : goodRange;
 
         string judge = "";
@@ -411,6 +491,18 @@ public class PlayerJudge : MonoBehaviour
         // START 노트를 HitLine에 고정 (GOOD/GREAT이어도 항상 HitLine에서 보이게)
         n.transform.localPosition = new Vector3(spawner.hitLineLocalX, n.transform.localPosition.y, n.transform.localPosition.z);
 
+        // END 노트의 시간을 미리 저장
+        float endTime = 0f;
+        NoteMovement[] allNotes = FindObjectsOfType<NoteMovement>();
+        foreach (var note in allNotes)
+        {
+            if (note.longNoteGroupId == n.longNoteGroupId && note.noteSubType == "LONG_END")
+            {
+                endTime = note.noteTime;
+                break;
+            }
+        }
+
         // 롱노트 상태 시작
         currentLongNote = new LongNoteState
         {
@@ -418,7 +510,8 @@ public class PlayerJudge : MonoBehaviour
             noteType = n.noteType,
             startJudge = judge,
             isHolding = true,
-            isFailed = false
+            isFailed = false,
+            endTime = endTime
         };
 
         // 고정 요리 스프라이트 애니메이션 재생 (롱노트 시작)
@@ -481,6 +574,9 @@ public class PlayerJudge : MonoBehaviour
 
         Debug.Log($"[LongNote Fail] 키를 뗌! groupId: {currentLongNote.groupId}");
 
+        // MISS 판정 팝업 표시
+        judgePopup.ShowJudge("MISS");
+
         // 남은 Hold 노트와 End 노트를 모두 MISS 처리
         NoteMovement[] allNotes = FindObjectsOfType<NoteMovement>();
         foreach (var n in allNotes)
@@ -534,7 +630,7 @@ public class PlayerJudge : MonoBehaviour
                         // 롱노트 duration 이후에 막대 파괴
                         float duration = 0f;
 
-                        // duration 정보 찾기 (LONG_END 노트의 시간 - LONG_START 노트의 시간)
+                        // duration 정보 찾기 (LONG_END 노트의 시간 - 현재 시간)
                         double songTime = AudioSettings.dspTime - spawner.songStartDspTime;
                         NoteMovement endNote = System.Array.Find(allNotes, note =>
                             note.longNoteGroupId == groupId && note.noteSubType == "LONG_END");
@@ -628,6 +724,18 @@ public class PlayerJudge : MonoBehaviour
         {
             Debug.Log($"[MISS] LONG_START missed! Fading bar for group {n.longNoteGroupId}");
 
+            // END 노트의 시간을 미리 저장
+            float endTime = 0f;
+            NoteMovement[] allNotes = FindObjectsOfType<NoteMovement>();
+            foreach (var note in allNotes)
+            {
+                if (note.longNoteGroupId == n.longNoteGroupId && note.noteSubType == "LONG_END")
+                {
+                    endTime = note.noteTime;
+                    break;
+                }
+            }
+
             // currentLongNote 설정 (bar 업데이트를 위해)
             currentLongNote = new LongNoteState
             {
@@ -635,13 +743,13 @@ public class PlayerJudge : MonoBehaviour
                 noteType = n.noteType,
                 startJudge = "MISS",
                 isHolding = false,
-                isFailed = true
+                isFailed = true,
+                endTime = endTime
             };
 
             FadeLongNoteBar(n.longNoteGroupId);
 
             // 남은 LONG_HOLD와 LONG_END 노트들도 모두 MISS 처리
-            NoteMovement[] allNotes = FindObjectsOfType<NoteMovement>();
             foreach (var note in allNotes)
             {
                 if (note.longNoteGroupId == n.longNoteGroupId && !note.isJudged)
@@ -649,8 +757,23 @@ public class PlayerJudge : MonoBehaviour
                     note.isJudged = true;
                     ScoreManager.Instance.AddJudge("MISS");
                     Debug.Log($"[MISS] Auto-miss {note.noteSubType} for group {n.longNoteGroupId}");
+                    
+                    // LONG_END는 조용히 파괴 (막대는 남김)
+                    if (note.noteSubType == "LONG_END")
+                    {
+                        Destroy(note.gameObject);
+                    }
                 }
             }
+            
+            // LONG_START는 미스 효과 후 파괴하지 않음 (막대 업데이트를 위해 필요)
+            NoteEffect effect = n.GetComponent<NoteEffect>();
+            if (effect != null)
+            {
+                effect.PlayMissEffect(null); // 파괴 콜백 없음
+            }
+            
+            return; // 여기서 종료 (아래 일반 파괴 로직 실행 안 함)
         }
 
         // 패링 노트(SPACE) 미스 시 선택된 효과 적용
@@ -659,7 +782,6 @@ public class PlayerJudge : MonoBehaviour
         {
             if (isParryNote)
             {
-                // 선택된 패링 미스 효과 재생
                 cameraShake.PlayParryMissEffect(currentParryMissEffect);
             }
             else
@@ -669,10 +791,10 @@ public class PlayerJudge : MonoBehaviour
         }
 
         // 미스 효과 재생 후 파괴
-        NoteEffect effect = n.GetComponent<NoteEffect>();
-        if (effect != null)
+        NoteEffect effect2 = n.GetComponent<NoteEffect>();
+        if (effect2 != null)
         {
-            effect.PlayMissEffect(() => Destroy(n.gameObject));
+            effect2.PlayMissEffect(() => Destroy(n.gameObject));
         }
         else
         {

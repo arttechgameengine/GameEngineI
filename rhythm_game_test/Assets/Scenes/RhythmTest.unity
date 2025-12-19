@@ -1269,15 +1269,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: adb7d0dfae41dc44ea3fa41fe2ecd6de, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2608,6 +2608,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1866899336}
+  - {fileID: 770418626}
   m_Father: {fileID: 1898027572}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &648025290
@@ -2623,6 +2624,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   judgeText: {fileID: 1866899337}
+  judgeImage: {fileID: 770418627}
+  perfectImage: {fileID: 21300000, guid: a1123d5b055144541af5d5bb31073a24, type: 3}
+  greatImage: {fileID: 21300000, guid: eed071f7a2c57f84bbb868ae00f56753, type: 3}
+  goodImage: {fileID: 21300000, guid: 0cf812069be2a31428dc4e41b0727e49, type: 3}
+  missImage: {fileID: 21300000, guid: 7ed1c745da05ae0448b92d03b7ed717d, type: 3}
   fadeDuration: 0.3
   displayDuration: 0.5
 --- !u!1 &651287776
@@ -3191,7 +3197,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: b9c0b92a795ce02449b40f1d70a4e114, type: 3}
+  m_Resource: {fileID: 8300000, guid: 4f9b868131c945b48925f752a0dc338f, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -3291,7 +3297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 767341542}
   bgmSource: {fileID: 759572563}
-  jsonPattern: {fileID: 4900000, guid: 27e567f6a891a1c48968e50acd075800, type: 3}
+  jsonPattern: {fileID: 4900000, guid: 8c297d7188f140b47b1edd225bab5f21, type: 3}
   prepareTime: 6
 --- !u!4 &759572565
 Transform:
@@ -3365,6 +3371,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &770418625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 770418626}
+  - component: {fileID: 770418628}
+  - component: {fileID: 770418627}
+  m_Layer: 5
+  m_Name: JudgeImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &770418626
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 770418625}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 648025289}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 24, y: 100}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &770418627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 770418625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &770418628
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 770418625}
+  m_CullTransparentMesh: 1
 --- !u!1 &779668070
 GameObject:
   m_ObjectHideFlags: 0
@@ -8102,9 +8183,9 @@ RectTransform:
   - {fileID: 972998630}
   - {fileID: 597266358}
   - {fileID: 418067976}
+  - {fileID: 1180194714}
   - {fileID: 648025289}
   - {fileID: 153278780}
-  - {fileID: 1180194714}
   - {fileID: 928989697}
   - {fileID: 2109745582}
   - {fileID: 1625212170}

@@ -1,81 +1,114 @@
-using UnityEngine; 
+using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 using System.Collections;
 
 public class JudgePopup : MonoBehaviour
 {
+    // ===== 기존 Text (유지, 사용 안 해도 됨) =====
     public TextMeshProUGUI judgeText;
+
+    // ===== Image 기반 판정 표시 =====
+    public Image judgeImage;
+    public Sprite perfectImage;
+    public Sprite greatImage;
+    public Sprite goodImage;
+    public Sprite missImage;
+
     public float fadeDuration = 0.3f;
     public float displayDuration = 0.5f;
 
     private Coroutine currentPopup;
 
+    void Awake()
+    {
+        // 초기 상태: 완전 투명 + 비활성
+        if (judgeImage != null)
+        {
+            Color c = judgeImage.color;
+            c.a = 0f;
+            judgeImage.color = c;
+            judgeImage.gameObject.SetActive(false);
+        }
+
+        if (judgeText != null)
+            judgeText.gameObject.SetActive(false);
+    }
+
     public void ShowJudge(string judge)
     {
-        // 이전 팝업 중단 (겹침 방지)
         if (currentPopup != null)
-        {
             StopCoroutine(currentPopup);
-        }
 
         currentPopup = StartCoroutine(PopupRoutine(judge));
     }
 
     IEnumerator PopupRoutine(string judge)
     {
-        judgeText.text = judge;
-
-        // 판정별 색상 설정
-        switch (judge)
+        if (judgeImage != null)
         {
-            case "PERFECT":
-                judgeText.color = new Color(1f, 0.84f, 0f, 0f); // 금색
-                break;
-            case "GREAT":
-                judgeText.color = new Color(0f, 1f, 0.5f, 0f); // 초록
-                break;
-            case "GOOD":
-                judgeText.color = new Color(0.3f, 0.7f, 1f, 0f); // 하늘색
-                break;
-            case "MISS":
-                judgeText.color = new Color(1f, 0.3f, 0.3f, 0f); // 빨강
-                break;
-            default:
-                judgeText.color = new Color(1f, 1f, 1f, 0f); // 흰색
-                break;
+            judgeImage.sprite = GetJudgeSprite(judge);
+            Color c = judgeImage.color;
+            c.a = 0f;
+            judgeImage.color = c;
+            judgeImage.gameObject.SetActive(true);
         }
 
         // Fade In
         float elapsed = 0f;
-        Color startColor = judgeText.color;
-        Color targetColor = new Color(startColor.r, startColor.g, startColor.b, 1f);
-
         while (elapsed < fadeDuration)
         {
             elapsed += Time.deltaTime;
             float t = elapsed / fadeDuration;
-            judgeText.color = Color.Lerp(startColor, targetColor, t);
+
+            if (judgeImage != null)
+            {
+                Color c = judgeImage.color;
+                c.a = Mathf.Lerp(0f, 1f, t);
+                judgeImage.color = c;
+            }
             yield return null;
         }
-        judgeText.color = targetColor;
 
-        // 잠시 유지
         yield return new WaitForSeconds(displayDuration);
 
         // Fade Out
         elapsed = 0f;
-        startColor = judgeText.color;
-        targetColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
-
         while (elapsed < fadeDuration)
         {
             elapsed += Time.deltaTime;
             float t = elapsed / fadeDuration;
-            judgeText.color = Color.Lerp(startColor, targetColor, t);
+
+            if (judgeImage != null)
+            {
+                Color c = judgeImage.color;
+                c.a = Mathf.Lerp(1f, 0f, t);
+                judgeImage.color = c;
+            }
             yield return null;
         }
-        judgeText.color = targetColor;
+
+        // 종료 후 완전 투명 + 비활성
+        if (judgeImage != null)
+        {
+            Color c = judgeImage.color;
+            c.a = 0f;
+            judgeImage.color = c;
+            judgeImage.gameObject.SetActive(false);
+        }
 
         currentPopup = null;
+    }
+
+    Sprite GetJudgeSprite(string judge)
+    {
+        switch (judge)
+        {
+            case "PERFECT": return perfectImage;
+            case "GREAT":   return greatImage;
+            case "GOOD":    return goodImage;
+            case "MISS":    return missImage;
+            default:        return null;
+        }
     }
 }

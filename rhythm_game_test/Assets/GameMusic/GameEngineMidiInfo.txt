@@ -6,3 +6,7 @@ Tempo: 99.9
 Round 2 Shortened:
 
 Tempo: 112.7
+
+Round 3 Shortened:
+
+Tempo 151.7
